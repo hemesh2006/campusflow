@@ -1,0 +1,120 @@
+{
+  "generated_at": "2026-08-31T04:18:20.164039+00:00",
+  "agents": {
+    "sys-notification-router": {
+      "name": "Notification Router",
+      "role": "system",
+      "status": "running",
+      "accuracy": 99.0,
+      "hallucination": 0.1,
+      "owner_id": null,
+      "owner_name": "System",
+      "deadline": null
+    },
+    "sys-compliance-monitor": {
+      "name": "Compliance Monitor",
+      "role": "system",
+      "status": "running",
+      "accuracy": 97.5,
+      "hallucination": 0.3,
+      "owner_id": null,
+      "owner_name": "System",
+      "deadline": "Policy audit due Fri, 5:00 PM"
+    },
+    "agent-manager": {
+      "name": "agent-manager",
+      "role": "system",
+      "status": "running",
+      "accuracy": 97.5,
+      "hallucination": 0.3,
+      "owner_id": null,
+      "owner_name": "System",
+      "deadline": "due on fridays"
+    },
+    "teacher-manager": {
+      "name": "teacher-manager",
+      "role": "system",
+      "status": "running",
+      "accuracy": 97.5,
+      "hallucination": 0.3,
+      "owner_id": null,
+      "owner_name": "System",
+      "deadline": null
+    },
+    "jude-agent": {
+      "name": "jude-agent",
+      "role": "system",
+      "status": "running",
+      "accuracy": 97.5,
+      "hallucination": 0.3,
+      "owner_id": null,
+      "owner_name": "System",
+      "deadline": null
+    },
+    "hemesh-agent": {
+      "name": "hemesh-agent",
+      "role": "system",
+      "status": "running",
+      "accuracy": 97.5,
+      "hallucination": 0.3,
+      "owner_id": null,
+      "owner_name": "System",
+      "deadline": null
+    }
+  },
+  "connections": {
+    "sys-notification-router": [
+      "sys-compliance-monitor",
+      "agent-manager"
+    ],
+    "sys-compliance-monitor": [
+      "sys-notification-router",
+      "teacher-manager"
+    ],
+    "agent-manager": [
+      "sys-notification-router",
+      "teacher-manager",
+      "jude-agent"
+    ],
+    "teacher-manager": [
+      "agent-manager",
+      "sys-compliance-monitor",
+      "hemesh-agent"
+    ],
+    "hemesh-agent": [
+      "jude-agent",
+      "teacher-manager"
+    ],
+    "jude-agent": [
+      "hemesh-agent",
+      "agent-manager"
+    ]
+  },
+  "role_graph": {
+    "system": []
+  },
+  "access_scope": {
+    "6a8c2c6f143c302da8d3629d": [
+      "sys-notification-router",
+      "sys-compliance-monitor",
+      "agent-manager",
+      "teacher-manager",
+      "jude-agent",
+      "hemesh-agent"
+    ],
+    "6a8c2ce4a963fc2909bfdb5d": [],
+    "6a8c2f4b796bc0dcd1e0efc5": [],
+    "6a8c30774ccc77483c543704": [],
+    "6a8c30894ccc77483c543705": [],
+    "6a8c30a24ccc77483c543706": [],
+    "6a8c30b74ccc77483c543707": [],
+    "6a8c31344ccc77483c543708": [
+      "sys-notification-router",
+      "sys-compliance-monitor",
+      "agent-manager",
+      "teacher-manager",
+      "jude-agent",
+      "hemesh-agent"
+    ]
+  }
+}

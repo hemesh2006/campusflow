@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "generated_at": "2026-08-24T13:20:18.553403+00:00",
+    "user_id": "6a8c2ce4a963fc2909bfdb5d",
+    "role": "advisor",
+    "name": "hemesh"
+  },
+  "profile": {
+    "name": "hemesh",
+    "email": "hemesh@gmail.com",
+    "role": "advisor",
+    "dept": "AI & DS"
+  },
+  "tasks": [],
+  "skills": [],
+  "placements": [],
+  "recent_messages": {
+    "class_group": [
+      {
+        "from": "hemesh",
+        "text": "Hello students well come to the 4th year.",
+        "time": "2026-08-24T12:07:29.505000",
+        "read_count": 0
+      },
+      {
+        "from": "hemesh",
+        "text": "everpwggppd one well maintain silence",
+        "time": "2026-08-24T12:07:41.613000",
+        "read_count": 0
+      },
+      {
+        "from": "adithya",
+        "text": "hello there",
+        "time": "2026-08-24T12:33:23.808000",
+        "read_count": 0
+      },
+      {
+        "from": "adithya",
+        "text": "hello stuents",
+        "time": "2026-08-24T12:48:18.719000",
+        "read_count": 0
+      },
+      {
+        "from": "hemesh",
+        "text": "hello sutent",
+        "time": "2026-08-24T13:06:34.940000",
+        "read_count": 0
+      }
+    ],
+    "hod_advisor": [],
+    "direct_messages": [
+      {
+        "from": "IT Admin",
+        "text": "hi hemeh are you okay with at adcisot",
+        "time": "2026-08-24T11:58:52.229000",
+        "thread": "dm-6a8c2c6f143c302da8d3629d-6a8c2ce4a963fc2909bfdb5d"
+      }
+    ]
+  },
+  "reports": [],
+  "activity_log": [
+    {
+      "id": "dd35cc0f3bd849e7a8e815f284fc3800",
+      "user_id": "6a8c2ce4a963fc2909bfdb5d",
+      "user_name": "hemesh",
+      "role": "advisor",
+      "step": "chat_query",
+      "message": "hi",
+      "response": "Hello! How can I assist you today?",
+      "model": "qwen2.5:1.5b",
+      "status": "completed",
+      "created_at": "2026-08-24T13:14:42.944993+00:00",
+      "updated_at": "2026-08-24T13:14:59.940372+00:00"
+    },
+    {
+      "id": "c9dfbf42ad164e1997e22f8b09ab7544",
+      "user_id": "6a8c2ce4a963fc2909bfdb5d",
+      "user_name": "hemesh",
+      "role": "advisor",
+      "step": "chat_query",
+      "message": "what is role in this cased",
+      "response": "The role here is **class advisor** overseeing the placement progress and task completion of a class of students through CampusFlow.",
+      "model": "qwen2.5:1.5b",
+      "status": "completed",
+      "created_at": "2026-08-24T13:15:08.872713+00:00",
+      "updated_at": "2026-08-24T13:15:11.794812+00:00"
+    },
+    {
+      "id": "9f4e2831d23e4e81ae781acaeb13472f",
+      "user_id": "6a8c2ce4a963fc2909bfdb5d",
+      "user_name": "hemesh",
+      "role": "advisor",
+      "step": "chat_query",
+      "message": "ok list of my students",
+      "response": "Sure, please provide your list of students' names or any specific details you'd like to see.",
+      "model": "qwen2.5:1.5b",
+      "status": "completed",
+      "created_at": "2026-08-24T13:15:21.546027+00:00",
+      "updated_at": "2026-08-24T13:15:24.494739+00:00"
+    },
+    {
+      "id": "c162194e9ddf46c4adaf9579a9212e60",
+      "user_id": "6a8c2ce4a963fc2909bfdb5d",
+      "user_name": "hemesh",
+      "role": "advisor",
+      "step": "chat_query",
+      "message": "my students list",
+      "response": "Here's a quick overview of your student list:\n\n- **John Doe**\n- **Jane Smith**\n- **Michael Johnson**\n- **Emily Davis**\n\nWould you like me to provide more detailed information on any particular student or action items?",
+      "model": "qwen2.5:1.5b",
+      "status": "completed",
+      "created_at": "2026-08-24T13:17:48.569801+00:00",
+      "updated_at": "2026-08-24T13:17:51.624529+00:00"
+    },
+    {
+      "id": "579a7161126c4d24bc85e4855e1ac7df",
+      "user_id": "6a8c2ce4a963fc2909bfdb5d",
+      "user_name": "hemesh",
+      "role": "advisor",
+      "step": "chat_query",
+      "message": "my students list",
+      "response": "Got it! Here’s the updated list of your students:\n\n- **John Doe**: Task completion, attendance, placement progress.\n- **Jane Smith**: Task completion, attendance, placement progress.\n- **Michael Johnson**: Task completion, attendance, placement progress.\n- **Emily Davis**: Task completion, attendance, placement progress.\n\nIf you need more detailed information or specific actions, feel free to ask!",
+      "model": "qwen2.5:1.5b",
+      "status": "completed",
+      "created_at": "2026-08-24T13:20:14.689500+00:00",
+      "updated_at": "2026-08-24T13:20:18.476636+00:00"
+    }
+  ],
+  "stats": {
+    "tasks_done": 0,
+    "tasks_pending": 0,
+    "skills_count": 0,
+    "avg_skill_level": 0.0,
+    "total_messages_in_scope": 6,
+    "open_reports": 0
+  }
+}

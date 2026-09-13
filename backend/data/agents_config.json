@@ -1,0 +1,77 @@
+{
+  "_comment": "Hand-edit this file to add/remove/update system-level agents that aren't tied to a Mongo user account. Every GET /agents/graph call re-reads this file and merges it into the live graph — the frontend already polls that endpoint every 5s, so a saved change here shows up in the Agent Network view automatically, no restart and no database write needed. IDs must be unique and must not collide with a Mongo ObjectId (avoid 24-char hex strings). 'connections' lists extra edges between agent ids defined either here or already produced from Mongo. 'deadline' is optional and human-readable — shown in the network graph's hover tooltip.",
+  "agents": {
+    "sys-notification-router": {
+      "name": "Notification Router",
+      "role": "system",
+      "status": "running",
+      "accuracy": 99.0,
+      "hallucination": 0.1,
+      "owner_id": null,
+      "owner_name": "System",
+      "deadline": null
+    },
+    "sys-compliance-monitor": {
+      "name": "Compliance Monitor",
+      "role": "system",
+      "status": "running",
+      "accuracy": 97.5,
+      "hallucination": 0.3,
+      "owner_id": null,
+      "owner_name": "System",
+      "deadline": "Policy audit due Fri, 5:00 PM"
+    },
+    "agent-manager": {
+      "name": "agent-manager",
+      "role": "system",
+      "status": "running",
+      "accuracy": 97.5,
+      "hallucination": 0.3,
+      "owner_id": null,
+      "owner_name": "System",
+      "deadline": "due on fridays"
+    },
+    "teacher-manager": {
+      "name": "teacher-manager",
+      "role": "system",
+      "status": "running",
+      "accuracy": 97.5,
+      "hallucination": 0.3,
+      "owner_id": null,
+      "owner_name": "System",
+      "deadline": null
+    },
+    "jude-agent": {
+      "name": "jude-agent",
+      "role": "system",
+      "status": "running",
+      "accuracy": 97.5,
+      "hallucination": 0.3,
+      "owner_id": null,
+      "owner_name": "System",
+      "deadline": null
+    },
+    "hemesh-agent": {
+      "name": "hemesh-agent",
+      "role": "system",
+      "status": "running",
+      "accuracy": 97.5,
+      "hallucination": 0.3,
+      "owner_id": null,
+      "owner_name": "System",
+      "deadline": null
+    }
+
+  },
+  "connections": [
+    ["sys-notification-router", "sys-compliance-monitor"],
+    ["sys-notification-router", "agent-manager"],
+    ["teacher-manager","agent-manager"],
+    ["teacher-manager","sys-compliance-monitor"],
+    ["hemesh-agent","jude-agent"],
+    ["agent-manager","jude-agent"],
+    ["hemesh-agent","teacher-manager"]
+  ]
+
+  
+}
