@@ -2,9 +2,9 @@ from typing import Optional, Annotated
 from pydantic import BaseModel, BeforeValidator
 from fastapi import APIRouter, Depends, HTTPException, status
 from bson import ObjectId
-from campusflow.backend.app.database import skills_col
-from campusflow.backend.app.core.deps import get_current_user
-from campusflow.backend.app.models.user import UserPublic
+from app.database import skills_col
+from app.core.deps import get_current_user
+from app.models.user import UserPublic
 
 PyObjectId = Annotated[str, BeforeValidator(str)]
 

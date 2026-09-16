@@ -1,13 +1,11 @@
 from typing import Optional, Annotated, List
-import asyncio
 from datetime import datetime, timezone
 from pydantic import BaseModel, BeforeValidator
 from fastapi import APIRouter, Depends, HTTPException, status
 from bson import ObjectId
-from campusflow.backend.app.database import messages_col, users_col
-from campusflow.backend.app.core.deps import get_current_user
-from campusflow.backend.app.models.user import UserPublic, Role
-from campusflow.backend.app.services import agent_spawner
+from app.database import messages_col, users_col
+from app.core.deps import get_current_user
+from app.models.user import UserPublic, Role
 
 PyObjectId = Annotated[str, BeforeValidator(str)]
 
@@ -184,13 +182,6 @@ async def post_message(payload: MessageCreate, current_user: UserPublic = Depend
     # This ensures hierarchical isolation of messages between HOD, Advisor, Principal, etc.
     result = await messages_col.insert_one(doc)
     sent = MessageOut(id=str(result.inserted_id), **doc)
-
-    # Higher-order senders (Principal/HOD/Advisor) posting into a real
-    # group — never a 1:1 DM — get the message evaluated by the Agent
-    # Manager's reasoning step. Fire-and-forget: a slow or offline
-    # Ollama server must never delay or fail the send itself.
-    if current_user.role in (Role.PRINCIPAL, Role.HOD, Role.ADVISOR) and not payload.group.startswith(DM_PREFIX):
-        asyncio.create_task(agent_spawner.evaluate_message(payload.group, payload.text, current_user))
 
     return sent
 

@@ -10,12 +10,12 @@ from datetime import datetime, timezone
 from pydantic import BaseModel
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from campusflow.backend.app.config import settings as app_settings
-from campusflow.backend.app.database import settings_col
-from campusflow.backend.app.core.deps import get_current_user, require_role
-from campusflow.backend.app.models.user import UserPublic, Role
-from campusflow.backend.app.services import user_knowledge
-from campusflow.backend.app.services import action_log, ollama_client
+from app.config import settings as app_settings
+from app.database import settings_col
+from app.core.deps import get_current_user, require_role
+from app.models.user import UserPublic, Role
+from app.services import user_knowledge
+from app.services import action_log, ollama_client
 
 router = APIRouter(prefix="/assistant", tags=["assistant"])
 

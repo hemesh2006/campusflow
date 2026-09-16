@@ -12,7 +12,7 @@ connection traceback bubbling up to the frontend, since "Ollama isn't
 running" is by far the most common failure here.
 """
 import httpx
-from campusflow.backend.app.config import settings
+from app.config import settings
 
 
 class OllamaError(Exception):

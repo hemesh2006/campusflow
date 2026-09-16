@@ -1,9 +1,9 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from bson import ObjectId
-from campusflow.backend.app.core.security import decode_access_token
-from campusflow.backend.app.database import users_col
-from campusflow.backend.app.models.user import UserPublic, Role
+from app.core.security import decode_access_token
+from app.database import users_col
+from app.models.user import UserPublic, Role
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 

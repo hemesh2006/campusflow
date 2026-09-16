@@ -13,11 +13,11 @@ Safety:
   endpoint hands out a valid session for any account with zero auth.
 """
 from fastapi import APIRouter, HTTPException, status
-from campusflow.backend.app.config import settings
-from campusflow.backend.app.database import users_col
-from campusflow.backend.app.models.user import Token
-from campusflow.backend.app.core.security import create_access_token
-from campusflow.backend.app.core.deps import user_doc_to_public
+from app.config import settings
+from app.database import users_col
+from app.models.user import Token
+from app.core.security import create_access_token
+from app.core.deps import user_doc_to_public
 
 router = APIRouter(prefix="/dev", tags=["dev"])
 

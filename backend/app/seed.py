@@ -15,12 +15,12 @@ flow yet, so for now that means editing this file and re-running, or
 updating the hashed_password field directly in Mongo.)
 """
 import asyncio
-from campusflow.backend.app.database import (
+from app.database import (
     users_col, tasks_col, agents_col, placements_col,
     messages_col, skills_col, reports_col,
 )
-from campusflow.backend.app.core.security import hash_password
-from campusflow.backend.app.models.user import resolve_role_from_email
+from app.core.security import hash_password
+from app.models.user import resolve_role_from_email
 
 ADMIN_EMAIL = "admin@campusflow.edu"
 ADMIN_PASSWORD = "password123"

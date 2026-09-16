@@ -3,9 +3,9 @@ from datetime import datetime, timezone
 from pydantic import BaseModel, BeforeValidator
 from fastapi import APIRouter, Depends, HTTPException, status
 from bson import ObjectId
-from campusflow.backend.app.database import placements_col, users_col
-from campusflow.backend.app.core.deps import get_current_user, require_role
-from campusflow.backend.app.models.user import UserPublic, Role
+from app.database import placements_col, users_col
+from app.core.deps import get_current_user, require_role
+from app.models.user import UserPublic, Role
 
 PyObjectId = Annotated[str, BeforeValidator(str)]
 

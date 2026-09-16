@@ -2,10 +2,10 @@ from typing import Optional, Annotated
 from pydantic import BaseModel, BeforeValidator
 from fastapi import APIRouter, Depends, HTTPException, status
 from bson import ObjectId
-from campusflow.backend.app.database import agents_col, users_col
-from campusflow.backend.app.core.deps import get_current_user, require_role
-from campusflow.backend.app.models.user import UserPublic, Role
-from campusflow.backend.app.services import agent_graph
+from app.database import agents_col, users_col
+from app.core.deps import get_current_user, require_role
+from app.models.user import UserPublic, Role
+from app.services import agent_graph
 
 PyObjectId = Annotated[str, BeforeValidator(str)]
 

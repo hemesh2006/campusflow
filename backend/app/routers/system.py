@@ -10,8 +10,8 @@ from pydantic import BaseModel
 from fastapi import APIRouter, Depends
 import psutil
 
-from campusflow.backend.app.core.deps import require_role
-from campusflow.backend.app.models.user import UserPublic, Role
+from app.core.deps import require_role
+from app.models.user import UserPublic, Role
 
 router = APIRouter(prefix="/system", tags=["system"])
 

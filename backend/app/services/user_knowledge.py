@@ -38,11 +38,11 @@ import asyncio
 from datetime import datetime, timezone
 from pathlib import Path
 
-from campusflow.backend.app.database import (
+from app.database import (
     users_col, tasks_col, skills_col, placements_col,
     messages_col, reports_col,
 )
-from campusflow.backend.app.services.action_log import _read_all as _read_action_log, _lock as _log_lock
+from app.services.action_log import _read_all as _read_action_log, _lock as _log_lock
 
 KNOWLEDGE_DIR = Path(__file__).resolve().parent.parent.parent / "data" / "knowledge"
 _write_lock = asyncio.Lock()

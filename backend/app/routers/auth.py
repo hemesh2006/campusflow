@@ -1,10 +1,10 @@
 import asyncio
 from fastapi import APIRouter, HTTPException, Depends, status
-from campusflow.backend.app.database import users_col
-from campusflow.backend.app.models.user import UserCreate, UserLogin, UserPublic, Token, resolve_role_from_email
-from campusflow.backend.app.core.security import hash_password, verify_password, create_access_token
-from campusflow.backend.app.core.deps import get_current_user, user_doc_to_public
-from campusflow.backend.app.services import user_knowledge
+from app.database import users_col
+from app.models.user import UserCreate, UserLogin, UserPublic, Token, resolve_role_from_email
+from app.core.security import hash_password, verify_password, create_access_token
+from app.core.deps import get_current_user, user_doc_to_public
+from app.services import user_knowledge
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 

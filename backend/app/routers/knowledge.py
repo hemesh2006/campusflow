@@ -22,9 +22,9 @@ POST /knowledge/admin/refresh/{user_id}   (admin only)
 """
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from campusflow.backend.app.core.deps import get_current_user, require_role
-from campusflow.backend.app.models.user import UserPublic, Role
-from campusflow.backend.app.services import user_knowledge
+from app.core.deps import get_current_user, require_role
+from app.models.user import UserPublic, Role
+from app.services import user_knowledge
 
 router = APIRouter(prefix="/knowledge", tags=["knowledge"])
 

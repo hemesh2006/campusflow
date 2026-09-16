@@ -1,5 +1,5 @@
 from motor.motor_asyncio import AsyncIOMotorClient
-from campusflow.backend.app.config import settings
+from app.config import settings
 
 client = AsyncIOMotorClient(settings.mongo_uri)
 db = client[settings.mongo_db_name]

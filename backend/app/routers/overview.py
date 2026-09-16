@@ -9,9 +9,9 @@ from typing import Optional
 from pydantic import BaseModel
 from fastapi import APIRouter, Depends
 
-from campusflow.backend.app.database import users_col, tasks_col, agents_col, messages_col
-from campusflow.backend.app.core.deps import require_role
-from campusflow.backend.app.models.user import UserPublic, Role
+from app.database import users_col, tasks_col, agents_col, messages_col
+from app.core.deps import require_role
+from app.models.user import UserPublic, Role
 
 router = APIRouter(prefix="/overview", tags=["overview"])
 

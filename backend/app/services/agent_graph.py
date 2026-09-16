@@ -68,8 +68,8 @@ import asyncio
 from datetime import datetime, timezone
 from pathlib import Path
 
-from campusflow.backend.app.database import agents_col, users_col
-from campusflow.backend.app.models.user import Role
+from app.database import agents_col, users_col
+from app.models.user import Role
 
 GRAPH_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "agent_graph.json"
 

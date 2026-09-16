@@ -2,14 +2,14 @@ from bson import ObjectId
 from typing import Optional
 from pydantic import BaseModel, EmailStr
 from fastapi import APIRouter, Depends, HTTPException, status
-from campusflow.backend.app.database import users_col, tasks_col
-from campusflow.backend.app.core.deps import get_current_user, require_role, user_doc_to_public
-from campusflow.backend.app.models.user import (
+from app.database import users_col, tasks_col
+from app.core.deps import get_current_user, require_role, user_doc_to_public
+from app.models.user import (
     UserPublic, UserProfileUpdate, Role,
     AssignPrincipalPayload, AssignHodPayload, AssignAdvisorPayload, RemoveRolePayload, AdminUserRoleUpdate,
     StudentAcademicUpdate,
 )
-from campusflow.backend.app.core.security import hash_password
+from app.core.security import hash_password
 
 
 

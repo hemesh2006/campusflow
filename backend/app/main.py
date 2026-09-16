@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from campusflow.backend.app.config import settings
-from campusflow.backend.app.database import ensure_indexes
-from campusflow.backend.app.routers import users
-from campusflow.backend.app.routers import agents, assistant, auth, dev, knowledge, messages, overview, placements, reports, skills, system, tasks
+from app.config import settings
+from app.database import ensure_indexes
+from app.routers import users
+from app.routers import agents, assistant, auth, dev, knowledge, messages, overview, placements, reports, skills, system, tasks
 
 app = FastAPI(title="CampusFlow API", version="0.1.0")
 
