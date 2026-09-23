@@ -1,6 +1,6 @@
 # CampusFlow — Development Log
 
-Project: `campusflow/` — React/Vite frontend + FastAPI/MongoDB backend
+Project: `campusflow/` — React/Vite frontend + Django REST/MongoDB backend
 All changes made by Claude via filesystem MCP on the local machine.
 
 ---
@@ -22,8 +22,8 @@ Read every file in `frontend/src` and `backend/app` directly from disk. No chang
 - Shared components: `src/components/common/` and `src/components/layout/`
 - Mock data: `src/data/mockData.js` — large file, many pages still importing from here
 
-**Backend** (`backend/` — FastAPI + Motor/MongoDB)
-- Entry: `app/main.py`
+**Backend** (`backend/` — Django REST Framework + Motor/MongoDB)
+- Entry: `django_project/asgi.py`
 - Routers: auth, users, tasks, agents, placements, messages, skills, system, dev
 - Models: `app/models/user.py`
 - DB: `app/database.py` — Motor async client, one collection per resource
@@ -89,7 +89,7 @@ The project report describes an AI multi-agent system with LLM-driven task decom
 - Rendered as a small pill under the demo-accounts strip: `Updated: <date, time>`.
 - Dev bypass button left completely untouched.
 
-**`backend/app/routers/placements.py`**
+**`backend/apps/academic/placements.py`**
 - Added `completed: bool = False` and `completed_at: str | None = None` fields to the `Placement` model.
 - New endpoint: `POST /placements/{id}/complete` — marks every task in that drive as `done: true`, sets `completed=true` and `completed_at` to current UTC timestamp, saves to MongoDB.
 
@@ -101,7 +101,7 @@ The project report describes an AI multi-agent system with LLM-driven task decom
 - On click: calls `completePlacement(id)`, marks all tasks done in local state, shows a green "Completed" badge on the card header and a "Completed action logged · timestamp" line.
 - Button disables itself permanently after the first successful click (cannot re-trigger).
 
-**`backend/app/routers/placements.py`** (second addition)
+**`backend/apps/academic/placements.py`** (second addition)
 - New endpoint: `GET /placements/advisor/summary` — role-restricted to advisor/hod/principal/admin.
 - Groups all students' placement records by `(company, role)`, scoped to the advisor's own department.
 - Returns per drive: total students, completed count, and per-student detail (name, email, completed flag, completed_at, full task list).
@@ -127,13 +127,13 @@ The project report describes an AI multi-agent system with LLM-driven task decom
 
 ### Files changed
 
-**`backend/app/routers/system.py`** — new file
+**`backend/apps/platform/system.py`** — new file
 - `GET /system/stats` — admin-only (`require_role(Role.ADMIN)`).
 - CPU + RAM via `psutil`: returns `cpu_percent`, `cpu_cores`, `memory_percent`, `memory_used_gb`, `memory_total_gb`.
 - GPU via subprocess call to `nvidia-smi --query-gpu=utilization.gpu,memory.used,memory.total,name --format=csv,noheader,nounits`. If `nvidia-smi` is not on PATH or fails for any reason, returns `gpu_available: false` — never sends a made-up number.
 
-**`backend/app/main.py`**
-- Added `from app.routers import system` and `app.include_router(system.router)`.
+**`backend/django_project/urls.py`**
+- Added the system app URL registration to `django_project/urls.py`.
 
 **`backend/requirements.txt`**
 - Added `psutil==6.0.0`.
@@ -168,7 +168,7 @@ or just `pip install psutil==6.0.0`, then restart the FastAPI server. Without th
 - Fixed: added `import { updateMyProfile } from "../../api/users"`, added `handleSave` which calls `PATCH /users/me` and then `setUser(updated)` from `useAuth()` so the in-memory session updates immediately. Passed as `onSave={handleSave}` to `ProfileForm`.
 - Now works for all roles that have a `/notifications` route (Advisor, HOD, Principal, Admin, Student via StudentProfile).
 
-**`backend/app/routers/users.py`**
+**`backend/apps/accounts/users.py`**
 - Added `StudentCreate` Pydantic model (name, email, optional roll_id, optional dept).
 - New endpoint: `GET /advisor/students` — accessible to advisor/hod/principal/admin. Advisors get students filtered to their own `dept`; HOD/Principal/Admin get all students.
 - New endpoint: `POST /advisor/students` — accessible to advisor/hod/admin. Creates a new student account in MongoDB with default password `password123` and the advisor's dept. Returns 409 if email already exists.
@@ -233,7 +233,7 @@ Backend (from `campusflow/backend/`):
 ```
 pip install -r requirements.txt
 python -m app.seed        # only needed once / to reset demo data
-uvicorn app.main:app --reload
+uvicorn django_project.asgi:application --reload --port 8000
 ```
 Requires MongoDB running locally at `mongodb://localhost:27017` (see `backend/.env`).
 
@@ -270,7 +270,7 @@ Now: a student must **sign up themselves first** (already-existing Sign up page)
 
 **`backend/app/core/deps.py`** — `user_doc_to_public()` now carries `class_advisor_id` through.
 
-**`backend/app/routers/users.py`**
+**`backend/apps/accounts/users.py`**
 - `GET /advisor/students` — now filters on `class_advisor_id == current_user.id` for advisors (was `dept == current_user.dept`). HOD/Principal/Admin still see every student (oversight view).
 - `GET /advisor/students/unassigned` — new. Returns students with `class_advisor_id: null`, scoped to the advisor's own dept (HOD/Principal/Admin see all depts).
 - `POST /advisor/students/{id}/add` — new, advisor-only. Maps a student into the caller's class; 409 if that student is already mapped anywhere.
@@ -302,7 +302,7 @@ Now: a student must **sign up themselves first** (already-existing Sign up page)
 
 ### Files changed
 
-**`backend/app/routers/users.py`**
+**`backend/apps/accounts/users.py`**
 - Added `AdvisorStudentOut(UserPublic)` with `tasks_done` / `tasks_total`, computed live from `tasks_col` per student.
 - `GET /advisor/students` and `GET /advisor/students/unassigned` now return `AdvisorStudentOut` instead of bare `UserPublic` — previously these endpoints had no task data at all, so `AdvisorStudents.jsx`'s expanded task-progress view was silently always empty for real students (mock field names `tasksDone`/`tasksTotal` never matched anything the real API returned).
 
@@ -313,14 +313,14 @@ Now: a student must **sign up themselves first** (already-existing Sign up page)
 - Removed `ADVISOR_STUDENTS`, `COMMON_GROUP_FEED`, `AGENTS` mock imports.
 - Now fetches `listAdvisorStudents()`, `listAgents()`, and `listMessages("CSE-C")` on mount; roster snapshot, avg attendance, at-risk list, and "your agent" card all computed from live data. Common group feed now posts through `postMessage()` like `AdvisorGroup.jsx` already did.
 
-**`backend/app/routers/overview.py`** — new file
+**`backend/apps/platform/overview.py`** — new file
 - `GET /overview/departments` — per-dept students/advisors/agents-running/avg-task-completion, computed from `users_col`/`agents_col`/`tasks_col` (Principal/HOD/Admin).
 - `GET /overview/institution` — total students, dept count, overall completion rate, messages sent in the last 7 days (Principal/Admin).
 - `GET /overview/staff-activity` — per advisor/HOD: messages sent, completed tasks among their scoped students, and a composite 0–100 activity score (documented as a lightweight heuristic, not a claimed ML metric).
 - `GET /overview/completion-by-student` — per-student task completion %, dept-scoped for HOD.
 - Nothing here is a new collection — all four endpoints aggregate existing `users`/`tasks`/`agents`/`messages` data live.
 
-**`backend/app/main.py`** — registered `overview.router`.
+**`backend/django_project/urls.py`** — registered the overview routes.
 
 **`frontend/src/api/overview.js`** — new file, thin wrappers for the four endpoints above.
 
@@ -331,7 +331,7 @@ Now: a student must **sign up themselves first** (already-existing Sign up page)
 **`frontend/src/pages/dashboards/PrincipalDepartments.jsx`** — rewritten
 - Removed `DEPT_OVERVIEW` mock import and the `FairnessSlider` (no real per-department fairness signal exists anywhere in the backend — was always rendering the same default). Replaced with a real "avg. task completion" progress bar from `GET /overview/departments`.
 
-**`backend/app/routers/reports.py`** — new file
+**`backend/apps/academic/reports.py`** — new file
 - `Report` stored in a new `reports_col`: `subject`, `body`, `from_user_id`, `from_name`, `from_dept`, `status` (open/investigating/resolved), `created_at`.
 - `POST /reports` — any authenticated role can file one.
 - `GET /reports` — Admin/Principal see everything; HOD scoped to `from_dept == their dept`.
@@ -339,7 +339,7 @@ Now: a student must **sign up themselves first** (already-existing Sign up page)
 
 **`backend/app/database.py`** — added `reports_col` + index on `from_dept`.
 
-**`backend/app/main.py`** — registered `reports.router`.
+**`backend/django_project/urls.py`** — registered the reports routes.
 
 **`frontend/src/api/reports.js`** — new file (`listReports`, `fileReport`, `updateReportStatus`).
 
@@ -351,7 +351,7 @@ Now: a student must **sign up themselves first** (already-existing Sign up page)
 - Removed the hardcoded `["CSE-C","CSE-D","AIDS-A","AIDS-B"]` fake class list and `MOCK_REPORTS`.
 - Now fetches `GET /agents`, `listAdvisorStudents()`, `listReports()`, and `listDepartmentsOverview()`; class-advisor count, department completion %, and the reports card are all real.
 
-**`backend/app/routers/agents.py`**
+**`backend/apps/agents/agents.py`**
 - Added `GET /agents/network` — returns `{agents, edges}`. Edges are derived on the fly (not stored): system-role agents connect to every HOD/advisor agent, HOD agents connect to their department's advisor agents, and advisor agents connect to agents owned by students mapped into that advisor's class (`class_advisor_id`). Scoping: Admin sees everything; HOD sees their dept; Advisor sees their own agent + their class's student agents + system agents; Student sees only their own.
 
 **`frontend/src/api/agents.js`** — added `getAgentNetwork()`.
@@ -390,7 +390,7 @@ The existing floating "Your assistant" chat bubble (`AssistantChat.jsx`, already
 **`backend/app/services/action_log.py`** — new file
 - File-backed, append-only logger writing to **`backend/data/user_action.json`** (created automatically on first use). One JSON record per assistant query: `id`, `user_id`, `user_name`, `role`, `step`, `message`, `response`, `model`, `status` (`in_progress` → `completed`/`error`), `created_at`, `updated_at`. `start_action()` is called (and persisted) *before* the Ollama call so there's always a durable record even if the model never responds — that's what makes a conversation resumable. `user_history(user_id)` reads it back out, oldest-first, for the frontend to replay into the chat panel. Capped at 2000 records institution-wide (oldest dropped first).
 
-**`backend/app/routers/assistant.py`** — new file, `prefix="/assistant"`
+**`backend/apps/agents/assistant.py`** — new file
 - `POST /assistant/chat` — any authenticated role. Builds a role-specific system prompt (different persona/brief for student/advisor/hod/principal/admin), logs the query as `in_progress`, calls Ollama with the active model + last 8 turns of history for context, logs the result as `completed` or `error`, returns the reply. System prompt explicitly instructs the model to: format replies in Markdown, **bold** anything the user must not miss (deadlines/statuses/counts), *italicize* supporting detail, **always bold every date or time it mentions**, and — when the user's message is vague or doesn't say what they want — ask a clarifying question with 2-3 concrete examples instead of guessing (this is the "gather the user's queries" behavior).
 - `GET /assistant/history` — this user's recent action-log entries, for resuming a conversation.
 - `GET /assistant/models` (admin-only) — lists every model pulled on the Ollama host + which one is active.
@@ -398,7 +398,7 @@ The existing floating "Your assistant" chat bubble (`AssistantChat.jsx`, already
 
 **`backend/app/database.py`** — added `settings_col = db["settings"]`.
 
-**`backend/app/main.py`** — registered `assistant.router`.
+**`backend/django_project/urls.py`** — registered the assistant routes.
 
 **`backend/requirements.txt`** — added `httpx==0.27.2`.
 
@@ -464,7 +464,7 @@ The agent network's connection rules (system -> hod/advisor, hod -> their dept's
 - `load_graph()` — reads the last persisted file without touching Mongo.
 - `scoped_view(graph, user_id)` — filters the full graph down to a subgraph (`agents` + `connections`) for one user, using their `access_scope` entry. Edges are pre-restricted to visible agents only.
 
-**`backend/app/routers/agents.py`**
+**`backend/apps/agents/agents.py`**
 - `POST /agents` and `PATCH /agents/{id}/status` now call `agent_graph.rebuild_graph()` after writing, so the file never drifts from Mongo when an agent is created or its status changes.
 - New `GET /agents/graph` — rebuilds the graph, then returns the subgraph scoped to the caller (`{generated_at, agents, connections}`, dict-keyed by agent id).
 - New `GET /agents/graph/full` — admin-only, returns the entire unscoped graph for debugging access rules.

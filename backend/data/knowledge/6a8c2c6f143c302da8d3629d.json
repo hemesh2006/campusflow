@@ -1,0 +1,114 @@
+{
+  "meta": {
+    "generated_at": "2026-09-16T09:48:14.685300+00:00",
+    "user_id": "6a8c2c6f143c302da8d3629d",
+    "role": "admin",
+    "name": "IT Admin"
+  },
+  "profile": {
+    "name": "IT Admin",
+    "email": "admin@campusflow.edu",
+    "role": "admin",
+    "dept": "All",
+    "dob": "2006-03-11",
+    "mobile": "9047009912",
+    "semesters": []
+  },
+  "tasks": [],
+  "skills": [],
+  "placements": [],
+  "recent_messages": {
+    "principal_hod": [
+      {
+        "from": "arjun",
+        "text": "hello hods",
+        "time": "2026-08-24T11:58:02.478000",
+        "read_count": 0
+      },
+      {
+        "from": "arjun",
+        "text": "hello all",
+        "time": "2026-08-24T12:10:40.765000",
+        "read_count": 0
+      },
+      {
+        "from": "arjun",
+        "text": "gello hods",
+        "time": "2026-08-24T12:24:41.036000",
+        "read_count": 0
+      },
+      {
+        "from": "arjun",
+        "text": "he;llo hods are you getin the messages",
+        "time": "2026-08-24T12:31:16.157000",
+        "read_count": 0
+      },
+      {
+        "from": "arjun",
+        "text": "hello hod 11 111",
+        "time": "2026-08-24T12:43:41.304000",
+        "read_count": 0
+      },
+      {
+        "from": "anu",
+        "text": "hi",
+        "time": "2026-08-24T12:47:42.518000",
+        "read_count": 0
+      },
+      {
+        "from": "arjun",
+        "text": "role:",
+        "time": "2026-08-24T12:48:46.447000",
+        "read_count": 0
+      },
+      {
+        "from": "anu",
+        "text": "ghu",
+        "time": "2026-08-24T13:13:13.901000",
+        "read_count": 0
+      },
+      {
+        "from": "anu",
+        "text": "heloo principal",
+        "time": "2026-08-24T13:13:33.872000",
+        "read_count": 0
+      }
+    ],
+    "direct_messages": [
+      {
+        "from": "IT Admin",
+        "text": "hi hemeh are you okay with at adcisot",
+        "time": "2026-08-24T11:58:52.229000",
+        "thread": "dm-6a8c2c6f143c302da8d3629d-6a8c2ce4a963fc2909bfdb5d"
+      },
+      {
+        "from": "IT Admin",
+        "text": "hello there",
+        "time": "2026-08-24T12:08:29.166000",
+        "thread": "dm-6a8c2c6f143c302da8d3629d-6a8c31344ccc77483c543708"
+      },
+      {
+        "from": "IT Admin",
+        "text": "gello hod",
+        "time": "2026-08-24T12:23:41.856000",
+        "thread": "dm-6a8c2c6f143c302da8d3629d-6a8c31344ccc77483c543708"
+      },
+      {
+        "from": "anu",
+        "text": "yes ther",
+        "time": "2026-08-24T12:23:55.382000",
+        "thread": "dm-6a8c2c6f143c302da8d3629d-6a8c31344ccc77483c543708"
+      }
+    ]
+  },
+  "reports": [],
+  "activity_log": [],
+  "stats": {
+    "tasks_done": 0,
+    "tasks_pending": 0,
+    "skills_count": 0,
+    "avg_skill_level": 0.0,
+    "total_messages_in_scope": 13,
+    "open_reports": 0
+  }
+}

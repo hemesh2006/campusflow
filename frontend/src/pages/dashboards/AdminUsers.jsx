@@ -1,16 +1,19 @@
 import { useEffect, useState, useCallback } from "react";
-import { ShieldCheck, UserCheck, RefreshCw, AlertCircle, Settings2 } from "lucide-react";
+import { ShieldCheck, UserCheck, RefreshCw, AlertCircle, Settings2, Trash2 } from "lucide-react";
 import AppShell from "../../components/layout/AppShell";
 import { GlassCard, RoleBadge } from "../../components/common/Primitives";
 import { DEPARTMENTS, ROLES, ROLE_META } from "../../data/mockData";
-import { listUsers, adminUpdateUserRole, assignPrincipal, removeHierarchyRole } from "../../api/users";
+import { listUsers, adminUpdateUserRole, assignPrincipal, removeHierarchyRole, deleteUser } from "../../api/users";
+import { useAuth } from "../../context/AuthContext";
 
 export default function AdminUsers() {
+  const { user: currentUser } = useAuth();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [busyId, setBusyId] = useState(null);
   const [editingUser, setEditingUser] = useState(null); // { id, role, dept }
+  const [removingAll, setRemovingAll] = useState(false);
 
   const refresh = useCallback(() => {
     setLoading(true);
@@ -65,6 +68,28 @@ export default function AdminUsers() {
     }
   };
 
+  const handleRemoveAllUsers = async () => {
+    const removableUsers = users.filter((candidate) => candidate.id !== currentUser?.id);
+    if (!removableUsers.length) return;
+    const confirmed = window.confirm(
+      `Remove ${removableUsers.length} user${removableUsers.length === 1 ? "" : "s"}? Your admin account will be kept.`,
+    );
+    if (!confirmed) return;
+
+    setRemovingAll(true);
+    setError(null);
+    try {
+      await Promise.all(removableUsers.map((candidate) => deleteUser(candidate.id)));
+      setEditingUser(null);
+      await refresh();
+    } catch (err) {
+      setError(err.message || "Some users could not be removed.");
+      await refresh();
+    } finally {
+      setRemovingAll(false);
+    }
+  };
+
   const principals = users.filter((u) => u.role === "principal");
 
   return (
@@ -73,9 +98,19 @@ export default function AdminUsers() {
         <p style={{ fontSize: 12, color: "var(--text-faint)", margin: 0, maxWidth: 540, lineHeight: 1.6 }}>
           Roles are no longer assigned by email syntax. Admin manually manages roles for all registered accounts.
         </p>
-        <button className="btn btn-ghost btn-sm" onClick={refresh} disabled={loading}>
-          <RefreshCw size={13} /> Refresh
-        </button>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          <button className="btn btn-ghost btn-sm" onClick={refresh} disabled={loading || removingAll}>
+            <RefreshCw size={13} /> Refresh
+          </button>
+          <button
+            className="btn btn-ghost btn-sm"
+            style={{ color: "var(--accent-rose, #dc2626)", borderColor: "rgba(220,38,38,0.24)" }}
+            onClick={handleRemoveAllUsers}
+            disabled={loading || removingAll || users.filter((candidate) => candidate.id !== currentUser?.id).length === 0}
+          >
+            <Trash2 size={13} /> {removingAll ? "Removing…" : "Remove all other users"}
+          </button>
+        </div>
       </div>
 
       {error && (

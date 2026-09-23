@@ -1,11 +1,13 @@
 # CampusFlow API
 
-Python + FastAPI backend for the CampusFlow frontend, using MongoDB
+Python + Django backend for the CampusFlow frontend, using MongoDB
 (via Motor, the async driver) for storage.
 
 ## Stack
 
-- **FastAPI** — routes + validation
+- **Django** — ASGI runtime, URL dispatch, CORS, and API responses
+- **Django REST Framework** — request serializers and API validation
+- **Django async views** — endpoint dispatch around Motor's async driver
 - **MongoDB / Motor** — async database driver
 - **python-jose** — JWT issuing/verification
 - **passlib + bcrypt** — password hashing
@@ -43,11 +45,10 @@ to see immediately.
 ## 3. Run it
 
 ```bash
-uvicorn app.main:app --reload --port 8000
+uvicorn django_project.asgi:application --reload --port 8000
 ```
 
-Open `http://localhost:8000/docs` — FastAPI's auto-generated Swagger
-UI, where you can try every endpoint directly in the browser.
+Open `http://localhost:8000/health` to verify the Django API is running.
 
 ## API surface
 
@@ -91,11 +92,42 @@ const login = async ({ email, password }) => {
 
 Keep the returned shape (`{id, name, email, role, dept}`) the same as
 now — every page already expects it, so nothing downstream needs to
-change.
+uvicorn django_project.asgi:application --reload --host 127.0.0.1 --port 8000
 
 **Then each resource.** For every mock export you replace (say,
 `STUDENT_TASKS`), swap the import for a `fetch` in that page's
 component, attaching the token:
+## Backend layout
+
+```text
+backend/
+├── django_project/       Django settings, ASGI entrypoint, URL registry
+├── apps/                 Django domain apps
+│   ├── accounts/          Authentication, profiles, users, hierarchy
+│   ├── tasks/             Task endpoints
+│   ├── agents/            Agents, assistant, knowledge
+│   ├── communication/     Messages and direct communication
+│   ├── academic/          Placements, reports, skills
+│   └── platform/          Overview and system endpoints
+├── app/
+│   ├── api/               DRF serializers and request parsing
+│   ├── core/              JWT security and authenticated-user helpers
+│   ├── models/            Pydantic API/domain shapes
+│   ├── services/          Mongo-backed application services and integrations
+│   ├── database.py        Motor client and collection definitions
+│   ├── config.py          Environment-backed application settings
+│   └── seed.py            Optional local demo-data seeding command
+├── data/                  Local JSON data used by application services
+├── manage.py               Django management commands
+├── requirements.txt        Runtime dependencies
+└── .env.example            Environment variable template
+```
+
+Keep endpoint code in the relevant `apps/<domain>` package, reusable
+validation in `app/api`, authentication in `app/core`, and database
+integrations in `app/services`.
+The backend uses Uvicorn as its canonical server because Motor requires a
+persistent ASGI event loop.
 
 ```js
 const token = sessionStorage.getItem("campusflow.token");
@@ -115,13 +147,19 @@ if you deploy the frontend elsewhere.
 
 ## Adding a new resource
 
-Every resource follows the same pattern — copy `app/routers/tasks.py`
-as a template:
+Every resource follows the same pattern — copy `apps/tasks` as a template:
 
-1. Pydantic models for `Create` / `Out` shapes
+1. DRF serializers for `Create` / `Out` shapes
 2. A Motor collection reference in `app/database.py`
 3. A router with `GET`/`POST`/`PATCH` scoped by `current_user`
-4. `app.include_router(...)` in `app/main.py`
+4. App-local URL patterns in `apps/<domain>/urls.py`
+
+## Migration status
+
+The active application is Django/ASGI with DRF installed and MongoDB
+remaining the storage layer. All active API routes use native Django URL
+patterns, DRF serializers, and async Motor queries. The old FastAPI-style
+compatibility router has been removed.
 
 Good next candidates, following the frontend: `reports`, `agent
 limits` (the Admin Agent Manager settings), and a dedicated

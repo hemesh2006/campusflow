@@ -22,6 +22,42 @@ function Gauge({ label, percent, tone, icon: Icon, unavailable, sub }) {
   );
 }
 
+function LimitSlider({ label, hint, value, min, max, color, onChange }) {
+  const progress = ((value - min) / (max - min)) * 100;
+  const tint = `color-mix(in srgb, ${color} 9%, transparent)`;
+  const borderTint = `color-mix(in srgb, ${color} 22%, transparent)`;
+
+  return (
+    <div className="limit-row">
+      <div className="limit-row-head">
+        <div>
+          <div className="limit-label">{label}</div>
+          <div className="limit-hint">{hint}</div>
+        </div>
+        <div className="limit-value" style={{ color, borderColor: borderTint, background: tint }}>
+          {value}
+        </div>
+      </div>
+      <div className="limit-slider-wrap">
+        <input
+          className="limit-slider"
+          type="range"
+          min={min}
+          max={max}
+          value={value}
+          onChange={(event) => onChange(Number(event.target.value))}
+          style={{ "--limit-color": color, "--limit-progress": `${progress}%` }}
+          aria-label={label}
+        />
+        <div className="limit-scale" aria-hidden="true">
+          <span>{min}</span>
+          <span>{max}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function AgentManagerSettings() {
   const [maxAgents, setMaxAgents] = useState(40);
   const [perUserLimit, setPerUserLimit] = useState(4);
@@ -126,33 +162,17 @@ export default function AgentManagerSettings() {
       <div className="grid grid-main-side">
         <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
           <GlassCard style={{ padding: 20 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
+            <div className="limits-heading">
               <Sliders size={15} color="var(--accent-blue)" />
-              <span className="eyebrow">Global limits</span>
-            </div>
-
-            <div style={{ marginBottom: 18 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginBottom: 8 }}>
-                <span>Max agents running institution-wide</span>
-                <span style={{ fontFamily: "var(--font-mono)", color: "var(--accent-blue)" }}>{maxAgents}</span>
+              <div>
+                <span className="eyebrow">Global limits</span>
+                <p className="limits-subtitle">Guardrails for agent capacity</p>
               </div>
-              <input type="range" min={10} max={100} value={maxAgents} onChange={(e) => setMaxAgents(Number(e.target.value))} style={{ width: "100%", accentColor: "var(--accent-blue)" }} />
             </div>
-
-            <div style={{ marginBottom: 18 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginBottom: 8 }}>
-                <span>Max agents per student</span>
-                <span style={{ fontFamily: "var(--font-mono)", color: "var(--accent-emerald)" }}>{perUserLimit}</span>
-              </div>
-              <input type="range" min={1} max={10} value={perUserLimit} onChange={(e) => setPerUserLimit(Number(e.target.value))} style={{ width: "100%", accentColor: "var(--accent-emerald)" }} />
-            </div>
-
-            <div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginBottom: 8 }}>
-                <span>Max agents a HOD can assign</span>
-                <span style={{ fontFamily: "var(--font-mono)", color: "var(--accent-violet)" }}>{perHodLimit}</span>
-              </div>
-              <input type="range" min={2} max={30} value={perHodLimit} onChange={(e) => setPerHodLimit(Number(e.target.value))} style={{ width: "100%", accentColor: "var(--accent-violet)" }} />
+            <div className="limits-list">
+              <LimitSlider label="Institution-wide capacity" hint="Maximum agents running at once" value={maxAgents} min={10} max={100} color="var(--accent-blue)" onChange={setMaxAgents} />
+              <LimitSlider label="Student allocation" hint="Maximum agents assigned to one student" value={perUserLimit} min={1} max={10} color="var(--accent-emerald)" onChange={setPerUserLimit} />
+              <LimitSlider label="HOD allocation" hint="Maximum agents one HOD can assign" value={perHodLimit} min={2} max={30} color="var(--accent-violet)" onChange={setPerHodLimit} />
             </div>
           </GlassCard>
 

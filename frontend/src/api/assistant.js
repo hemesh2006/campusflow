@@ -1,7 +1,7 @@
 import { api } from "./client";
 
 // Personal assistant agent — backed by a local Ollama model on the
-// backend (see backend/app/routers/assistant.py). Every call here is
+// backend (see backend/apps/agents/assistant.py). Every call here is
 // also written to backend/data/user_action.json for resumability.
 
 export const sendAssistantMessage = (message, history = []) =>
@@ -17,3 +17,6 @@ export const getAssistantModels = () => api.get("/assistant/models");
 
 // Admin-only — every agent institution-wide switches to this model.
 export const setAssistantModel = (model) => api.post("/assistant/model", { model });
+
+export const classifyMessage = (message) =>
+  api.post("/assistant/classify-message", { message });

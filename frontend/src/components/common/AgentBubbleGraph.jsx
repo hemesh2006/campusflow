@@ -7,6 +7,13 @@ const ROLE_COLOR = {
   system: "#8b6bff",
 };
 
+const ROLE_LABEL = {
+  student: "Student",
+  advisor: "Advisor",
+  hod: "HOD",
+  system: "System",
+};
+
 function seededRand(seed) {
   let s = seed;
   return () => {
@@ -177,38 +184,81 @@ export default function AgentBubbleGraph({ agents, edges, width = 760, height = 
         {/* bubbles */}
         {Object.values(nodes).map((n) => {
           const isSelected = selectedId === n.id;
+          const isHovered = hovered === n.id;
+          const color = ROLE_COLOR[n.role] || "var(--accent-blue)";
+          const label = n.name.length > 18 ? `${n.name.slice(0, 17)}…` : n.name;
+          const labelWidth = Math.max(76, Math.min(150, label.length * 7 + 24));
           return (
             <g
               key={n.id}
-              transform={`translate(${n.x}, ${n.y})`}
-              style={{ cursor: "pointer" }}
+              transform={`translate(${n.x}, ${n.y}) scale(${isSelected ? 1.12 : isHovered ? 1.06 : 1})`}
+              style={{ cursor: "pointer", transition: "transform 180ms ease" }}
               onClick={() => onSelect?.(n.id)}
               onMouseEnter={onNodeEnter(n.id)}
               onMouseMove={onNodeMove}
               onMouseLeave={() => setHovered(null)}
             >
+              <title>{`${n.name}, ${ROLE_LABEL[n.role] || n.role}, ${STATUS_LABEL[n.status] || n.status}`}</title>
+              {(isSelected || isHovered) && (
+                <circle
+                  r={n.r + 9}
+                  fill="none"
+                  stroke={color}
+                  strokeWidth={isSelected ? 2.5 : 1.5}
+                  strokeDasharray={isSelected ? "none" : "3 5"}
+                  opacity={isSelected ? 0.9 : 0.55}
+                />
+              )}
               <circle
                 r={n.r}
                 fill={`url(#bubble-${n.role})`}
                 filter="url(#nodeShadow)"
-                stroke={isSelected ? "#fff" : "rgba(255,255,255,0.25)"}
-                strokeWidth={isSelected ? 2.5 : 1}
+                stroke={isSelected ? "#fff" : color}
+                strokeOpacity={isSelected ? 1 : 0.45}
+                strokeWidth={isSelected ? 3 : 1.5}
+              />
+              <circle
+                r={Math.max(5, n.r * 0.22)}
+                cx={-n.r * 0.28}
+                cy={-n.r * 0.3}
+                fill="#fff"
+                opacity="0.22"
               />
               {n.status === "running" && (
-                <circle r={n.r} fill="none" stroke={ROLE_COLOR[n.role]} strokeWidth="1.5" opacity="0.6">
+                <circle r={n.r} fill="none" stroke={color} strokeWidth="1.5" opacity="0.6">
                   <animate attributeName="r" values={`${n.r};${n.r + 9};${n.r}`} dur="2.6s" repeatCount="indefinite" />
                   <animate attributeName="opacity" values="0.5;0;0.5" dur="2.6s" repeatCount="indefinite" />
                 </circle>
               )}
+              <circle
+                cx={n.r * 0.68}
+                cy={-n.r * 0.68}
+                r="5"
+                fill={n.status === "running" ? "#10b981" : "#94a3b8"}
+                stroke="#fff"
+                strokeWidth="2"
+              />
+              <rect
+                x={-labelWidth / 2}
+                y={n.r + 8}
+                width={labelWidth}
+                height="24"
+                rx="12"
+                fill="#fff"
+                stroke={isSelected ? color : "rgba(15,23,42,0.09)"}
+                strokeWidth={isSelected ? 1.5 : 1}
+                opacity="0.98"
+              />
               <text
-                y={n.r + 15}
+                y={n.r + 24}
                 textAnchor="middle"
-                fontSize="10.5"
-                fontFamily="Inter, sans-serif"
-                fill="var(--text-mid)"
+                fontSize="10"
+                fontWeight={isSelected ? "700" : "600"}
+                fontFamily="Plus Jakarta Sans, sans-serif"
+                fill="var(--text-hi)"
                 style={{ pointerEvents: "none" }}
               >
-                {n.name.length > 16 ? n.name.slice(0, 15) + "…" : n.name}
+                {label}
               </text>
             </g>
           );

@@ -3,6 +3,7 @@ import AppShell from "../../components/layout/AppShell";
 import { GlassCard } from "../../components/common/Primitives";
 import CommonGroupFeed from "../../components/common/CommonGroupFeed";
 import { listMessages, postMessage } from "../../api/messages";
+import { classifyMessage } from "../../api/assistant";
 import { useAuth } from "../../context/AuthContext";
 import { Users, Building2 } from "lucide-react";
 
@@ -19,6 +20,8 @@ export default function AdvisorGroup() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [classification, setClassification] = useState(null);
+  const [classifying, setClassifying] = useState(false);
 
   const deptSlug = user?.dept ? user.dept.toLowerCase().replace(/[^a-z0-9]/g, "") : "general";
   const groupId = activeTab === "class" ? (user?.id ? `class-${user.id}` : "class-unassigned") : `hod-advisor-${deptSlug}`;
@@ -35,12 +38,19 @@ export default function AdvisorGroup() {
   }, [groupId]);
 
   const handleSend = async (text) => {
+    setClassifying(true);
+    setError(null);
     try {
-      await postMessage({ group: groupId, text });
+      const result = await classifyMessage(text);
+      const workflow = result.classification;
+      setClassification({ ...workflow, model: result.model });
+      await postMessage({ group: groupId, text, workflow });
       const data = await listMessages(groupId);
       setItems(data.map(toFeedItem));
-    } catch {
-      setError("Message may not have been saved — check your connection.");
+    } catch (err) {
+      setError(err.message || "Message classification failed — check Ollama and try again.");
+    } finally {
+      setClassifying(false);
     }
   };
 
@@ -93,6 +103,26 @@ export default function AdvisorGroup() {
             <button className="btn btn-primary btn-sm" style={{ marginTop: 12, width: "100%" }}>
               Save instruction
             </button>
+          </GlassCard>
+
+          <GlassCard style={{ padding: 18 }}>
+            <span className="eyebrow">Live message classifier</span>
+            <p style={{ fontSize: 12, color: "var(--text-lo)", margin: "8px 0 12px", lineHeight: 1.6 }}>
+              New announcements are classified by the active Ollama model before they reach the class feed.
+            </p>
+            {classifying && <p style={{ fontSize: 12, color: "var(--accent-blue)" }}>Analyzing with Ollama…</p>}
+            {!classifying && classification && (
+              <div style={{ padding: 12, borderRadius: 12, background: "var(--bg-3)", border: "1px solid var(--glass-border)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "center" }}>
+                  <strong style={{ fontSize: 13 }}>{classification.title}</strong>
+                  <span className="pill">{classification.category}</span>
+                </div>
+                <p style={{ fontSize: 12, color: "var(--text-mid)", margin: "8px 0" }}>{classification.summary}</p>
+                <span style={{ fontSize: 10.5, color: "var(--text-faint)", fontFamily: "var(--font-mono)" }}>
+                  Action: {classification.action_type} · {classification.model}
+                </span>
+              </div>
+            )}
           </GlassCard>
         </div>
       </div>

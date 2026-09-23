@@ -1,19 +1,13 @@
-from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
 from bson import ObjectId
+from rest_framework.exceptions import NotAuthenticated, PermissionDenied
 from app.core.security import decode_access_token
 from app.database import users_col
 from app.models.user import UserPublic, Role
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
-
-
-async def get_current_user(token: str = Depends(oauth2_scheme)) -> UserPublic:
-    credentials_error = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
+async def get_current_user(request) -> UserPublic:
+    credentials_error = NotAuthenticated("Could not validate credentials")
+    authorization = request.headers.get("Authorization", "")
+    token = authorization.removeprefix("Bearer ").strip()
     payload = decode_access_token(token)
     if not payload or "sub" not in payload:
         raise credentials_error
@@ -47,9 +41,8 @@ def user_doc_to_public(user: dict) -> UserPublic:
 
 
 def require_role(*allowed: Role):
-    """Usage: Depends(require_role(Role.ADMIN, Role.HOD))"""
-    async def checker(user: UserPublic = Depends(get_current_user)) -> UserPublic:
+    async def checker(user: UserPublic) -> UserPublic:
         if user.role not in allowed:
-            raise HTTPException(status.HTTP_403_FORBIDDEN, "Not permitted for this role")
+            raise PermissionDenied("Not permitted for this role")
         return user
     return checker
