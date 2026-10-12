@@ -42,7 +42,7 @@ from app.database import (
     users_col, tasks_col, skills_col, placements_col,
     messages_col, reports_col,
 )
-from app.services.action_log import _read_all as _read_action_log, _lock as _log_lock
+from app.services.action_log import _read_all_sync as _read_action_log, _lock as _log_lock
 
 KNOWLEDGE_DIR = Path(__file__).resolve().parent.parent.parent / "data" / "knowledge"
 _write_lock = asyncio.Lock()
@@ -195,10 +195,13 @@ async def build_snapshot(user_id: str) -> dict:
 
     # Pull this user's assistant activity from the action log
     async with _log_lock:
-        all_logs = _read_action_log()
+        all_logs = await asyncio.to_thread(_read_action_log)
     activity_log = [r for r in all_logs if r.get("user_id") == user_id][-50:]
 
     stats = _compute_stats(tasks, skills, reports, messages)
+
+    from app.services.hierarchy_sync import get_user_hierarchy_node
+    h_node = get_user_hierarchy_node(user_id) or {}
 
     snapshot = {
         "meta": {
@@ -208,6 +211,9 @@ async def build_snapshot(user_id: str) -> dict:
             "name": profile.get("name", ""),
         },
         "profile": profile,
+        "settings": h_node.get("settings", {}),
+        "permissions": h_node.get("permissions", {}),
+        "hierarchy": h_node.get("hierarchy", {}),
         "tasks": tasks,
         "skills": skills,
         "placements": placements,

@@ -24,6 +24,8 @@ export default function AdvisorDashboard() {
   const [feedLoading, setFeedLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const classGroup = user?.id ? `class-${user.id}` : GROUP;
+
   useEffect(() => {
     let cancelled = false;
     Promise.all([listAdvisorStudents(), listAgents()])
@@ -31,17 +33,19 @@ export default function AdvisorDashboard() {
       .catch((err) => { if (!cancelled) setError(err.message || "Failed to load dashboard data."); })
       .finally(() => { if (!cancelled) setLoading(false); });
 
-    listMessages(GROUP)
+    listMessages(classGroup)
       .then((data) => { if (!cancelled) setFeed(data.map(toFeedItem)); })
       .catch(() => {})
       .finally(() => { if (!cancelled) setFeedLoading(false); });
 
     return () => { cancelled = true; };
-  }, []);
+  }, [classGroup]);
 
   const handleSend = async (text) => {
     try {
-      await postMessage({ group: GROUP, text });
+      await postMessage({ group: classGroup, text });
+      const data = await listMessages(classGroup);
+      setFeed(data.map(toFeedItem));
     } catch {
       setError("Message may not have been saved — check your connection.");
     }

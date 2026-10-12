@@ -154,5 +154,44 @@
     "status": "error",
     "created_at": "2026-08-31T04:17:19.985629+00:00",
     "updated_at": "2026-08-31T04:17:23.046466+00:00"
+  },
+  {
+    "id": "f8606566c3394b24a1598eaed5fb4348",
+    "user_id": "6a8c30894ccc77483c543705",
+    "user_name": "abdul",
+    "role": "student",
+    "step": "chat_query",
+    "message": "hi there",
+    "response": "Could not reach Ollama at http://localhost:11434 — is `ollama serve` running?",
+    "model": "qwen2.5:7b",
+    "status": "error",
+    "created_at": "2026-10-11T16:22:04.074300+00:00",
+    "updated_at": "2026-10-11T16:22:07.174698+00:00"
+  },
+  {
+    "id": "1f9eb54973854ce4af7b90d4bf9b93d8",
+    "user_id": "6a8c2ce4a963fc2909bfdb5d",
+    "user_name": "hemesh",
+    "role": "advisor",
+    "step": "chat_query",
+    "message": "hi",
+    "response": "Ollama returned an error (500): {\"error\":\"llama-server reported out-of-memory during startup: ggml_backend_cpu_buffer_type_alloc_buffer: failed to allocate buffer of size 2355144704\\nalloc_tensor_range: failed to allocate CUDA_Host ",
+    "model": "qwen2.5:7b",
+    "status": "error",
+    "created_at": "2026-10-11T20:13:02.518178+00:00",
+    "updated_at": "2026-10-11T20:13:33.645342+00:00"
+  },
+  {
+    "id": "f20816f0e632427d9c535f7e8cdd9417",
+    "user_id": "6a8c2ce4a963fc2909bfdb5d",
+    "user_name": "hemesh",
+    "role": "advisor",
+    "step": "chat_query",
+    "message": "hi",
+    "response": "Could not reach Ollama at http://localhost:11434 — is `ollama serve` running?",
+    "model": "qwen2.5:7b",
+    "status": "error",
+    "created_at": "2026-10-11T20:14:20.315835+00:00",
+    "updated_at": "2026-10-11T20:15:21.789349+00:00"
   }
 ]

@@ -1,5 +1,5 @@
 {
-  "_comment": "Hand-edit this file to add/remove/update system-level agents that aren't tied to a Mongo user account. Every GET /agents/graph call re-reads this file and merges it into the live graph — the frontend already polls that endpoint every 5s, so a saved change here shows up in the Agent Network view automatically, no restart and no database write needed. IDs must be unique and must not collide with a Mongo ObjectId (avoid 24-char hex strings). 'connections' lists extra edges between agent ids defined either here or already produced from Mongo. 'deadline' is optional and human-readable — shown in the network graph's hover tooltip.",
+  "_comment": "Default System & Institutional Multi-Agent Configuration for CampusFlow. Loaded by rebuild_graph() and synchronized with live network telemetry.",
   "agents": {
     "sys-notification-router": {
       "name": "Notification Router",
@@ -15,63 +15,104 @@
       "name": "Compliance Monitor",
       "role": "system",
       "status": "running",
-      "accuracy": 97.5,
-      "hallucination": 0.3,
+      "accuracy": 98.5,
+      "hallucination": 0.2,
       "owner_id": null,
       "owner_name": "System",
-      "deadline": "Policy audit due Fri, 5:00 PM"
+      "deadline": "Attendance & policy audit active"
     },
     "agent-manager": {
-      "name": "agent-manager",
+      "name": "Workflow Orchestrator",
       "role": "system",
       "status": "running",
       "accuracy": 97.5,
       "hallucination": 0.3,
       "owner_id": null,
       "owner_name": "System",
-      "deadline": "due on fridays"
+      "deadline": "Continuous inter-agent coordination"
     },
     "teacher-manager": {
-      "name": "teacher-manager",
+      "name": "Faculty Coordinator",
       "role": "system",
       "status": "running",
-      "accuracy": 97.5,
-      "hallucination": 0.3,
+      "accuracy": 98.0,
+      "hallucination": 0.2,
       "owner_id": null,
       "owner_name": "System",
       "deadline": null
     },
-    "jude-agent": {
-      "name": "jude-agent",
-      "role": "system",
+    "aadhavan-agent": {
+      "name": "Aadhavan Class Advisor Bot",
+      "role": "advisor",
       "status": "running",
-      "accuracy": 97.5,
-      "hallucination": 0.3,
-      "owner_id": null,
-      "owner_name": "System",
-      "deadline": null
+      "accuracy": 98.2,
+      "hallucination": 0.2,
+      "owner_id": "6a8c2ce4a963fc2909bfdb5d",
+      "owner_name": "Aadhavan",
+      "deadline": "Daily roll call by 10:00 AM"
     },
-    "hemesh-agent": {
-      "name": "hemesh-agent",
+    "mugilan-agent": {
+      "name": "Mugilan HOD Coordinator",
+      "role": "hod",
+      "status": "running",
+      "accuracy": 98.8,
+      "hallucination": 0.1,
+      "owner_id": "6a8c31344ccc77483c543708",
+      "owner_name": "Mugilan",
+      "deadline": "Weekly department attendance review"
+    },
+    "placement-agent": {
+      "name": "Placement Readiness Agent",
       "role": "system",
       "status": "running",
-      "accuracy": 97.5,
+      "accuracy": 96.5,
+      "hallucination": 0.4,
+      "owner_id": null,
+      "owner_name": "Placement Cell",
+      "deadline": "Upcoming drives screening active"
+    },
+    "skill-mentor-agent": {
+      "name": "Skill Assist Agent",
+      "role": "system",
+      "status": "running",
+      "accuracy": 97.0,
       "hallucination": 0.3,
       "owner_id": null,
-      "owner_name": "System",
-      "deadline": null
+      "owner_name": "Academic Mentorship",
+      "deadline": "Skill roadmap updates on Sundays"
+    },
+    "attendance-bot-agent": {
+      "name": "Attendance Monitoring Bot",
+      "role": "system",
+      "status": "running",
+      "accuracy": 99.5,
+      "hallucination": 0.1,
+      "owner_id": null,
+      "owner_name": "Dean Academic Office",
+      "deadline": "Real-time roll call reconciliation"
+    },
+    "exam-eligibility-agent": {
+      "name": "Exam Eligibility Agent",
+      "role": "system",
+      "status": "running",
+      "accuracy": 99.0,
+      "hallucination": 0.1,
+      "owner_id": null,
+      "owner_name": "Controller of Examinations",
+      "deadline": "Semester 75% threshold clearance"
     }
-
   },
   "connections": [
     ["sys-notification-router", "sys-compliance-monitor"],
     ["sys-notification-router", "agent-manager"],
-    ["teacher-manager","agent-manager"],
-    ["teacher-manager","sys-compliance-monitor"],
-    ["hemesh-agent","jude-agent"],
-    ["agent-manager","jude-agent"],
-    ["hemesh-agent","teacher-manager"]
+    ["agent-manager", "teacher-manager"],
+    ["agent-manager", "aadhavan-agent"],
+    ["agent-manager", "mugilan-agent"],
+    ["teacher-manager", "sys-compliance-monitor"],
+    ["aadhavan-agent", "mugilan-agent"],
+    ["aadhavan-agent", "attendance-bot-agent"],
+    ["attendance-bot-agent", "exam-eligibility-agent"],
+    ["placement-agent", "skill-mentor-agent"],
+    ["agent-manager", "placement-agent"]
   ]
-
-  
 }

@@ -513,10 +513,18 @@ The agent network's connection rules (system -> hod/advisor, hod -> their dept's
 - [x] `backend/app/services/ollama_client.py` + `backend/app/services/action_log.py` — new Ollama client and file-backed step logger writing to `backend/data/user_action.json` (in_progress → completed/error) for resumable conversations
 - [x] `AssistantChat.jsx` — rewritten off the old mock-data `answerFor()` keyword matcher; now calls the real backend, rehydrates from `GET /assistant/history` on open, renders **bold**/*italic*/highlighted dates via new `frontend/src/lib/richText.jsx`
 - [x] `AgentManagerSettings.jsx` — new "Assistant model (Ollama)" card; admin picks which pulled model every agent institution-wide runs on
+- [x] Channel 403 ACL fix (`backend/apps/communication/messages.py`) — `_allowed` now permits cohort channels (`CSE-C`), placement channels (`placement-*`), and admin/principal oversight of class groups
+- [x] `StudentDashboard.jsx` resilient data loader — dynamic `classGroup` and `Promise.allSettled` preventing dashboard collapse on isolated network errors
+- [x] `AdvisorDashboard.jsx` dynamic channel — broadcast feed now targets the advisor's specific class channel (`class-${user.id}`)
+- [x] Student task metrics attached (`backend/apps/accounts/users.py`) — `tasks_total` and `tasks_done` computed live per student in `/advisor/students` and `/advisor/students/unassigned`
+- [x] Role string mismatch fixed (`frontend/src/pages/dashboards/PrincipalGroup.jsx`) — advisor filter updated to `u.role === "advisor"`
+- [x] Task `DELETE` method implemented (`backend/apps/tasks/tasks.py` + `frontend/src/api/tasks.js`) — `task_detail` handles `DELETE /tasks/<id>`
+- [x] MongoDB index initialization automated (`backend/django_project/asgi.py` + `backend/app/seed.py`) — `ensure_indexes()` triggers at startup
+- [x] Safe JWT `ObjectId` parsing (`backend/app/core/deps.py`) — invalid token subject IDs return 401 instead of unhandled 500
+- [x] Escalation report submission UI (`frontend/src/pages/dashboards/StudentDashboard.jsx`) — `<FileReportCard />` modal calling `fileReport` (`POST /reports`)
 
 ### Still open
 
-- [ ] No frontend UI calls `POST /reports` yet — reports can currently only be filed via the API directly
 - [ ] System logs + hallucination trend endpoint — `AdminDashboard.jsx` log/trend widgets still use inline mock (no real event pipeline exists to source these from)
 - [ ] Skills management UI — `POST/PATCH/DELETE /skills` endpoints exist but no frontend page calls them
 - [ ] Per-student "fairness" / accountability-bias score (`AdvisorStudents.jsx` `FairnessSlider`) — UI exists but no backend field or endpoint was ever built for it; always shows the same default
@@ -525,10 +533,47 @@ The agent network's connection rules (system -> hod/advisor, hod -> their dept's
 
 ---
 
+## Prompt 10 — Master Blueprint, Audit, and Core Bug Fixes
+
+> ok now sovle the bug
+
+### What was fixed
+
+1. **Dashboard 403 Forbidden Access Fixed (`messages.py` & `StudentDashboard.jsx` & `AdvisorDashboard.jsx`)**:
+   - `_allowed()` in `backend/apps/communication/messages.py` now permits common broadcast channels like `"CSE-C"`, placement channels (`placement-*`), and grants Principal, HOD, and Admin oversight access on class channels (`class-*`).
+   - `StudentDashboard.jsx` now uses `user?.class_advisor_id ? 'class-${user.class_advisor_id}' : "CSE-C"` and `Promise.allSettled` to prevent dashboard failures.
+   - `AdvisorDashboard.jsx` now dynamically broadcasts to and reads from `class-${user.id}`.
+
+2. **Advisor Task Statistics Attached (`backend/apps/accounts/users.py`)**:
+   - `GET /advisor/students` and `GET /advisor/students/unassigned` now compute and include `tasks_total` and `tasks_done` for each student.
+   - Fixed `0 of undefined complete` and `undefined/undefined tasks` in `AdvisorStudents.jsx`, `AdvisorDashboard.jsx`, and `HodDashboard.jsx`.
+
+3. **Principal Advisor Dropdown Fixed (`frontend/src/pages/dashboards/PrincipalGroup.jsx`)**:
+   - Corrected filter from `u.role === "class_advisor"` to `u.role === "advisor"`.
+
+4. **Task Deletion Implemented (`backend/apps/tasks/tasks.py` & `frontend/src/api/tasks.js`)**:
+   - `tasks.py` refactored with `task_detail` handling `DELETE /tasks/<id>` (returns 204).
+   - `deleteTask` exported in `frontend/src/api/tasks.js`.
+
+5. **MongoDB Automatic Index Initialization (`backend/django_project/asgi.py` & `backend/app/seed.py`)**:
+   - ASGI application wrapped to trigger `ensure_indexes()` asynchronously at startup.
+   - `seed.py` now invokes `await ensure_indexes()`.
+
+6. **JWT ObjectId Parsing Guard (`backend/app/core/deps.py`)**:
+   - Wrapped `ObjectId(payload["sub"])` in try/except to prevent unhandled 500 exceptions on invalid IDs.
+
+7. **Escalation Report UI Added (`frontend/src/pages/dashboards/StudentDashboard.jsx`)**:
+   - Added `<FileReportCard />` modal component allowing students to submit tickets via `fileReport` (`POST /reports`).
+
+8. **Master Architecture Blueprint Updated**:
+   - Exhaustive blueprint saved to `PROJECT_ANALYSIS_FLOWS_AND_BUGS.md`.
+
+---
+
 ## Testing notes
 
 - All demo accounts use password `password123`. Run `python -m app.seed` from `campusflow/backend/` to reset the DB to a clean state.
 - Dev bypass (no-password role switcher) is on the Login page — only works when `DEV_MODE=true` in `backend/.env`.
-- Only one student (`student@campusflow.edu`) is seeded. Advisor placement summary and student list will show just that one student until more are added via "Add student" or seeded.
 - `psutil` must be installed (`pip install -r requirements.txt` in `backend/`) before CPU/GPU stats will work.
 - GPU stats only appear if the NVIDIA driver is installed and `nvidia-smi` is on PATH.
+

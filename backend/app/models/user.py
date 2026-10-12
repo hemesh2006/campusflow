@@ -64,6 +64,10 @@ class UserPublic(BaseModel):
     telegram_linked: bool = False
     placement_eligible: bool = True
 
+    # User Preferences & Hierarchical Permissions
+    settings: Optional[dict] = None
+    permissions: Optional[dict] = None
+
 
 class UserInDB(UserPublic):
     hashed_password: str
@@ -78,6 +82,7 @@ class UserProfileUpdate(BaseModel):
     semesters: Optional[list[SemesterGpa]] = None
     resume_uploaded: Optional[bool] = None
     telegram_linked: Optional[bool] = None
+    settings: Optional[dict] = None
 
 
 class Token(BaseModel):

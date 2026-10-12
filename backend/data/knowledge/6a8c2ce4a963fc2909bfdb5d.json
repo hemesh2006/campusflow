@@ -1,29 +1,184 @@
 {
   "meta": {
-    "generated_at": "2026-08-24T13:20:18.553403+00:00",
+    "generated_at": "2026-10-12T04:08:39.102011+00:00",
     "user_id": "6a8c2ce4a963fc2909bfdb5d",
     "role": "advisor",
-    "name": "hemesh"
+    "name": "Aadhavan"
   },
   "profile": {
-    "name": "hemesh",
-    "email": "hemesh@gmail.com",
+    "name": "Aadhavan",
+    "email": "aadhavan@campusflow.edu",
     "role": "advisor",
-    "dept": "AI & DS"
+    "dept": "AI & DS",
+    "alt_email": "hemesh@gmail.com"
+  },
+  "settings": {
+    "theme": "system",
+    "notifications": {
+      "email": true,
+      "telegram": false,
+      "academic_alerts": true,
+      "announcements": true,
+      "attendance_warnings": true
+    },
+    "ai_assistant": {
+      "enabled": true,
+      "preferred_model": null,
+      "response_style": "academic",
+      "auto_context": true,
+      "permission_aware": true
+    },
+    "privacy": {
+      "profile_visible": true,
+      "show_contact": true
+    }
+  },
+  "permissions": {
+    "role": "advisor",
+    "role_level": 2,
+    "scope": "class:AI & DS",
+    "can_view_institution_stats": false,
+    "can_manage_roles": false,
+    "can_manage_departments": false,
+    "can_view_all_departments": false,
+    "can_manage_advisors": false,
+    "can_manage_students": true,
+    "can_view_all_students": false,
+    "can_mark_attendance": true,
+    "can_warn_attendance": true,
+    "can_edit_academic_records": true,
+    "can_broadcast_institution": false,
+    "can_broadcast_department": false,
+    "can_broadcast_class": true,
+    "can_manage_own_tasks": true,
+    "can_assign_tasks_to_others": true,
+    "can_manage_agents": false,
+    "can_access_llm_admin": false,
+    "can_view_hardware_telemetry": false
+  },
+  "hierarchy": {
+    "level": 2,
+    "scope": "class:AI & DS",
+    "department": "AI & DS",
+    "reports_to": {
+      "id": "6a8c31344ccc77483c543708",
+      "name": "anu",
+      "role": "hod",
+      "dept": "AI & DS"
+    },
+    "manages": [
+      {
+        "id": "6acc57dd24fe7c6898881075",
+        "name": "Abinash",
+        "role": "student",
+        "roll_id": "22AD001"
+      },
+      {
+        "id": "6acc57dd24fe7c6898881076",
+        "name": "Yashwanth",
+        "role": "student",
+        "roll_id": "22AD002"
+      },
+      {
+        "id": "6acc57dd24fe7c6898881077",
+        "name": "Tharun",
+        "role": "student",
+        "roll_id": "22AD003"
+      },
+      {
+        "id": "6acc57dd24fe7c6898881078",
+        "name": "Mithun",
+        "role": "student",
+        "roll_id": "22AD004"
+      },
+      {
+        "id": "6acc57dd24fe7c6898881079",
+        "name": "Lohith",
+        "role": "student",
+        "roll_id": "22AD005"
+      },
+      {
+        "id": "6acc57dd24fe7c689888107a",
+        "name": "Akshaya",
+        "role": "student",
+        "roll_id": "22AD006"
+      },
+      {
+        "id": "6acc57dd24fe7c689888107b",
+        "name": "Janani",
+        "role": "student",
+        "roll_id": "22AD007"
+      },
+      {
+        "id": "6acc57dd24fe7c689888107c",
+        "name": "Dharshini",
+        "role": "student",
+        "roll_id": "22AD008"
+      },
+      {
+        "id": "6acc57dd24fe7c689888107d",
+        "name": "Nandhini",
+        "role": "student",
+        "roll_id": "22AD009"
+      },
+      {
+        "id": "6acc57dd24fe7c689888107e",
+        "name": "Vaishnavi",
+        "role": "student",
+        "roll_id": "22AD010"
+      },
+      {
+        "id": "6acc57dd24fe7c689888107f",
+        "name": "Gokul",
+        "role": "student",
+        "roll_id": "22AD011"
+      },
+      {
+        "id": "6acc57dd24fe7c6898881080",
+        "name": "Sriram",
+        "role": "student",
+        "roll_id": "22AD012"
+      },
+      {
+        "id": "6acc57dd24fe7c6898881081",
+        "name": "Monisha",
+        "role": "student",
+        "roll_id": "22AD013"
+      },
+      {
+        "id": "6acc57dd24fe7c6898881082",
+        "name": "Rithika",
+        "role": "student",
+        "roll_id": "22AD014"
+      },
+      {
+        "id": "6acc57dd24fe7c6898881083",
+        "name": "Pranav",
+        "role": "student",
+        "roll_id": "22AD015"
+      }
+    ]
   },
   "tasks": [],
   "skills": [],
-  "placements": [],
+  "placements": [
+    {
+      "company": "cognizant",
+      "role": "On-campus Drive",
+      "status": "action_needed",
+      "applied_at": null
+    }
+  ],
   "recent_messages": {
     "class_group": [
       {
-        "from": "hemesh",
+        "from": "Aadhavan (Class Advisor)",
         "text": "Hello students well come to the 4th year.",
         "time": "2026-08-24T12:07:29.505000",
         "read_count": 0
       },
       {
-        "from": "hemesh",
+        "from": "Aadhavan (Class Advisor)",
         "text": "everpwggppd one well maintain silence",
         "time": "2026-08-24T12:07:41.613000",
         "read_count": 0
@@ -41,9 +196,63 @@
         "read_count": 0
       },
       {
-        "from": "hemesh",
+        "from": "Aadhavan (Class Advisor)",
         "text": "hello sutent",
         "time": "2026-08-24T13:06:34.940000",
+        "read_count": 0
+      },
+      {
+        "from": "Aadhavan (Class Advisor)",
+        "text": "hello guys how are you",
+        "time": "2026-08-31T04:17:11.177000",
+        "read_count": 0
+      },
+      {
+        "from": "Aadhavan (Class Advisor)",
+        "text": "hi there",
+        "time": "2026-08-31T04:18:31.222000",
+        "read_count": 0
+      },
+      {
+        "from": "Aadhavan (Class Advisor)",
+        "text": "how are you",
+        "time": "2026-08-31T04:18:39.755000",
+        "read_count": 0
+      },
+      {
+        "from": "Aadhavan (Class Advisor)",
+        "text": "Placement drive registration is open. Submit your resume and Excel marks sheet before Friday at 5 PM.",
+        "time": "2026-09-16T09:49:06.543000",
+        "read_count": 0
+      },
+      {
+        "from": "Aadhavan (Class Advisor)",
+        "text": "placement drive is coming",
+        "time": "2026-09-16T09:50:15.526000",
+        "read_count": 0
+      },
+      {
+        "from": "adithya",
+        "text": "hi there",
+        "time": "2026-09-23T05:07:50.888000",
+        "read_count": 0
+      },
+      {
+        "from": "adithya",
+        "text": "hi there",
+        "time": "2026-09-23T05:08:17.690000",
+        "read_count": 0
+      },
+      {
+        "from": "Aadhavan (Class Advisor)",
+        "text": "helo complete this form",
+        "time": "2026-10-11T20:27:57.215000",
+        "read_count": 0
+      },
+      {
+        "from": "Aadhavan (Class Advisor)",
+        "text": "I have to fill the form now quickly.",
+        "time": "2026-10-12T03:17:53.551000",
         "read_count": 0
       }
     ],
@@ -54,6 +263,12 @@
         "text": "hi hemeh are you okay with at adcisot",
         "time": "2026-08-24T11:58:52.229000",
         "thread": "dm-6a8c2c6f143c302da8d3629d-6a8c2ce4a963fc2909bfdb5d"
+      },
+      {
+        "from": "Aadhavan (Class Advisor)",
+        "text": "⚠️ ATTENDANCE WARNING: Dear adithya, your current attendance is 0.0%, which is below the mandatory 75% institutional requirement. You are at risk of being barred from semester examinations. Please meet your Class Advisor (hemesh) immediately.",
+        "time": "2026-10-11T19:18:35.747000",
+        "thread": "dm-6a8c2ce4a963fc2909bfdb5d-6a8c30774ccc77483c543704"
       }
     ]
   },
@@ -123,6 +338,45 @@
       "status": "completed",
       "created_at": "2026-08-24T13:20:14.689500+00:00",
       "updated_at": "2026-08-24T13:20:18.476636+00:00"
+    },
+    {
+      "id": "6ca27c2576f64f6d839b81545e5da4b6",
+      "user_id": "6a8c2ce4a963fc2909bfdb5d",
+      "user_name": "hemesh",
+      "role": "advisor",
+      "step": "chat_query",
+      "message": "hi there",
+      "response": "Could not reach Ollama at http://localhost:11434 — is `ollama serve` running?",
+      "model": "qwen2.5:1.5b",
+      "status": "error",
+      "created_at": "2026-08-31T04:17:19.985629+00:00",
+      "updated_at": "2026-08-31T04:17:23.046466+00:00"
+    },
+    {
+      "id": "1f9eb54973854ce4af7b90d4bf9b93d8",
+      "user_id": "6a8c2ce4a963fc2909bfdb5d",
+      "user_name": "hemesh",
+      "role": "advisor",
+      "step": "chat_query",
+      "message": "hi",
+      "response": "Ollama returned an error (500): {\"error\":\"llama-server reported out-of-memory during startup: ggml_backend_cpu_buffer_type_alloc_buffer: failed to allocate buffer of size 2355144704\\nalloc_tensor_range: failed to allocate CUDA_Host ",
+      "model": "qwen2.5:7b",
+      "status": "error",
+      "created_at": "2026-10-11T20:13:02.518178+00:00",
+      "updated_at": "2026-10-11T20:13:33.645342+00:00"
+    },
+    {
+      "id": "f20816f0e632427d9c535f7e8cdd9417",
+      "user_id": "6a8c2ce4a963fc2909bfdb5d",
+      "user_name": "hemesh",
+      "role": "advisor",
+      "step": "chat_query",
+      "message": "hi",
+      "response": "Could not reach Ollama at http://localhost:11434 — is `ollama serve` running?",
+      "model": "qwen2.5:7b",
+      "status": "error",
+      "created_at": "2026-10-11T20:14:20.315835+00:00",
+      "updated_at": "2026-10-11T20:15:21.789349+00:00"
     }
   ],
   "stats": {
@@ -130,7 +384,7 @@
     "tasks_pending": 0,
     "skills_count": 0,
     "avg_skill_level": 0.0,
-    "total_messages_in_scope": 6,
+    "total_messages_in_scope": 16,
     "open_reports": 0
   }
 }

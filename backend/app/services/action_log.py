@@ -44,7 +44,7 @@ def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-def _read_all() -> list[dict]:
+def _read_all_sync() -> list[dict]:
     if not LOG_PATH.exists():
         return []
     try:
@@ -56,9 +56,11 @@ def _read_all() -> list[dict]:
         return []
 
 
-def _write_all(records: list[dict]) -> None:
+def _write_all_sync(records: list[dict]) -> None:
     LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
-    LOG_PATH.write_text(json.dumps(records, indent=2, ensure_ascii=False), encoding="utf-8")
+    temp_file = LOG_PATH.with_suffix(".tmp")
+    temp_file.write_text(json.dumps(records, indent=2, ensure_ascii=False), encoding="utf-8")
+    temp_file.replace(LOG_PATH)
 
 
 async def start_action(user_id: str, user_name: str, role: str, message: str, step: str = "chat_query") -> dict:
@@ -79,17 +81,17 @@ async def start_action(user_id: str, user_name: str, role: str, message: str, st
         "updated_at": _now(),
     }
     async with _lock:
-        records = _read_all()
+        records = await asyncio.to_thread(_read_all_sync)
         records.append(record)
         if len(records) > MAX_RECORDS:
             records = records[-MAX_RECORDS:]
-        _write_all(records)
+        await asyncio.to_thread(_write_all_sync, records)
     return record
 
 
 async def finish_action(action_id: str, response: str, model: str | None, status: str = "completed") -> None:
     async with _lock:
-        records = _read_all()
+        records = await asyncio.to_thread(_read_all_sync)
         for r in records:
             if r["id"] == action_id:
                 r["response"] = response
@@ -97,13 +99,13 @@ async def finish_action(action_id: str, response: str, model: str | None, status
                 r["status"] = status
                 r["updated_at"] = _now()
                 break
-        _write_all(records)
+        await asyncio.to_thread(_write_all_sync, records)
 
 
 async def user_history(user_id: str, limit: int = 30) -> list[dict]:
     """Most recent `limit` actions for this user, oldest first — ready
     to be replayed straight into the chat panel."""
     async with _lock:
-        records = _read_all()
+        records = await asyncio.to_thread(_read_all_sync)
     mine = [r for r in records if r["user_id"] == user_id]
     return mine[-limit:]

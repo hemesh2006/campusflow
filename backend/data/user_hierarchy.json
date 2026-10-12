@@ -1,0 +1,2956 @@
+{
+  "metadata": {
+    "generated_at": "2026-10-12T04:27:25.308597+00:00",
+    "institution": "CampusFlow Academic System",
+    "schema_version": "2.0",
+    "total_users": 19,
+    "departments_count": 1,
+    "role_distribution": {
+      "admin": 1,
+      "principal": 1,
+      "hod": 1,
+      "advisor": 1,
+      "student": 15
+    }
+  },
+  "hierarchy_tree": {
+    "system_administrators": [
+      {
+        "id": "6a8c2c6f143c302da8d3629d",
+        "name": "IT Admin",
+        "email": "admin@campusflow.edu",
+        "settings": {
+          "theme": "dark",
+          "notifications": {
+            "email": true,
+            "telegram": false,
+            "academic_alerts": true,
+            "announcements": true,
+            "attendance_warnings": true
+          },
+          "ai_assistant": {
+            "enabled": true,
+            "preferred_model": null,
+            "response_style": "academic",
+            "auto_context": true,
+            "permission_aware": true
+          },
+          "privacy": {
+            "profile_visible": true,
+            "show_contact": true
+          }
+        },
+        "permissions": {
+          "role": "admin",
+          "role_level": 5,
+          "scope": "system",
+          "can_view_institution_stats": true,
+          "can_manage_roles": true,
+          "can_manage_departments": true,
+          "can_view_all_departments": true,
+          "can_manage_advisors": true,
+          "can_manage_students": true,
+          "can_view_all_students": true,
+          "can_mark_attendance": true,
+          "can_warn_attendance": true,
+          "can_edit_academic_records": true,
+          "can_broadcast_institution": true,
+          "can_broadcast_department": true,
+          "can_broadcast_class": true,
+          "can_manage_own_tasks": true,
+          "can_assign_tasks_to_others": true,
+          "can_manage_agents": true,
+          "can_access_llm_admin": true,
+          "can_view_hardware_telemetry": true
+        }
+      }
+    ],
+    "principals": [
+      {
+        "id": "6a8c2f4b796bc0dcd1e0efc5",
+        "name": "arjun",
+        "email": "arjun@principal.com",
+        "settings": {
+          "theme": "system",
+          "notifications": {
+            "email": true,
+            "telegram": false,
+            "academic_alerts": true,
+            "announcements": true,
+            "attendance_warnings": true
+          },
+          "ai_assistant": {
+            "enabled": true,
+            "preferred_model": null,
+            "response_style": "executive",
+            "auto_context": true,
+            "permission_aware": true
+          },
+          "privacy": {
+            "profile_visible": true,
+            "show_contact": true
+          }
+        },
+        "permissions": {
+          "role": "principal",
+          "role_level": 4,
+          "scope": "institution",
+          "can_view_institution_stats": true,
+          "can_manage_roles": true,
+          "can_manage_departments": true,
+          "can_view_all_departments": true,
+          "can_manage_advisors": true,
+          "can_manage_students": true,
+          "can_view_all_students": true,
+          "can_mark_attendance": false,
+          "can_warn_attendance": true,
+          "can_edit_academic_records": true,
+          "can_broadcast_institution": true,
+          "can_broadcast_department": true,
+          "can_broadcast_class": true,
+          "can_manage_own_tasks": true,
+          "can_assign_tasks_to_others": true,
+          "can_manage_agents": false,
+          "can_access_llm_admin": false,
+          "can_view_hardware_telemetry": false
+        }
+      }
+    ],
+    "departments": {
+      "AI & DS": {
+        "department": "AI & DS",
+        "hod": {
+          "id": "6a8c31344ccc77483c543708",
+          "name": "Mugilan",
+          "email": "mugilan@campusflow.edu",
+          "settings": {
+            "theme": "system",
+            "notifications": {
+              "email": true,
+              "telegram": false,
+              "academic_alerts": true,
+              "announcements": true,
+              "attendance_warnings": true
+            },
+            "ai_assistant": {
+              "enabled": true,
+              "preferred_model": null,
+              "response_style": "executive",
+              "auto_context": true,
+              "permission_aware": true
+            },
+            "privacy": {
+              "profile_visible": true,
+              "show_contact": true
+            }
+          },
+          "permissions": {
+            "role": "hod",
+            "role_level": 3,
+            "scope": "department:AI & DS",
+            "can_view_institution_stats": false,
+            "can_manage_roles": true,
+            "can_manage_departments": false,
+            "can_view_all_departments": false,
+            "can_manage_advisors": true,
+            "can_manage_students": true,
+            "can_view_all_students": true,
+            "can_mark_attendance": false,
+            "can_warn_attendance": true,
+            "can_edit_academic_records": true,
+            "can_broadcast_institution": false,
+            "can_broadcast_department": true,
+            "can_broadcast_class": true,
+            "can_manage_own_tasks": true,
+            "can_assign_tasks_to_others": true,
+            "can_manage_agents": false,
+            "can_access_llm_admin": false,
+            "can_view_hardware_telemetry": false
+          }
+        },
+        "advisors": [
+          {
+            "id": "6a8c2ce4a963fc2909bfdb5d",
+            "name": "Aadhavan",
+            "email": "aadhavan@campusflow.edu",
+            "settings": {
+              "theme": "system",
+              "notifications": {
+                "email": true,
+                "telegram": false,
+                "academic_alerts": true,
+                "announcements": true,
+                "attendance_warnings": true
+              },
+              "ai_assistant": {
+                "enabled": true,
+                "preferred_model": null,
+                "response_style": "academic",
+                "auto_context": true,
+                "permission_aware": true
+              },
+              "privacy": {
+                "profile_visible": true,
+                "show_contact": true
+              }
+            },
+            "permissions": {
+              "role": "advisor",
+              "role_level": 2,
+              "scope": "class:AI & DS",
+              "can_view_institution_stats": false,
+              "can_manage_roles": false,
+              "can_manage_departments": false,
+              "can_view_all_departments": false,
+              "can_manage_advisors": false,
+              "can_manage_students": true,
+              "can_view_all_students": false,
+              "can_mark_attendance": true,
+              "can_warn_attendance": true,
+              "can_edit_academic_records": true,
+              "can_broadcast_institution": false,
+              "can_broadcast_department": false,
+              "can_broadcast_class": true,
+              "can_manage_own_tasks": true,
+              "can_assign_tasks_to_others": true,
+              "can_manage_agents": false,
+              "can_access_llm_admin": false,
+              "can_view_hardware_telemetry": false
+            },
+            "class_students_count": 15,
+            "students": [
+              {
+                "id": "6acc57dd24fe7c6898881075",
+                "name": "Abinash",
+                "email": "abinash@campusflow.edu",
+                "roll_id": "22AD001",
+                "cgpa": 8.75,
+                "attendance": 100.0,
+                "settings": {
+                  "theme": "system",
+                  "notifications": {
+                    "email": true,
+                    "telegram": false,
+                    "academic_alerts": true,
+                    "announcements": true,
+                    "attendance_warnings": true
+                  },
+                  "ai_assistant": {
+                    "enabled": true,
+                    "preferred_model": null,
+                    "response_style": "academic",
+                    "auto_context": true,
+                    "permission_aware": true
+                  },
+                  "privacy": {
+                    "profile_visible": true,
+                    "show_contact": false
+                  }
+                },
+                "permissions": {
+                  "role": "student",
+                  "role_level": 1,
+                  "scope": "self",
+                  "can_view_institution_stats": false,
+                  "can_manage_roles": false,
+                  "can_manage_departments": false,
+                  "can_view_all_departments": false,
+                  "can_manage_advisors": false,
+                  "can_manage_students": false,
+                  "can_view_all_students": false,
+                  "can_mark_attendance": false,
+                  "can_warn_attendance": false,
+                  "can_edit_academic_records": false,
+                  "can_broadcast_institution": false,
+                  "can_broadcast_department": false,
+                  "can_broadcast_class": false,
+                  "can_manage_own_tasks": true,
+                  "can_assign_tasks_to_others": false,
+                  "can_manage_agents": false,
+                  "can_access_llm_admin": false,
+                  "can_view_hardware_telemetry": false
+                }
+              },
+              {
+                "id": "6acc57dd24fe7c6898881076",
+                "name": "Yashwanth",
+                "email": "yashwanth@campusflow.edu",
+                "roll_id": "22AD002",
+                "cgpa": 7.9,
+                "attendance": 100.0,
+                "settings": {
+                  "theme": "system",
+                  "notifications": {
+                    "email": true,
+                    "telegram": false,
+                    "academic_alerts": true,
+                    "announcements": true,
+                    "attendance_warnings": true
+                  },
+                  "ai_assistant": {
+                    "enabled": true,
+                    "preferred_model": null,
+                    "response_style": "academic",
+                    "auto_context": true,
+                    "permission_aware": true
+                  },
+                  "privacy": {
+                    "profile_visible": true,
+                    "show_contact": false
+                  }
+                },
+                "permissions": {
+                  "role": "student",
+                  "role_level": 1,
+                  "scope": "self",
+                  "can_view_institution_stats": false,
+                  "can_manage_roles": false,
+                  "can_manage_departments": false,
+                  "can_view_all_departments": false,
+                  "can_manage_advisors": false,
+                  "can_manage_students": false,
+                  "can_view_all_students": false,
+                  "can_mark_attendance": false,
+                  "can_warn_attendance": false,
+                  "can_edit_academic_records": false,
+                  "can_broadcast_institution": false,
+                  "can_broadcast_department": false,
+                  "can_broadcast_class": false,
+                  "can_manage_own_tasks": true,
+                  "can_assign_tasks_to_others": false,
+                  "can_manage_agents": false,
+                  "can_access_llm_admin": false,
+                  "can_view_hardware_telemetry": false
+                }
+              },
+              {
+                "id": "6acc57dd24fe7c6898881077",
+                "name": "Tharun",
+                "email": "tharun@campusflow.edu",
+                "roll_id": "22AD003",
+                "cgpa": 8.45,
+                "attendance": 100.0,
+                "settings": {
+                  "theme": "system",
+                  "notifications": {
+                    "email": true,
+                    "telegram": false,
+                    "academic_alerts": true,
+                    "announcements": true,
+                    "attendance_warnings": true
+                  },
+                  "ai_assistant": {
+                    "enabled": true,
+                    "preferred_model": null,
+                    "response_style": "academic",
+                    "auto_context": true,
+                    "permission_aware": true
+                  },
+                  "privacy": {
+                    "profile_visible": true,
+                    "show_contact": false
+                  }
+                },
+                "permissions": {
+                  "role": "student",
+                  "role_level": 1,
+                  "scope": "self",
+                  "can_view_institution_stats": false,
+                  "can_manage_roles": false,
+                  "can_manage_departments": false,
+                  "can_view_all_departments": false,
+                  "can_manage_advisors": false,
+                  "can_manage_students": false,
+                  "can_view_all_students": false,
+                  "can_mark_attendance": false,
+                  "can_warn_attendance": false,
+                  "can_edit_academic_records": false,
+                  "can_broadcast_institution": false,
+                  "can_broadcast_department": false,
+                  "can_broadcast_class": false,
+                  "can_manage_own_tasks": true,
+                  "can_assign_tasks_to_others": false,
+                  "can_manage_agents": false,
+                  "can_access_llm_admin": false,
+                  "can_view_hardware_telemetry": false
+                }
+              },
+              {
+                "id": "6acc57dd24fe7c6898881078",
+                "name": "Mithun",
+                "email": "mithun@campusflow.edu",
+                "roll_id": "22AD004",
+                "cgpa": 7.3,
+                "attendance": 100.0,
+                "settings": {
+                  "theme": "system",
+                  "notifications": {
+                    "email": true,
+                    "telegram": false,
+                    "academic_alerts": true,
+                    "announcements": true,
+                    "attendance_warnings": true
+                  },
+                  "ai_assistant": {
+                    "enabled": true,
+                    "preferred_model": null,
+                    "response_style": "academic",
+                    "auto_context": true,
+                    "permission_aware": true
+                  },
+                  "privacy": {
+                    "profile_visible": true,
+                    "show_contact": false
+                  }
+                },
+                "permissions": {
+                  "role": "student",
+                  "role_level": 1,
+                  "scope": "self",
+                  "can_view_institution_stats": false,
+                  "can_manage_roles": false,
+                  "can_manage_departments": false,
+                  "can_view_all_departments": false,
+                  "can_manage_advisors": false,
+                  "can_manage_students": false,
+                  "can_view_all_students": false,
+                  "can_mark_attendance": false,
+                  "can_warn_attendance": false,
+                  "can_edit_academic_records": false,
+                  "can_broadcast_institution": false,
+                  "can_broadcast_department": false,
+                  "can_broadcast_class": false,
+                  "can_manage_own_tasks": true,
+                  "can_assign_tasks_to_others": false,
+                  "can_manage_agents": false,
+                  "can_access_llm_admin": false,
+                  "can_view_hardware_telemetry": false
+                }
+              },
+              {
+                "id": "6acc57dd24fe7c6898881079",
+                "name": "Lohith",
+                "email": "lohith@campusflow.edu",
+                "roll_id": "22AD005",
+                "cgpa": 9.1,
+                "attendance": 100.0,
+                "settings": {
+                  "theme": "system",
+                  "notifications": {
+                    "email": true,
+                    "telegram": false,
+                    "academic_alerts": true,
+                    "announcements": true,
+                    "attendance_warnings": true
+                  },
+                  "ai_assistant": {
+                    "enabled": true,
+                    "preferred_model": null,
+                    "response_style": "academic",
+                    "auto_context": true,
+                    "permission_aware": true
+                  },
+                  "privacy": {
+                    "profile_visible": true,
+                    "show_contact": false
+                  }
+                },
+                "permissions": {
+                  "role": "student",
+                  "role_level": 1,
+                  "scope": "self",
+                  "can_view_institution_stats": false,
+                  "can_manage_roles": false,
+                  "can_manage_departments": false,
+                  "can_view_all_departments": false,
+                  "can_manage_advisors": false,
+                  "can_manage_students": false,
+                  "can_view_all_students": false,
+                  "can_mark_attendance": false,
+                  "can_warn_attendance": false,
+                  "can_edit_academic_records": false,
+                  "can_broadcast_institution": false,
+                  "can_broadcast_department": false,
+                  "can_broadcast_class": false,
+                  "can_manage_own_tasks": true,
+                  "can_assign_tasks_to_others": false,
+                  "can_manage_agents": false,
+                  "can_access_llm_admin": false,
+                  "can_view_hardware_telemetry": false
+                }
+              },
+              {
+                "id": "6acc57dd24fe7c689888107a",
+                "name": "Akshaya",
+                "email": "akshaya@campusflow.edu",
+                "roll_id": "22AD006",
+                "cgpa": 8.85,
+                "attendance": 100.0,
+                "settings": {
+                  "theme": "system",
+                  "notifications": {
+                    "email": true,
+                    "telegram": false,
+                    "academic_alerts": true,
+                    "announcements": true,
+                    "attendance_warnings": true
+                  },
+                  "ai_assistant": {
+                    "enabled": true,
+                    "preferred_model": null,
+                    "response_style": "academic",
+                    "auto_context": true,
+                    "permission_aware": true
+                  },
+                  "privacy": {
+                    "profile_visible": true,
+                    "show_contact": false
+                  }
+                },
+                "permissions": {
+                  "role": "student",
+                  "role_level": 1,
+                  "scope": "self",
+                  "can_view_institution_stats": false,
+                  "can_manage_roles": false,
+                  "can_manage_departments": false,
+                  "can_view_all_departments": false,
+                  "can_manage_advisors": false,
+                  "can_manage_students": false,
+                  "can_view_all_students": false,
+                  "can_mark_attendance": false,
+                  "can_warn_attendance": false,
+                  "can_edit_academic_records": false,
+                  "can_broadcast_institution": false,
+                  "can_broadcast_department": false,
+                  "can_broadcast_class": false,
+                  "can_manage_own_tasks": true,
+                  "can_assign_tasks_to_others": false,
+                  "can_manage_agents": false,
+                  "can_access_llm_admin": false,
+                  "can_view_hardware_telemetry": false
+                }
+              },
+              {
+                "id": "6acc57dd24fe7c689888107b",
+                "name": "Janani",
+                "email": "janani@campusflow.edu",
+                "roll_id": "22AD007",
+                "cgpa": 9.35,
+                "attendance": 100.0,
+                "settings": {
+                  "theme": "system",
+                  "notifications": {
+                    "email": true,
+                    "telegram": false,
+                    "academic_alerts": true,
+                    "announcements": true,
+                    "attendance_warnings": true
+                  },
+                  "ai_assistant": {
+                    "enabled": true,
+                    "preferred_model": null,
+                    "response_style": "academic",
+                    "auto_context": true,
+                    "permission_aware": true
+                  },
+                  "privacy": {
+                    "profile_visible": true,
+                    "show_contact": false
+                  }
+                },
+                "permissions": {
+                  "role": "student",
+                  "role_level": 1,
+                  "scope": "self",
+                  "can_view_institution_stats": false,
+                  "can_manage_roles": false,
+                  "can_manage_departments": false,
+                  "can_view_all_departments": false,
+                  "can_manage_advisors": false,
+                  "can_manage_students": false,
+                  "can_view_all_students": false,
+                  "can_mark_attendance": false,
+                  "can_warn_attendance": false,
+                  "can_edit_academic_records": false,
+                  "can_broadcast_institution": false,
+                  "can_broadcast_department": false,
+                  "can_broadcast_class": false,
+                  "can_manage_own_tasks": true,
+                  "can_assign_tasks_to_others": false,
+                  "can_manage_agents": false,
+                  "can_access_llm_admin": false,
+                  "can_view_hardware_telemetry": false
+                }
+              },
+              {
+                "id": "6acc57dd24fe7c689888107c",
+                "name": "Dharshini",
+                "email": "dharshini@campusflow.edu",
+                "roll_id": "22AD008",
+                "cgpa": 8.2,
+                "attendance": 100.0,
+                "settings": {
+                  "theme": "system",
+                  "notifications": {
+                    "email": true,
+                    "telegram": false,
+                    "academic_alerts": true,
+                    "announcements": true,
+                    "attendance_warnings": true
+                  },
+                  "ai_assistant": {
+                    "enabled": true,
+                    "preferred_model": null,
+                    "response_style": "academic",
+                    "auto_context": true,
+                    "permission_aware": true
+                  },
+                  "privacy": {
+                    "profile_visible": true,
+                    "show_contact": false
+                  }
+                },
+                "permissions": {
+                  "role": "student",
+                  "role_level": 1,
+                  "scope": "self",
+                  "can_view_institution_stats": false,
+                  "can_manage_roles": false,
+                  "can_manage_departments": false,
+                  "can_view_all_departments": false,
+                  "can_manage_advisors": false,
+                  "can_manage_students": false,
+                  "can_view_all_students": false,
+                  "can_mark_attendance": false,
+                  "can_warn_attendance": false,
+                  "can_edit_academic_records": false,
+                  "can_broadcast_institution": false,
+                  "can_broadcast_department": false,
+                  "can_broadcast_class": false,
+                  "can_manage_own_tasks": true,
+                  "can_assign_tasks_to_others": false,
+                  "can_manage_agents": false,
+                  "can_access_llm_admin": false,
+                  "can_view_hardware_telemetry": false
+                }
+              },
+              {
+                "id": "6acc57dd24fe7c689888107d",
+                "name": "Nandhini",
+                "email": "nandhini@campusflow.edu",
+                "roll_id": "22AD009",
+                "cgpa": 7.65,
+                "attendance": 100.0,
+                "settings": {
+                  "theme": "system",
+                  "notifications": {
+                    "email": true,
+                    "telegram": false,
+                    "academic_alerts": true,
+                    "announcements": true,
+                    "attendance_warnings": true
+                  },
+                  "ai_assistant": {
+                    "enabled": true,
+                    "preferred_model": null,
+                    "response_style": "academic",
+                    "auto_context": true,
+                    "permission_aware": true
+                  },
+                  "privacy": {
+                    "profile_visible": true,
+                    "show_contact": false
+                  }
+                },
+                "permissions": {
+                  "role": "student",
+                  "role_level": 1,
+                  "scope": "self",
+                  "can_view_institution_stats": false,
+                  "can_manage_roles": false,
+                  "can_manage_departments": false,
+                  "can_view_all_departments": false,
+                  "can_manage_advisors": false,
+                  "can_manage_students": false,
+                  "can_view_all_students": false,
+                  "can_mark_attendance": false,
+                  "can_warn_attendance": false,
+                  "can_edit_academic_records": false,
+                  "can_broadcast_institution": false,
+                  "can_broadcast_department": false,
+                  "can_broadcast_class": false,
+                  "can_manage_own_tasks": true,
+                  "can_assign_tasks_to_others": false,
+                  "can_manage_agents": false,
+                  "can_access_llm_admin": false,
+                  "can_view_hardware_telemetry": false
+                }
+              },
+              {
+                "id": "6acc57dd24fe7c689888107e",
+                "name": "Vaishnavi",
+                "email": "vaishnavi@campusflow.edu",
+                "roll_id": "22AD010",
+                "cgpa": 8.95,
+                "attendance": 100.0,
+                "settings": {
+                  "theme": "system",
+                  "notifications": {
+                    "email": true,
+                    "telegram": false,
+                    "academic_alerts": true,
+                    "announcements": true,
+                    "attendance_warnings": true
+                  },
+                  "ai_assistant": {
+                    "enabled": true,
+                    "preferred_model": null,
+                    "response_style": "academic",
+                    "auto_context": true,
+                    "permission_aware": true
+                  },
+                  "privacy": {
+                    "profile_visible": true,
+                    "show_contact": false
+                  }
+                },
+                "permissions": {
+                  "role": "student",
+                  "role_level": 1,
+                  "scope": "self",
+                  "can_view_institution_stats": false,
+                  "can_manage_roles": false,
+                  "can_manage_departments": false,
+                  "can_view_all_departments": false,
+                  "can_manage_advisors": false,
+                  "can_manage_students": false,
+                  "can_view_all_students": false,
+                  "can_mark_attendance": false,
+                  "can_warn_attendance": false,
+                  "can_edit_academic_records": false,
+                  "can_broadcast_institution": false,
+                  "can_broadcast_department": false,
+                  "can_broadcast_class": false,
+                  "can_manage_own_tasks": true,
+                  "can_assign_tasks_to_others": false,
+                  "can_manage_agents": false,
+                  "can_access_llm_admin": false,
+                  "can_view_hardware_telemetry": false
+                }
+              },
+              {
+                "id": "6acc57dd24fe7c689888107f",
+                "name": "Gokul",
+                "email": "gokul@campusflow.edu",
+                "roll_id": "22AD011",
+                "cgpa": 8.15,
+                "attendance": 100.0,
+                "settings": {
+                  "theme": "system",
+                  "notifications": {
+                    "email": true,
+                    "telegram": false,
+                    "academic_alerts": true,
+                    "announcements": true,
+                    "attendance_warnings": true
+                  },
+                  "ai_assistant": {
+                    "enabled": true,
+                    "preferred_model": null,
+                    "response_style": "academic",
+                    "auto_context": true,
+                    "permission_aware": true
+                  },
+                  "privacy": {
+                    "profile_visible": true,
+                    "show_contact": false
+                  }
+                },
+                "permissions": {
+                  "role": "student",
+                  "role_level": 1,
+                  "scope": "self",
+                  "can_view_institution_stats": false,
+                  "can_manage_roles": false,
+                  "can_manage_departments": false,
+                  "can_view_all_departments": false,
+                  "can_manage_advisors": false,
+                  "can_manage_students": false,
+                  "can_view_all_students": false,
+                  "can_mark_attendance": false,
+                  "can_warn_attendance": false,
+                  "can_edit_academic_records": false,
+                  "can_broadcast_institution": false,
+                  "can_broadcast_department": false,
+                  "can_broadcast_class": false,
+                  "can_manage_own_tasks": true,
+                  "can_assign_tasks_to_others": false,
+                  "can_manage_agents": false,
+                  "can_access_llm_admin": false,
+                  "can_view_hardware_telemetry": false
+                }
+              },
+              {
+                "id": "6acc57dd24fe7c6898881080",
+                "name": "Sriram",
+                "email": "sriram@campusflow.edu",
+                "roll_id": "22AD012",
+                "cgpa": 8.6,
+                "attendance": 100.0,
+                "settings": {
+                  "theme": "system",
+                  "notifications": {
+                    "email": true,
+                    "telegram": false,
+                    "academic_alerts": true,
+                    "announcements": true,
+                    "attendance_warnings": true
+                  },
+                  "ai_assistant": {
+                    "enabled": true,
+                    "preferred_model": null,
+                    "response_style": "academic",
+                    "auto_context": true,
+                    "permission_aware": true
+                  },
+                  "privacy": {
+                    "profile_visible": true,
+                    "show_contact": false
+                  }
+                },
+                "permissions": {
+                  "role": "student",
+                  "role_level": 1,
+                  "scope": "self",
+                  "can_view_institution_stats": false,
+                  "can_manage_roles": false,
+                  "can_manage_departments": false,
+                  "can_view_all_departments": false,
+                  "can_manage_advisors": false,
+                  "can_manage_students": false,
+                  "can_view_all_students": false,
+                  "can_mark_attendance": false,
+                  "can_warn_attendance": false,
+                  "can_edit_academic_records": false,
+                  "can_broadcast_institution": false,
+                  "can_broadcast_department": false,
+                  "can_broadcast_class": false,
+                  "can_manage_own_tasks": true,
+                  "can_assign_tasks_to_others": false,
+                  "can_manage_agents": false,
+                  "can_access_llm_admin": false,
+                  "can_view_hardware_telemetry": false
+                }
+              },
+              {
+                "id": "6acc57dd24fe7c6898881081",
+                "name": "Monisha",
+                "email": "monisha@campusflow.edu",
+                "roll_id": "22AD013",
+                "cgpa": 8.4,
+                "attendance": 100.0,
+                "settings": {
+                  "theme": "system",
+                  "notifications": {
+                    "email": true,
+                    "telegram": false,
+                    "academic_alerts": true,
+                    "announcements": true,
+                    "attendance_warnings": true
+                  },
+                  "ai_assistant": {
+                    "enabled": true,
+                    "preferred_model": null,
+                    "response_style": "academic",
+                    "auto_context": true,
+                    "permission_aware": true
+                  },
+                  "privacy": {
+                    "profile_visible": true,
+                    "show_contact": false
+                  }
+                },
+                "permissions": {
+                  "role": "student",
+                  "role_level": 1,
+                  "scope": "self",
+                  "can_view_institution_stats": false,
+                  "can_manage_roles": false,
+                  "can_manage_departments": false,
+                  "can_view_all_departments": false,
+                  "can_manage_advisors": false,
+                  "can_manage_students": false,
+                  "can_view_all_students": false,
+                  "can_mark_attendance": false,
+                  "can_warn_attendance": false,
+                  "can_edit_academic_records": false,
+                  "can_broadcast_institution": false,
+                  "can_broadcast_department": false,
+                  "can_broadcast_class": false,
+                  "can_manage_own_tasks": true,
+                  "can_assign_tasks_to_others": false,
+                  "can_manage_agents": false,
+                  "can_access_llm_admin": false,
+                  "can_view_hardware_telemetry": false
+                }
+              },
+              {
+                "id": "6acc57dd24fe7c6898881082",
+                "name": "Rithika",
+                "email": "rithika@campusflow.edu",
+                "roll_id": "22AD014",
+                "cgpa": 9.2,
+                "attendance": 100.0,
+                "settings": {
+                  "theme": "system",
+                  "notifications": {
+                    "email": true,
+                    "telegram": false,
+                    "academic_alerts": true,
+                    "announcements": true,
+                    "attendance_warnings": true
+                  },
+                  "ai_assistant": {
+                    "enabled": true,
+                    "preferred_model": null,
+                    "response_style": "academic",
+                    "auto_context": true,
+                    "permission_aware": true
+                  },
+                  "privacy": {
+                    "profile_visible": true,
+                    "show_contact": false
+                  }
+                },
+                "permissions": {
+                  "role": "student",
+                  "role_level": 1,
+                  "scope": "self",
+                  "can_view_institution_stats": false,
+                  "can_manage_roles": false,
+                  "can_manage_departments": false,
+                  "can_view_all_departments": false,
+                  "can_manage_advisors": false,
+                  "can_manage_students": false,
+                  "can_view_all_students": false,
+                  "can_mark_attendance": false,
+                  "can_warn_attendance": false,
+                  "can_edit_academic_records": false,
+                  "can_broadcast_institution": false,
+                  "can_broadcast_department": false,
+                  "can_broadcast_class": false,
+                  "can_manage_own_tasks": true,
+                  "can_assign_tasks_to_others": false,
+                  "can_manage_agents": false,
+                  "can_access_llm_admin": false,
+                  "can_view_hardware_telemetry": false
+                }
+              },
+              {
+                "id": "6acc57dd24fe7c6898881083",
+                "name": "Pranav",
+                "email": "pranav@campusflow.edu",
+                "roll_id": "22AD015",
+                "cgpa": 7.8,
+                "attendance": 100.0,
+                "settings": {
+                  "theme": "system",
+                  "notifications": {
+                    "email": true,
+                    "telegram": false,
+                    "academic_alerts": true,
+                    "announcements": true,
+                    "attendance_warnings": true
+                  },
+                  "ai_assistant": {
+                    "enabled": true,
+                    "preferred_model": null,
+                    "response_style": "academic",
+                    "auto_context": true,
+                    "permission_aware": true
+                  },
+                  "privacy": {
+                    "profile_visible": true,
+                    "show_contact": false
+                  }
+                },
+                "permissions": {
+                  "role": "student",
+                  "role_level": 1,
+                  "scope": "self",
+                  "can_view_institution_stats": false,
+                  "can_manage_roles": false,
+                  "can_manage_departments": false,
+                  "can_view_all_departments": false,
+                  "can_manage_advisors": false,
+                  "can_manage_students": false,
+                  "can_view_all_students": false,
+                  "can_mark_attendance": false,
+                  "can_warn_attendance": false,
+                  "can_edit_academic_records": false,
+                  "can_broadcast_institution": false,
+                  "can_broadcast_department": false,
+                  "can_broadcast_class": false,
+                  "can_manage_own_tasks": true,
+                  "can_assign_tasks_to_others": false,
+                  "can_manage_agents": false,
+                  "can_access_llm_admin": false,
+                  "can_view_hardware_telemetry": false
+                }
+              }
+            ]
+          }
+        ],
+        "unassigned_students": [],
+        "total_students": 15
+      }
+    },
+    "unassigned_users": []
+  },
+  "users": {
+    "6a8c2c6f143c302da8d3629d": {
+      "id": "6a8c2c6f143c302da8d3629d",
+      "name": "IT Admin",
+      "email": "admin@campusflow.edu",
+      "role": "admin",
+      "dept": "All",
+      "profile": {
+        "name": "IT Admin",
+        "email": "admin@campusflow.edu",
+        "role": "admin",
+        "dept": "All",
+        "class_advisor_id": null,
+        "roll_id": null,
+        "mobile": "9047009912",
+        "dob": "2006-03-11",
+        "year": null,
+        "college": null,
+        "cgpa": null,
+        "attendance": null,
+        "semesters": [],
+        "resume_uploaded": false,
+        "telegram_linked": false,
+        "placement_eligible": true
+      },
+      "settings": {
+        "theme": "dark",
+        "notifications": {
+          "email": true,
+          "telegram": false,
+          "academic_alerts": true,
+          "announcements": true,
+          "attendance_warnings": true
+        },
+        "ai_assistant": {
+          "enabled": true,
+          "preferred_model": null,
+          "response_style": "academic",
+          "auto_context": true,
+          "permission_aware": true
+        },
+        "privacy": {
+          "profile_visible": true,
+          "show_contact": true
+        }
+      },
+      "permissions": {
+        "role": "admin",
+        "role_level": 5,
+        "scope": "system",
+        "can_view_institution_stats": true,
+        "can_manage_roles": true,
+        "can_manage_departments": true,
+        "can_view_all_departments": true,
+        "can_manage_advisors": true,
+        "can_manage_students": true,
+        "can_view_all_students": true,
+        "can_mark_attendance": true,
+        "can_warn_attendance": true,
+        "can_edit_academic_records": true,
+        "can_broadcast_institution": true,
+        "can_broadcast_department": true,
+        "can_broadcast_class": true,
+        "can_manage_own_tasks": true,
+        "can_assign_tasks_to_others": true,
+        "can_manage_agents": true,
+        "can_access_llm_admin": true,
+        "can_view_hardware_telemetry": true
+      },
+      "hierarchy": {
+        "level": 5,
+        "scope": "system",
+        "department": "All",
+        "reports_to": null,
+        "manages": []
+      },
+      "stats": {
+        "cgpa": null,
+        "attendance": null,
+        "tasks_total": 0,
+        "tasks_done": 0
+      }
+    },
+    "6a8c2ce4a963fc2909bfdb5d": {
+      "id": "6a8c2ce4a963fc2909bfdb5d",
+      "name": "Aadhavan",
+      "email": "aadhavan@campusflow.edu",
+      "role": "advisor",
+      "dept": "AI & DS",
+      "profile": {
+        "name": "Aadhavan",
+        "email": "aadhavan@campusflow.edu",
+        "role": "advisor",
+        "dept": "AI & DS",
+        "class_advisor_id": null,
+        "roll_id": null,
+        "mobile": null,
+        "dob": null,
+        "year": null,
+        "college": null,
+        "cgpa": null,
+        "attendance": null,
+        "semesters": [],
+        "resume_uploaded": false,
+        "telegram_linked": false,
+        "placement_eligible": true
+      },
+      "settings": {
+        "theme": "system",
+        "notifications": {
+          "email": true,
+          "telegram": false,
+          "academic_alerts": true,
+          "announcements": true,
+          "attendance_warnings": true
+        },
+        "ai_assistant": {
+          "enabled": true,
+          "preferred_model": null,
+          "response_style": "academic",
+          "auto_context": true,
+          "permission_aware": true
+        },
+        "privacy": {
+          "profile_visible": true,
+          "show_contact": true
+        }
+      },
+      "permissions": {
+        "role": "advisor",
+        "role_level": 2,
+        "scope": "class:AI & DS",
+        "can_view_institution_stats": false,
+        "can_manage_roles": false,
+        "can_manage_departments": false,
+        "can_view_all_departments": false,
+        "can_manage_advisors": false,
+        "can_manage_students": true,
+        "can_view_all_students": false,
+        "can_mark_attendance": true,
+        "can_warn_attendance": true,
+        "can_edit_academic_records": true,
+        "can_broadcast_institution": false,
+        "can_broadcast_department": false,
+        "can_broadcast_class": true,
+        "can_manage_own_tasks": true,
+        "can_assign_tasks_to_others": true,
+        "can_manage_agents": false,
+        "can_access_llm_admin": false,
+        "can_view_hardware_telemetry": false
+      },
+      "hierarchy": {
+        "level": 2,
+        "scope": "class:AI & DS",
+        "department": "AI & DS",
+        "reports_to": {
+          "id": "6a8c31344ccc77483c543708",
+          "name": "Mugilan",
+          "role": "hod",
+          "dept": "AI & DS"
+        },
+        "manages": [
+          {
+            "id": "6acc57dd24fe7c6898881075",
+            "name": "Abinash",
+            "role": "student",
+            "roll_id": "22AD001"
+          },
+          {
+            "id": "6acc57dd24fe7c6898881076",
+            "name": "Yashwanth",
+            "role": "student",
+            "roll_id": "22AD002"
+          },
+          {
+            "id": "6acc57dd24fe7c6898881077",
+            "name": "Tharun",
+            "role": "student",
+            "roll_id": "22AD003"
+          },
+          {
+            "id": "6acc57dd24fe7c6898881078",
+            "name": "Mithun",
+            "role": "student",
+            "roll_id": "22AD004"
+          },
+          {
+            "id": "6acc57dd24fe7c6898881079",
+            "name": "Lohith",
+            "role": "student",
+            "roll_id": "22AD005"
+          },
+          {
+            "id": "6acc57dd24fe7c689888107a",
+            "name": "Akshaya",
+            "role": "student",
+            "roll_id": "22AD006"
+          },
+          {
+            "id": "6acc57dd24fe7c689888107b",
+            "name": "Janani",
+            "role": "student",
+            "roll_id": "22AD007"
+          },
+          {
+            "id": "6acc57dd24fe7c689888107c",
+            "name": "Dharshini",
+            "role": "student",
+            "roll_id": "22AD008"
+          },
+          {
+            "id": "6acc57dd24fe7c689888107d",
+            "name": "Nandhini",
+            "role": "student",
+            "roll_id": "22AD009"
+          },
+          {
+            "id": "6acc57dd24fe7c689888107e",
+            "name": "Vaishnavi",
+            "role": "student",
+            "roll_id": "22AD010"
+          },
+          {
+            "id": "6acc57dd24fe7c689888107f",
+            "name": "Gokul",
+            "role": "student",
+            "roll_id": "22AD011"
+          },
+          {
+            "id": "6acc57dd24fe7c6898881080",
+            "name": "Sriram",
+            "role": "student",
+            "roll_id": "22AD012"
+          },
+          {
+            "id": "6acc57dd24fe7c6898881081",
+            "name": "Monisha",
+            "role": "student",
+            "roll_id": "22AD013"
+          },
+          {
+            "id": "6acc57dd24fe7c6898881082",
+            "name": "Rithika",
+            "role": "student",
+            "roll_id": "22AD014"
+          },
+          {
+            "id": "6acc57dd24fe7c6898881083",
+            "name": "Pranav",
+            "role": "student",
+            "roll_id": "22AD015"
+          }
+        ]
+      },
+      "stats": {
+        "cgpa": null,
+        "attendance": null,
+        "tasks_total": 0,
+        "tasks_done": 0
+      }
+    },
+    "6a8c2f4b796bc0dcd1e0efc5": {
+      "id": "6a8c2f4b796bc0dcd1e0efc5",
+      "name": "arjun",
+      "email": "arjun@principal.com",
+      "role": "principal",
+      "dept": "AI & DS",
+      "profile": {
+        "name": "arjun",
+        "email": "arjun@principal.com",
+        "role": "principal",
+        "dept": "AI & DS",
+        "class_advisor_id": null,
+        "roll_id": null,
+        "mobile": null,
+        "dob": null,
+        "year": null,
+        "college": null,
+        "cgpa": null,
+        "attendance": null,
+        "semesters": [],
+        "resume_uploaded": false,
+        "telegram_linked": false,
+        "placement_eligible": true
+      },
+      "settings": {
+        "theme": "system",
+        "notifications": {
+          "email": true,
+          "telegram": false,
+          "academic_alerts": true,
+          "announcements": true,
+          "attendance_warnings": true
+        },
+        "ai_assistant": {
+          "enabled": true,
+          "preferred_model": null,
+          "response_style": "executive",
+          "auto_context": true,
+          "permission_aware": true
+        },
+        "privacy": {
+          "profile_visible": true,
+          "show_contact": true
+        }
+      },
+      "permissions": {
+        "role": "principal",
+        "role_level": 4,
+        "scope": "institution",
+        "can_view_institution_stats": true,
+        "can_manage_roles": true,
+        "can_manage_departments": true,
+        "can_view_all_departments": true,
+        "can_manage_advisors": true,
+        "can_manage_students": true,
+        "can_view_all_students": true,
+        "can_mark_attendance": false,
+        "can_warn_attendance": true,
+        "can_edit_academic_records": true,
+        "can_broadcast_institution": true,
+        "can_broadcast_department": true,
+        "can_broadcast_class": true,
+        "can_manage_own_tasks": true,
+        "can_assign_tasks_to_others": true,
+        "can_manage_agents": false,
+        "can_access_llm_admin": false,
+        "can_view_hardware_telemetry": false
+      },
+      "hierarchy": {
+        "level": 4,
+        "scope": "institution",
+        "department": "AI & DS",
+        "reports_to": null,
+        "manages": []
+      },
+      "stats": {
+        "cgpa": null,
+        "attendance": null,
+        "tasks_total": 0,
+        "tasks_done": 0
+      }
+    },
+    "6a8c31344ccc77483c543708": {
+      "id": "6a8c31344ccc77483c543708",
+      "name": "Mugilan",
+      "email": "mugilan@campusflow.edu",
+      "role": "hod",
+      "dept": "AI & DS",
+      "profile": {
+        "name": "Mugilan",
+        "email": "mugilan@campusflow.edu",
+        "role": "hod",
+        "dept": "AI & DS",
+        "class_advisor_id": null,
+        "roll_id": null,
+        "mobile": null,
+        "dob": null,
+        "year": null,
+        "college": null,
+        "cgpa": null,
+        "attendance": null,
+        "semesters": [],
+        "resume_uploaded": false,
+        "telegram_linked": false,
+        "placement_eligible": true
+      },
+      "settings": {
+        "theme": "system",
+        "notifications": {
+          "email": true,
+          "telegram": false,
+          "academic_alerts": true,
+          "announcements": true,
+          "attendance_warnings": true
+        },
+        "ai_assistant": {
+          "enabled": true,
+          "preferred_model": null,
+          "response_style": "executive",
+          "auto_context": true,
+          "permission_aware": true
+        },
+        "privacy": {
+          "profile_visible": true,
+          "show_contact": true
+        }
+      },
+      "permissions": {
+        "role": "hod",
+        "role_level": 3,
+        "scope": "department:AI & DS",
+        "can_view_institution_stats": false,
+        "can_manage_roles": true,
+        "can_manage_departments": false,
+        "can_view_all_departments": false,
+        "can_manage_advisors": true,
+        "can_manage_students": true,
+        "can_view_all_students": true,
+        "can_mark_attendance": false,
+        "can_warn_attendance": true,
+        "can_edit_academic_records": true,
+        "can_broadcast_institution": false,
+        "can_broadcast_department": true,
+        "can_broadcast_class": true,
+        "can_manage_own_tasks": true,
+        "can_assign_tasks_to_others": true,
+        "can_manage_agents": false,
+        "can_access_llm_admin": false,
+        "can_view_hardware_telemetry": false
+      },
+      "hierarchy": {
+        "level": 3,
+        "scope": "department:AI & DS",
+        "department": "AI & DS",
+        "reports_to": {
+          "id": "6a8c2f4b796bc0dcd1e0efc5",
+          "name": "arjun",
+          "role": "principal"
+        },
+        "manages": [
+          {
+            "id": "6a8c2ce4a963fc2909bfdb5d",
+            "name": "Aadhavan",
+            "role": "advisor"
+          }
+        ]
+      },
+      "stats": {
+        "cgpa": null,
+        "attendance": null,
+        "tasks_total": 0,
+        "tasks_done": 0
+      }
+    },
+    "6acc57dd24fe7c6898881075": {
+      "id": "6acc57dd24fe7c6898881075",
+      "name": "Abinash",
+      "email": "abinash@campusflow.edu",
+      "role": "student",
+      "dept": "AI & DS",
+      "profile": {
+        "name": "Abinash",
+        "email": "abinash@campusflow.edu",
+        "role": "student",
+        "dept": "AI & DS",
+        "class_advisor_id": "6a8c2ce4a963fc2909bfdb5d",
+        "roll_id": "22AD001",
+        "mobile": null,
+        "dob": null,
+        "year": null,
+        "college": null,
+        "cgpa": 8.75,
+        "attendance": 100.0,
+        "semesters": [
+          {
+            "sem": "Sem 1",
+            "gpa": 8.55
+          },
+          {
+            "sem": "Sem 2",
+            "gpa": 8.65
+          },
+          {
+            "sem": "Sem 3",
+            "gpa": 8.75
+          }
+        ],
+        "resume_uploaded": true,
+        "telegram_linked": false,
+        "placement_eligible": true
+      },
+      "settings": {
+        "theme": "system",
+        "notifications": {
+          "email": true,
+          "telegram": false,
+          "academic_alerts": true,
+          "announcements": true,
+          "attendance_warnings": true
+        },
+        "ai_assistant": {
+          "enabled": true,
+          "preferred_model": null,
+          "response_style": "academic",
+          "auto_context": true,
+          "permission_aware": true
+        },
+        "privacy": {
+          "profile_visible": true,
+          "show_contact": false
+        }
+      },
+      "permissions": {
+        "role": "student",
+        "role_level": 1,
+        "scope": "self",
+        "can_view_institution_stats": false,
+        "can_manage_roles": false,
+        "can_manage_departments": false,
+        "can_view_all_departments": false,
+        "can_manage_advisors": false,
+        "can_manage_students": false,
+        "can_view_all_students": false,
+        "can_mark_attendance": false,
+        "can_warn_attendance": false,
+        "can_edit_academic_records": false,
+        "can_broadcast_institution": false,
+        "can_broadcast_department": false,
+        "can_broadcast_class": false,
+        "can_manage_own_tasks": true,
+        "can_assign_tasks_to_others": false,
+        "can_manage_agents": false,
+        "can_access_llm_admin": false,
+        "can_view_hardware_telemetry": false
+      },
+      "hierarchy": {
+        "level": 1,
+        "scope": "self",
+        "department": "AI & DS",
+        "reports_to": {
+          "id": "6a8c2ce4a963fc2909bfdb5d",
+          "name": "Aadhavan",
+          "role": "advisor",
+          "dept": "AI & DS"
+        },
+        "manages": []
+      },
+      "stats": {
+        "cgpa": 8.75,
+        "attendance": 100.0,
+        "tasks_total": 0,
+        "tasks_done": 0
+      }
+    },
+    "6acc57dd24fe7c6898881076": {
+      "id": "6acc57dd24fe7c6898881076",
+      "name": "Yashwanth",
+      "email": "yashwanth@campusflow.edu",
+      "role": "student",
+      "dept": "AI & DS",
+      "profile": {
+        "name": "Yashwanth",
+        "email": "yashwanth@campusflow.edu",
+        "role": "student",
+        "dept": "AI & DS",
+        "class_advisor_id": "6a8c2ce4a963fc2909bfdb5d",
+        "roll_id": "22AD002",
+        "mobile": null,
+        "dob": null,
+        "year": null,
+        "college": null,
+        "cgpa": 7.9,
+        "attendance": 100.0,
+        "semesters": [
+          {
+            "sem": "Sem 1",
+            "gpa": 7.7
+          },
+          {
+            "sem": "Sem 2",
+            "gpa": 7.8
+          },
+          {
+            "sem": "Sem 3",
+            "gpa": 7.9
+          }
+        ],
+        "resume_uploaded": true,
+        "telegram_linked": false,
+        "placement_eligible": true
+      },
+      "settings": {
+        "theme": "system",
+        "notifications": {
+          "email": true,
+          "telegram": false,
+          "academic_alerts": true,
+          "announcements": true,
+          "attendance_warnings": true
+        },
+        "ai_assistant": {
+          "enabled": true,
+          "preferred_model": null,
+          "response_style": "academic",
+          "auto_context": true,
+          "permission_aware": true
+        },
+        "privacy": {
+          "profile_visible": true,
+          "show_contact": false
+        }
+      },
+      "permissions": {
+        "role": "student",
+        "role_level": 1,
+        "scope": "self",
+        "can_view_institution_stats": false,
+        "can_manage_roles": false,
+        "can_manage_departments": false,
+        "can_view_all_departments": false,
+        "can_manage_advisors": false,
+        "can_manage_students": false,
+        "can_view_all_students": false,
+        "can_mark_attendance": false,
+        "can_warn_attendance": false,
+        "can_edit_academic_records": false,
+        "can_broadcast_institution": false,
+        "can_broadcast_department": false,
+        "can_broadcast_class": false,
+        "can_manage_own_tasks": true,
+        "can_assign_tasks_to_others": false,
+        "can_manage_agents": false,
+        "can_access_llm_admin": false,
+        "can_view_hardware_telemetry": false
+      },
+      "hierarchy": {
+        "level": 1,
+        "scope": "self",
+        "department": "AI & DS",
+        "reports_to": {
+          "id": "6a8c2ce4a963fc2909bfdb5d",
+          "name": "Aadhavan",
+          "role": "advisor",
+          "dept": "AI & DS"
+        },
+        "manages": []
+      },
+      "stats": {
+        "cgpa": 7.9,
+        "attendance": 100.0,
+        "tasks_total": 0,
+        "tasks_done": 0
+      }
+    },
+    "6acc57dd24fe7c6898881077": {
+      "id": "6acc57dd24fe7c6898881077",
+      "name": "Tharun",
+      "email": "tharun@campusflow.edu",
+      "role": "student",
+      "dept": "AI & DS",
+      "profile": {
+        "name": "Tharun",
+        "email": "tharun@campusflow.edu",
+        "role": "student",
+        "dept": "AI & DS",
+        "class_advisor_id": "6a8c2ce4a963fc2909bfdb5d",
+        "roll_id": "22AD003",
+        "mobile": null,
+        "dob": null,
+        "year": null,
+        "college": null,
+        "cgpa": 8.45,
+        "attendance": 100.0,
+        "semesters": [
+          {
+            "sem": "Sem 1",
+            "gpa": 8.25
+          },
+          {
+            "sem": "Sem 2",
+            "gpa": 8.35
+          },
+          {
+            "sem": "Sem 3",
+            "gpa": 8.45
+          }
+        ],
+        "resume_uploaded": true,
+        "telegram_linked": false,
+        "placement_eligible": true
+      },
+      "settings": {
+        "theme": "system",
+        "notifications": {
+          "email": true,
+          "telegram": false,
+          "academic_alerts": true,
+          "announcements": true,
+          "attendance_warnings": true
+        },
+        "ai_assistant": {
+          "enabled": true,
+          "preferred_model": null,
+          "response_style": "academic",
+          "auto_context": true,
+          "permission_aware": true
+        },
+        "privacy": {
+          "profile_visible": true,
+          "show_contact": false
+        }
+      },
+      "permissions": {
+        "role": "student",
+        "role_level": 1,
+        "scope": "self",
+        "can_view_institution_stats": false,
+        "can_manage_roles": false,
+        "can_manage_departments": false,
+        "can_view_all_departments": false,
+        "can_manage_advisors": false,
+        "can_manage_students": false,
+        "can_view_all_students": false,
+        "can_mark_attendance": false,
+        "can_warn_attendance": false,
+        "can_edit_academic_records": false,
+        "can_broadcast_institution": false,
+        "can_broadcast_department": false,
+        "can_broadcast_class": false,
+        "can_manage_own_tasks": true,
+        "can_assign_tasks_to_others": false,
+        "can_manage_agents": false,
+        "can_access_llm_admin": false,
+        "can_view_hardware_telemetry": false
+      },
+      "hierarchy": {
+        "level": 1,
+        "scope": "self",
+        "department": "AI & DS",
+        "reports_to": {
+          "id": "6a8c2ce4a963fc2909bfdb5d",
+          "name": "Aadhavan",
+          "role": "advisor",
+          "dept": "AI & DS"
+        },
+        "manages": []
+      },
+      "stats": {
+        "cgpa": 8.45,
+        "attendance": 100.0,
+        "tasks_total": 0,
+        "tasks_done": 0
+      }
+    },
+    "6acc57dd24fe7c6898881078": {
+      "id": "6acc57dd24fe7c6898881078",
+      "name": "Mithun",
+      "email": "mithun@campusflow.edu",
+      "role": "student",
+      "dept": "AI & DS",
+      "profile": {
+        "name": "Mithun",
+        "email": "mithun@campusflow.edu",
+        "role": "student",
+        "dept": "AI & DS",
+        "class_advisor_id": "6a8c2ce4a963fc2909bfdb5d",
+        "roll_id": "22AD004",
+        "mobile": null,
+        "dob": null,
+        "year": null,
+        "college": null,
+        "cgpa": 7.3,
+        "attendance": 100.0,
+        "semesters": [
+          {
+            "sem": "Sem 1",
+            "gpa": 7.1
+          },
+          {
+            "sem": "Sem 2",
+            "gpa": 7.2
+          },
+          {
+            "sem": "Sem 3",
+            "gpa": 7.3
+          }
+        ],
+        "resume_uploaded": true,
+        "telegram_linked": false,
+        "placement_eligible": false
+      },
+      "settings": {
+        "theme": "system",
+        "notifications": {
+          "email": true,
+          "telegram": false,
+          "academic_alerts": true,
+          "announcements": true,
+          "attendance_warnings": true
+        },
+        "ai_assistant": {
+          "enabled": true,
+          "preferred_model": null,
+          "response_style": "academic",
+          "auto_context": true,
+          "permission_aware": true
+        },
+        "privacy": {
+          "profile_visible": true,
+          "show_contact": false
+        }
+      },
+      "permissions": {
+        "role": "student",
+        "role_level": 1,
+        "scope": "self",
+        "can_view_institution_stats": false,
+        "can_manage_roles": false,
+        "can_manage_departments": false,
+        "can_view_all_departments": false,
+        "can_manage_advisors": false,
+        "can_manage_students": false,
+        "can_view_all_students": false,
+        "can_mark_attendance": false,
+        "can_warn_attendance": false,
+        "can_edit_academic_records": false,
+        "can_broadcast_institution": false,
+        "can_broadcast_department": false,
+        "can_broadcast_class": false,
+        "can_manage_own_tasks": true,
+        "can_assign_tasks_to_others": false,
+        "can_manage_agents": false,
+        "can_access_llm_admin": false,
+        "can_view_hardware_telemetry": false
+      },
+      "hierarchy": {
+        "level": 1,
+        "scope": "self",
+        "department": "AI & DS",
+        "reports_to": {
+          "id": "6a8c2ce4a963fc2909bfdb5d",
+          "name": "Aadhavan",
+          "role": "advisor",
+          "dept": "AI & DS"
+        },
+        "manages": []
+      },
+      "stats": {
+        "cgpa": 7.3,
+        "attendance": 100.0,
+        "tasks_total": 0,
+        "tasks_done": 0
+      }
+    },
+    "6acc57dd24fe7c6898881079": {
+      "id": "6acc57dd24fe7c6898881079",
+      "name": "Lohith",
+      "email": "lohith@campusflow.edu",
+      "role": "student",
+      "dept": "AI & DS",
+      "profile": {
+        "name": "Lohith",
+        "email": "lohith@campusflow.edu",
+        "role": "student",
+        "dept": "AI & DS",
+        "class_advisor_id": "6a8c2ce4a963fc2909bfdb5d",
+        "roll_id": "22AD005",
+        "mobile": null,
+        "dob": null,
+        "year": null,
+        "college": null,
+        "cgpa": 9.1,
+        "attendance": 100.0,
+        "semesters": [
+          {
+            "sem": "Sem 1",
+            "gpa": 8.9
+          },
+          {
+            "sem": "Sem 2",
+            "gpa": 9.0
+          },
+          {
+            "sem": "Sem 3",
+            "gpa": 9.1
+          }
+        ],
+        "resume_uploaded": true,
+        "telegram_linked": false,
+        "placement_eligible": true
+      },
+      "settings": {
+        "theme": "system",
+        "notifications": {
+          "email": true,
+          "telegram": false,
+          "academic_alerts": true,
+          "announcements": true,
+          "attendance_warnings": true
+        },
+        "ai_assistant": {
+          "enabled": true,
+          "preferred_model": null,
+          "response_style": "academic",
+          "auto_context": true,
+          "permission_aware": true
+        },
+        "privacy": {
+          "profile_visible": true,
+          "show_contact": false
+        }
+      },
+      "permissions": {
+        "role": "student",
+        "role_level": 1,
+        "scope": "self",
+        "can_view_institution_stats": false,
+        "can_manage_roles": false,
+        "can_manage_departments": false,
+        "can_view_all_departments": false,
+        "can_manage_advisors": false,
+        "can_manage_students": false,
+        "can_view_all_students": false,
+        "can_mark_attendance": false,
+        "can_warn_attendance": false,
+        "can_edit_academic_records": false,
+        "can_broadcast_institution": false,
+        "can_broadcast_department": false,
+        "can_broadcast_class": false,
+        "can_manage_own_tasks": true,
+        "can_assign_tasks_to_others": false,
+        "can_manage_agents": false,
+        "can_access_llm_admin": false,
+        "can_view_hardware_telemetry": false
+      },
+      "hierarchy": {
+        "level": 1,
+        "scope": "self",
+        "department": "AI & DS",
+        "reports_to": {
+          "id": "6a8c2ce4a963fc2909bfdb5d",
+          "name": "Aadhavan",
+          "role": "advisor",
+          "dept": "AI & DS"
+        },
+        "manages": []
+      },
+      "stats": {
+        "cgpa": 9.1,
+        "attendance": 100.0,
+        "tasks_total": 0,
+        "tasks_done": 0
+      }
+    },
+    "6acc57dd24fe7c689888107a": {
+      "id": "6acc57dd24fe7c689888107a",
+      "name": "Akshaya",
+      "email": "akshaya@campusflow.edu",
+      "role": "student",
+      "dept": "AI & DS",
+      "profile": {
+        "name": "Akshaya",
+        "email": "akshaya@campusflow.edu",
+        "role": "student",
+        "dept": "AI & DS",
+        "class_advisor_id": "6a8c2ce4a963fc2909bfdb5d",
+        "roll_id": "22AD006",
+        "mobile": null,
+        "dob": null,
+        "year": null,
+        "college": null,
+        "cgpa": 8.85,
+        "attendance": 100.0,
+        "semesters": [
+          {
+            "sem": "Sem 1",
+            "gpa": 8.65
+          },
+          {
+            "sem": "Sem 2",
+            "gpa": 8.75
+          },
+          {
+            "sem": "Sem 3",
+            "gpa": 8.85
+          }
+        ],
+        "resume_uploaded": true,
+        "telegram_linked": false,
+        "placement_eligible": true
+      },
+      "settings": {
+        "theme": "system",
+        "notifications": {
+          "email": true,
+          "telegram": false,
+          "academic_alerts": true,
+          "announcements": true,
+          "attendance_warnings": true
+        },
+        "ai_assistant": {
+          "enabled": true,
+          "preferred_model": null,
+          "response_style": "academic",
+          "auto_context": true,
+          "permission_aware": true
+        },
+        "privacy": {
+          "profile_visible": true,
+          "show_contact": false
+        }
+      },
+      "permissions": {
+        "role": "student",
+        "role_level": 1,
+        "scope": "self",
+        "can_view_institution_stats": false,
+        "can_manage_roles": false,
+        "can_manage_departments": false,
+        "can_view_all_departments": false,
+        "can_manage_advisors": false,
+        "can_manage_students": false,
+        "can_view_all_students": false,
+        "can_mark_attendance": false,
+        "can_warn_attendance": false,
+        "can_edit_academic_records": false,
+        "can_broadcast_institution": false,
+        "can_broadcast_department": false,
+        "can_broadcast_class": false,
+        "can_manage_own_tasks": true,
+        "can_assign_tasks_to_others": false,
+        "can_manage_agents": false,
+        "can_access_llm_admin": false,
+        "can_view_hardware_telemetry": false
+      },
+      "hierarchy": {
+        "level": 1,
+        "scope": "self",
+        "department": "AI & DS",
+        "reports_to": {
+          "id": "6a8c2ce4a963fc2909bfdb5d",
+          "name": "Aadhavan",
+          "role": "advisor",
+          "dept": "AI & DS"
+        },
+        "manages": []
+      },
+      "stats": {
+        "cgpa": 8.85,
+        "attendance": 100.0,
+        "tasks_total": 0,
+        "tasks_done": 0
+      }
+    },
+    "6acc57dd24fe7c689888107b": {
+      "id": "6acc57dd24fe7c689888107b",
+      "name": "Janani",
+      "email": "janani@campusflow.edu",
+      "role": "student",
+      "dept": "AI & DS",
+      "profile": {
+        "name": "Janani",
+        "email": "janani@campusflow.edu",
+        "role": "student",
+        "dept": "AI & DS",
+        "class_advisor_id": "6a8c2ce4a963fc2909bfdb5d",
+        "roll_id": "22AD007",
+        "mobile": null,
+        "dob": null,
+        "year": null,
+        "college": null,
+        "cgpa": 9.35,
+        "attendance": 100.0,
+        "semesters": [
+          {
+            "sem": "Sem 1",
+            "gpa": 9.15
+          },
+          {
+            "sem": "Sem 2",
+            "gpa": 9.25
+          },
+          {
+            "sem": "Sem 3",
+            "gpa": 9.35
+          }
+        ],
+        "resume_uploaded": true,
+        "telegram_linked": false,
+        "placement_eligible": true
+      },
+      "settings": {
+        "theme": "system",
+        "notifications": {
+          "email": true,
+          "telegram": false,
+          "academic_alerts": true,
+          "announcements": true,
+          "attendance_warnings": true
+        },
+        "ai_assistant": {
+          "enabled": true,
+          "preferred_model": null,
+          "response_style": "academic",
+          "auto_context": true,
+          "permission_aware": true
+        },
+        "privacy": {
+          "profile_visible": true,
+          "show_contact": false
+        }
+      },
+      "permissions": {
+        "role": "student",
+        "role_level": 1,
+        "scope": "self",
+        "can_view_institution_stats": false,
+        "can_manage_roles": false,
+        "can_manage_departments": false,
+        "can_view_all_departments": false,
+        "can_manage_advisors": false,
+        "can_manage_students": false,
+        "can_view_all_students": false,
+        "can_mark_attendance": false,
+        "can_warn_attendance": false,
+        "can_edit_academic_records": false,
+        "can_broadcast_institution": false,
+        "can_broadcast_department": false,
+        "can_broadcast_class": false,
+        "can_manage_own_tasks": true,
+        "can_assign_tasks_to_others": false,
+        "can_manage_agents": false,
+        "can_access_llm_admin": false,
+        "can_view_hardware_telemetry": false
+      },
+      "hierarchy": {
+        "level": 1,
+        "scope": "self",
+        "department": "AI & DS",
+        "reports_to": {
+          "id": "6a8c2ce4a963fc2909bfdb5d",
+          "name": "Aadhavan",
+          "role": "advisor",
+          "dept": "AI & DS"
+        },
+        "manages": []
+      },
+      "stats": {
+        "cgpa": 9.35,
+        "attendance": 100.0,
+        "tasks_total": 0,
+        "tasks_done": 0
+      }
+    },
+    "6acc57dd24fe7c689888107c": {
+      "id": "6acc57dd24fe7c689888107c",
+      "name": "Dharshini",
+      "email": "dharshini@campusflow.edu",
+      "role": "student",
+      "dept": "AI & DS",
+      "profile": {
+        "name": "Dharshini",
+        "email": "dharshini@campusflow.edu",
+        "role": "student",
+        "dept": "AI & DS",
+        "class_advisor_id": "6a8c2ce4a963fc2909bfdb5d",
+        "roll_id": "22AD008",
+        "mobile": null,
+        "dob": null,
+        "year": null,
+        "college": null,
+        "cgpa": 8.2,
+        "attendance": 100.0,
+        "semesters": [
+          {
+            "sem": "Sem 1",
+            "gpa": 8.0
+          },
+          {
+            "sem": "Sem 2",
+            "gpa": 8.1
+          },
+          {
+            "sem": "Sem 3",
+            "gpa": 8.2
+          }
+        ],
+        "resume_uploaded": true,
+        "telegram_linked": false,
+        "placement_eligible": true
+      },
+      "settings": {
+        "theme": "system",
+        "notifications": {
+          "email": true,
+          "telegram": false,
+          "academic_alerts": true,
+          "announcements": true,
+          "attendance_warnings": true
+        },
+        "ai_assistant": {
+          "enabled": true,
+          "preferred_model": null,
+          "response_style": "academic",
+          "auto_context": true,
+          "permission_aware": true
+        },
+        "privacy": {
+          "profile_visible": true,
+          "show_contact": false
+        }
+      },
+      "permissions": {
+        "role": "student",
+        "role_level": 1,
+        "scope": "self",
+        "can_view_institution_stats": false,
+        "can_manage_roles": false,
+        "can_manage_departments": false,
+        "can_view_all_departments": false,
+        "can_manage_advisors": false,
+        "can_manage_students": false,
+        "can_view_all_students": false,
+        "can_mark_attendance": false,
+        "can_warn_attendance": false,
+        "can_edit_academic_records": false,
+        "can_broadcast_institution": false,
+        "can_broadcast_department": false,
+        "can_broadcast_class": false,
+        "can_manage_own_tasks": true,
+        "can_assign_tasks_to_others": false,
+        "can_manage_agents": false,
+        "can_access_llm_admin": false,
+        "can_view_hardware_telemetry": false
+      },
+      "hierarchy": {
+        "level": 1,
+        "scope": "self",
+        "department": "AI & DS",
+        "reports_to": {
+          "id": "6a8c2ce4a963fc2909bfdb5d",
+          "name": "Aadhavan",
+          "role": "advisor",
+          "dept": "AI & DS"
+        },
+        "manages": []
+      },
+      "stats": {
+        "cgpa": 8.2,
+        "attendance": 100.0,
+        "tasks_total": 0,
+        "tasks_done": 0
+      }
+    },
+    "6acc57dd24fe7c689888107d": {
+      "id": "6acc57dd24fe7c689888107d",
+      "name": "Nandhini",
+      "email": "nandhini@campusflow.edu",
+      "role": "student",
+      "dept": "AI & DS",
+      "profile": {
+        "name": "Nandhini",
+        "email": "nandhini@campusflow.edu",
+        "role": "student",
+        "dept": "AI & DS",
+        "class_advisor_id": "6a8c2ce4a963fc2909bfdb5d",
+        "roll_id": "22AD009",
+        "mobile": null,
+        "dob": null,
+        "year": null,
+        "college": null,
+        "cgpa": 7.65,
+        "attendance": 100.0,
+        "semesters": [
+          {
+            "sem": "Sem 1",
+            "gpa": 7.45
+          },
+          {
+            "sem": "Sem 2",
+            "gpa": 7.55
+          },
+          {
+            "sem": "Sem 3",
+            "gpa": 7.65
+          }
+        ],
+        "resume_uploaded": true,
+        "telegram_linked": false,
+        "placement_eligible": false
+      },
+      "settings": {
+        "theme": "system",
+        "notifications": {
+          "email": true,
+          "telegram": false,
+          "academic_alerts": true,
+          "announcements": true,
+          "attendance_warnings": true
+        },
+        "ai_assistant": {
+          "enabled": true,
+          "preferred_model": null,
+          "response_style": "academic",
+          "auto_context": true,
+          "permission_aware": true
+        },
+        "privacy": {
+          "profile_visible": true,
+          "show_contact": false
+        }
+      },
+      "permissions": {
+        "role": "student",
+        "role_level": 1,
+        "scope": "self",
+        "can_view_institution_stats": false,
+        "can_manage_roles": false,
+        "can_manage_departments": false,
+        "can_view_all_departments": false,
+        "can_manage_advisors": false,
+        "can_manage_students": false,
+        "can_view_all_students": false,
+        "can_mark_attendance": false,
+        "can_warn_attendance": false,
+        "can_edit_academic_records": false,
+        "can_broadcast_institution": false,
+        "can_broadcast_department": false,
+        "can_broadcast_class": false,
+        "can_manage_own_tasks": true,
+        "can_assign_tasks_to_others": false,
+        "can_manage_agents": false,
+        "can_access_llm_admin": false,
+        "can_view_hardware_telemetry": false
+      },
+      "hierarchy": {
+        "level": 1,
+        "scope": "self",
+        "department": "AI & DS",
+        "reports_to": {
+          "id": "6a8c2ce4a963fc2909bfdb5d",
+          "name": "Aadhavan",
+          "role": "advisor",
+          "dept": "AI & DS"
+        },
+        "manages": []
+      },
+      "stats": {
+        "cgpa": 7.65,
+        "attendance": 100.0,
+        "tasks_total": 0,
+        "tasks_done": 0
+      }
+    },
+    "6acc57dd24fe7c689888107e": {
+      "id": "6acc57dd24fe7c689888107e",
+      "name": "Vaishnavi",
+      "email": "vaishnavi@campusflow.edu",
+      "role": "student",
+      "dept": "AI & DS",
+      "profile": {
+        "name": "Vaishnavi",
+        "email": "vaishnavi@campusflow.edu",
+        "role": "student",
+        "dept": "AI & DS",
+        "class_advisor_id": "6a8c2ce4a963fc2909bfdb5d",
+        "roll_id": "22AD010",
+        "mobile": null,
+        "dob": null,
+        "year": null,
+        "college": null,
+        "cgpa": 8.95,
+        "attendance": 100.0,
+        "semesters": [
+          {
+            "sem": "Sem 1",
+            "gpa": 8.75
+          },
+          {
+            "sem": "Sem 2",
+            "gpa": 8.85
+          },
+          {
+            "sem": "Sem 3",
+            "gpa": 8.95
+          }
+        ],
+        "resume_uploaded": true,
+        "telegram_linked": false,
+        "placement_eligible": true
+      },
+      "settings": {
+        "theme": "system",
+        "notifications": {
+          "email": true,
+          "telegram": false,
+          "academic_alerts": true,
+          "announcements": true,
+          "attendance_warnings": true
+        },
+        "ai_assistant": {
+          "enabled": true,
+          "preferred_model": null,
+          "response_style": "academic",
+          "auto_context": true,
+          "permission_aware": true
+        },
+        "privacy": {
+          "profile_visible": true,
+          "show_contact": false
+        }
+      },
+      "permissions": {
+        "role": "student",
+        "role_level": 1,
+        "scope": "self",
+        "can_view_institution_stats": false,
+        "can_manage_roles": false,
+        "can_manage_departments": false,
+        "can_view_all_departments": false,
+        "can_manage_advisors": false,
+        "can_manage_students": false,
+        "can_view_all_students": false,
+        "can_mark_attendance": false,
+        "can_warn_attendance": false,
+        "can_edit_academic_records": false,
+        "can_broadcast_institution": false,
+        "can_broadcast_department": false,
+        "can_broadcast_class": false,
+        "can_manage_own_tasks": true,
+        "can_assign_tasks_to_others": false,
+        "can_manage_agents": false,
+        "can_access_llm_admin": false,
+        "can_view_hardware_telemetry": false
+      },
+      "hierarchy": {
+        "level": 1,
+        "scope": "self",
+        "department": "AI & DS",
+        "reports_to": {
+          "id": "6a8c2ce4a963fc2909bfdb5d",
+          "name": "Aadhavan",
+          "role": "advisor",
+          "dept": "AI & DS"
+        },
+        "manages": []
+      },
+      "stats": {
+        "cgpa": 8.95,
+        "attendance": 100.0,
+        "tasks_total": 0,
+        "tasks_done": 0
+      }
+    },
+    "6acc57dd24fe7c689888107f": {
+      "id": "6acc57dd24fe7c689888107f",
+      "name": "Gokul",
+      "email": "gokul@campusflow.edu",
+      "role": "student",
+      "dept": "AI & DS",
+      "profile": {
+        "name": "Gokul",
+        "email": "gokul@campusflow.edu",
+        "role": "student",
+        "dept": "AI & DS",
+        "class_advisor_id": "6a8c2ce4a963fc2909bfdb5d",
+        "roll_id": "22AD011",
+        "mobile": null,
+        "dob": null,
+        "year": null,
+        "college": null,
+        "cgpa": 8.15,
+        "attendance": 100.0,
+        "semesters": [
+          {
+            "sem": "Sem 1",
+            "gpa": 7.95
+          },
+          {
+            "sem": "Sem 2",
+            "gpa": 8.05
+          },
+          {
+            "sem": "Sem 3",
+            "gpa": 8.15
+          }
+        ],
+        "resume_uploaded": true,
+        "telegram_linked": false,
+        "placement_eligible": true
+      },
+      "settings": {
+        "theme": "system",
+        "notifications": {
+          "email": true,
+          "telegram": false,
+          "academic_alerts": true,
+          "announcements": true,
+          "attendance_warnings": true
+        },
+        "ai_assistant": {
+          "enabled": true,
+          "preferred_model": null,
+          "response_style": "academic",
+          "auto_context": true,
+          "permission_aware": true
+        },
+        "privacy": {
+          "profile_visible": true,
+          "show_contact": false
+        }
+      },
+      "permissions": {
+        "role": "student",
+        "role_level": 1,
+        "scope": "self",
+        "can_view_institution_stats": false,
+        "can_manage_roles": false,
+        "can_manage_departments": false,
+        "can_view_all_departments": false,
+        "can_manage_advisors": false,
+        "can_manage_students": false,
+        "can_view_all_students": false,
+        "can_mark_attendance": false,
+        "can_warn_attendance": false,
+        "can_edit_academic_records": false,
+        "can_broadcast_institution": false,
+        "can_broadcast_department": false,
+        "can_broadcast_class": false,
+        "can_manage_own_tasks": true,
+        "can_assign_tasks_to_others": false,
+        "can_manage_agents": false,
+        "can_access_llm_admin": false,
+        "can_view_hardware_telemetry": false
+      },
+      "hierarchy": {
+        "level": 1,
+        "scope": "self",
+        "department": "AI & DS",
+        "reports_to": {
+          "id": "6a8c2ce4a963fc2909bfdb5d",
+          "name": "Aadhavan",
+          "role": "advisor",
+          "dept": "AI & DS"
+        },
+        "manages": []
+      },
+      "stats": {
+        "cgpa": 8.15,
+        "attendance": 100.0,
+        "tasks_total": 0,
+        "tasks_done": 0
+      }
+    },
+    "6acc57dd24fe7c6898881080": {
+      "id": "6acc57dd24fe7c6898881080",
+      "name": "Sriram",
+      "email": "sriram@campusflow.edu",
+      "role": "student",
+      "dept": "AI & DS",
+      "profile": {
+        "name": "Sriram",
+        "email": "sriram@campusflow.edu",
+        "role": "student",
+        "dept": "AI & DS",
+        "class_advisor_id": "6a8c2ce4a963fc2909bfdb5d",
+        "roll_id": "22AD012",
+        "mobile": null,
+        "dob": null,
+        "year": null,
+        "college": null,
+        "cgpa": 8.6,
+        "attendance": 100.0,
+        "semesters": [
+          {
+            "sem": "Sem 1",
+            "gpa": 8.4
+          },
+          {
+            "sem": "Sem 2",
+            "gpa": 8.5
+          },
+          {
+            "sem": "Sem 3",
+            "gpa": 8.6
+          }
+        ],
+        "resume_uploaded": true,
+        "telegram_linked": false,
+        "placement_eligible": true
+      },
+      "settings": {
+        "theme": "system",
+        "notifications": {
+          "email": true,
+          "telegram": false,
+          "academic_alerts": true,
+          "announcements": true,
+          "attendance_warnings": true
+        },
+        "ai_assistant": {
+          "enabled": true,
+          "preferred_model": null,
+          "response_style": "academic",
+          "auto_context": true,
+          "permission_aware": true
+        },
+        "privacy": {
+          "profile_visible": true,
+          "show_contact": false
+        }
+      },
+      "permissions": {
+        "role": "student",
+        "role_level": 1,
+        "scope": "self",
+        "can_view_institution_stats": false,
+        "can_manage_roles": false,
+        "can_manage_departments": false,
+        "can_view_all_departments": false,
+        "can_manage_advisors": false,
+        "can_manage_students": false,
+        "can_view_all_students": false,
+        "can_mark_attendance": false,
+        "can_warn_attendance": false,
+        "can_edit_academic_records": false,
+        "can_broadcast_institution": false,
+        "can_broadcast_department": false,
+        "can_broadcast_class": false,
+        "can_manage_own_tasks": true,
+        "can_assign_tasks_to_others": false,
+        "can_manage_agents": false,
+        "can_access_llm_admin": false,
+        "can_view_hardware_telemetry": false
+      },
+      "hierarchy": {
+        "level": 1,
+        "scope": "self",
+        "department": "AI & DS",
+        "reports_to": {
+          "id": "6a8c2ce4a963fc2909bfdb5d",
+          "name": "Aadhavan",
+          "role": "advisor",
+          "dept": "AI & DS"
+        },
+        "manages": []
+      },
+      "stats": {
+        "cgpa": 8.6,
+        "attendance": 100.0,
+        "tasks_total": 0,
+        "tasks_done": 0
+      }
+    },
+    "6acc57dd24fe7c6898881081": {
+      "id": "6acc57dd24fe7c6898881081",
+      "name": "Monisha",
+      "email": "monisha@campusflow.edu",
+      "role": "student",
+      "dept": "AI & DS",
+      "profile": {
+        "name": "Monisha",
+        "email": "monisha@campusflow.edu",
+        "role": "student",
+        "dept": "AI & DS",
+        "class_advisor_id": "6a8c2ce4a963fc2909bfdb5d",
+        "roll_id": "22AD013",
+        "mobile": null,
+        "dob": null,
+        "year": null,
+        "college": null,
+        "cgpa": 8.4,
+        "attendance": 100.0,
+        "semesters": [
+          {
+            "sem": "Sem 1",
+            "gpa": 8.2
+          },
+          {
+            "sem": "Sem 2",
+            "gpa": 8.3
+          },
+          {
+            "sem": "Sem 3",
+            "gpa": 8.4
+          }
+        ],
+        "resume_uploaded": true,
+        "telegram_linked": false,
+        "placement_eligible": true
+      },
+      "settings": {
+        "theme": "system",
+        "notifications": {
+          "email": true,
+          "telegram": false,
+          "academic_alerts": true,
+          "announcements": true,
+          "attendance_warnings": true
+        },
+        "ai_assistant": {
+          "enabled": true,
+          "preferred_model": null,
+          "response_style": "academic",
+          "auto_context": true,
+          "permission_aware": true
+        },
+        "privacy": {
+          "profile_visible": true,
+          "show_contact": false
+        }
+      },
+      "permissions": {
+        "role": "student",
+        "role_level": 1,
+        "scope": "self",
+        "can_view_institution_stats": false,
+        "can_manage_roles": false,
+        "can_manage_departments": false,
+        "can_view_all_departments": false,
+        "can_manage_advisors": false,
+        "can_manage_students": false,
+        "can_view_all_students": false,
+        "can_mark_attendance": false,
+        "can_warn_attendance": false,
+        "can_edit_academic_records": false,
+        "can_broadcast_institution": false,
+        "can_broadcast_department": false,
+        "can_broadcast_class": false,
+        "can_manage_own_tasks": true,
+        "can_assign_tasks_to_others": false,
+        "can_manage_agents": false,
+        "can_access_llm_admin": false,
+        "can_view_hardware_telemetry": false
+      },
+      "hierarchy": {
+        "level": 1,
+        "scope": "self",
+        "department": "AI & DS",
+        "reports_to": {
+          "id": "6a8c2ce4a963fc2909bfdb5d",
+          "name": "Aadhavan",
+          "role": "advisor",
+          "dept": "AI & DS"
+        },
+        "manages": []
+      },
+      "stats": {
+        "cgpa": 8.4,
+        "attendance": 100.0,
+        "tasks_total": 0,
+        "tasks_done": 0
+      }
+    },
+    "6acc57dd24fe7c6898881082": {
+      "id": "6acc57dd24fe7c6898881082",
+      "name": "Rithika",
+      "email": "rithika@campusflow.edu",
+      "role": "student",
+      "dept": "AI & DS",
+      "profile": {
+        "name": "Rithika",
+        "email": "rithika@campusflow.edu",
+        "role": "student",
+        "dept": "AI & DS",
+        "class_advisor_id": "6a8c2ce4a963fc2909bfdb5d",
+        "roll_id": "22AD014",
+        "mobile": null,
+        "dob": null,
+        "year": null,
+        "college": null,
+        "cgpa": 9.2,
+        "attendance": 100.0,
+        "semesters": [
+          {
+            "sem": "Sem 1",
+            "gpa": 9.0
+          },
+          {
+            "sem": "Sem 2",
+            "gpa": 9.1
+          },
+          {
+            "sem": "Sem 3",
+            "gpa": 9.2
+          }
+        ],
+        "resume_uploaded": true,
+        "telegram_linked": false,
+        "placement_eligible": true
+      },
+      "settings": {
+        "theme": "system",
+        "notifications": {
+          "email": true,
+          "telegram": false,
+          "academic_alerts": true,
+          "announcements": true,
+          "attendance_warnings": true
+        },
+        "ai_assistant": {
+          "enabled": true,
+          "preferred_model": null,
+          "response_style": "academic",
+          "auto_context": true,
+          "permission_aware": true
+        },
+        "privacy": {
+          "profile_visible": true,
+          "show_contact": false
+        }
+      },
+      "permissions": {
+        "role": "student",
+        "role_level": 1,
+        "scope": "self",
+        "can_view_institution_stats": false,
+        "can_manage_roles": false,
+        "can_manage_departments": false,
+        "can_view_all_departments": false,
+        "can_manage_advisors": false,
+        "can_manage_students": false,
+        "can_view_all_students": false,
+        "can_mark_attendance": false,
+        "can_warn_attendance": false,
+        "can_edit_academic_records": false,
+        "can_broadcast_institution": false,
+        "can_broadcast_department": false,
+        "can_broadcast_class": false,
+        "can_manage_own_tasks": true,
+        "can_assign_tasks_to_others": false,
+        "can_manage_agents": false,
+        "can_access_llm_admin": false,
+        "can_view_hardware_telemetry": false
+      },
+      "hierarchy": {
+        "level": 1,
+        "scope": "self",
+        "department": "AI & DS",
+        "reports_to": {
+          "id": "6a8c2ce4a963fc2909bfdb5d",
+          "name": "Aadhavan",
+          "role": "advisor",
+          "dept": "AI & DS"
+        },
+        "manages": []
+      },
+      "stats": {
+        "cgpa": 9.2,
+        "attendance": 100.0,
+        "tasks_total": 0,
+        "tasks_done": 0
+      }
+    },
+    "6acc57dd24fe7c6898881083": {
+      "id": "6acc57dd24fe7c6898881083",
+      "name": "Pranav",
+      "email": "pranav@campusflow.edu",
+      "role": "student",
+      "dept": "AI & DS",
+      "profile": {
+        "name": "Pranav",
+        "email": "pranav@campusflow.edu",
+        "role": "student",
+        "dept": "AI & DS",
+        "class_advisor_id": "6a8c2ce4a963fc2909bfdb5d",
+        "roll_id": "22AD015",
+        "mobile": null,
+        "dob": null,
+        "year": null,
+        "college": null,
+        "cgpa": 7.8,
+        "attendance": 100.0,
+        "semesters": [
+          {
+            "sem": "Sem 1",
+            "gpa": 7.6
+          },
+          {
+            "sem": "Sem 2",
+            "gpa": 7.7
+          },
+          {
+            "sem": "Sem 3",
+            "gpa": 7.8
+          }
+        ],
+        "resume_uploaded": true,
+        "telegram_linked": false,
+        "placement_eligible": true
+      },
+      "settings": {
+        "theme": "system",
+        "notifications": {
+          "email": true,
+          "telegram": false,
+          "academic_alerts": true,
+          "announcements": true,
+          "attendance_warnings": true
+        },
+        "ai_assistant": {
+          "enabled": true,
+          "preferred_model": null,
+          "response_style": "academic",
+          "auto_context": true,
+          "permission_aware": true
+        },
+        "privacy": {
+          "profile_visible": true,
+          "show_contact": false
+        }
+      },
+      "permissions": {
+        "role": "student",
+        "role_level": 1,
+        "scope": "self",
+        "can_view_institution_stats": false,
+        "can_manage_roles": false,
+        "can_manage_departments": false,
+        "can_view_all_departments": false,
+        "can_manage_advisors": false,
+        "can_manage_students": false,
+        "can_view_all_students": false,
+        "can_mark_attendance": false,
+        "can_warn_attendance": false,
+        "can_edit_academic_records": false,
+        "can_broadcast_institution": false,
+        "can_broadcast_department": false,
+        "can_broadcast_class": false,
+        "can_manage_own_tasks": true,
+        "can_assign_tasks_to_others": false,
+        "can_manage_agents": false,
+        "can_access_llm_admin": false,
+        "can_view_hardware_telemetry": false
+      },
+      "hierarchy": {
+        "level": 1,
+        "scope": "self",
+        "department": "AI & DS",
+        "reports_to": {
+          "id": "6a8c2ce4a963fc2909bfdb5d",
+          "name": "Aadhavan",
+          "role": "advisor",
+          "dept": "AI & DS"
+        },
+        "manages": []
+      },
+      "stats": {
+        "cgpa": 7.8,
+        "attendance": 100.0,
+        "tasks_total": 0,
+        "tasks_done": 0
+      }
+    }
+  },
+  "permissions_reference": {
+    "levels": {
+      "5": "admin (System Level)",
+      "4": "principal (Institution Level)",
+      "3": "hod (Department Level)",
+      "2": "advisor (Class Level)",
+      "1": "student (Self Level)"
+    }
+  }
+}

@@ -63,8 +63,42 @@ async def _active_model():
     return (document or {}).get("model") or app_settings.ollama_default_model
 
 
-def _prompt(user, context):
-    return f"You are the personal assistant agent for {user.name}, {ROLE_BRIEF.get(user.role, 'a CampusFlow user')}. Be concise, warm, and directly useful. Format replies in Markdown. User snapshot: {context or 'No snapshot available.'}"
+def _prompt(user, context, hierarchy_node=None):
+    base = f"You are the personal assistant agent for {user.name}, {ROLE_BRIEF.get(user.role, 'a CampusFlow user')}. Be concise, warm, and directly useful. Format replies in Markdown."
+
+    hierarchy_block = ""
+    if hierarchy_node:
+        perms = hierarchy_node.get("permissions", {})
+        h_info = hierarchy_node.get("hierarchy", {})
+        settings = hierarchy_node.get("settings", {})
+
+        allowed_actions = [k.replace("can_", "").replace("_", " ") for k, v in perms.items() if k.startswith("can_") and v]
+        denied_actions = [k.replace("can_", "").replace("_", " ") for k, v in perms.items() if k.startswith("can_") and not v]
+
+        reports_to = h_info.get("reports_to")
+        manages = h_info.get("manages", [])
+
+        rep_str = f"{reports_to['name']} ({reports_to.get('role', '').upper()})" if reports_to else "None (Institutional Leadership)"
+        man_str = ", ".join([f"{m['name']} ({m.get('role', '')})" for m in manages[:8]]) if manages else "None"
+        if len(manages) > 8:
+            man_str += f" (+{len(manages) - 8} more)"
+
+        hierarchy_block = f"""
+INSTITUTIONAL HIERARCHY & PERMISSION CONTEXT:
+- Role & Authority: {user.role.value.upper()} (Level {perms.get('role_level', 1)}/5, Scope: {perms.get('scope', 'self')})
+- Department: {user.dept or 'None / General'}
+- Reports To: {rep_str}
+- Supervises / Manages: {man_str}
+- Authorized Capabilities: {', '.join(allowed_actions) if allowed_actions else 'Standard student self-view'}
+- Restricted Capabilities: {', '.join(denied_actions[:8])}
+- User Style Preference: {settings.get('ai_assistant', {}).get('response_style', 'concise')}
+
+DECISION-MAKING & GOVERNANCE RULES:
+1. Always respect the user's authority scope. If a student asks to change grades or reassign advisors, state clearly that their role lacks permission.
+2. If an advisor, HOD, or principal asks about their students, subordinates, or department hierarchy, use the hierarchy data directly to provide accurate, grounded answers.
+"""
+
+    return f"{base}\n{hierarchy_block}\nUser snapshot: {context or 'No snapshot available.'}"
 
 
 async def chat(request):
@@ -82,8 +116,10 @@ async def chat(request):
         return _error("Message can't be empty", 400)
     record = await action_log.start_action(user.id, user.name, user.role.value, text, step="chat_query")
     context = user_knowledge.snapshot_as_context_string(user.id)
+    from app.services.hierarchy_sync import get_user_hierarchy_node
+    hierarchy_node = get_user_hierarchy_node(user.id)
     model = await _active_model()
-    messages = [{"role": "system", "content": _prompt(user, context)}]
+    messages = [{"role": "system", "content": _prompt(user, context, hierarchy_node)}]
     messages.extend({"role": item.role, "content": item.content} for item in payload.history[-8:] if item.role in ("user", "assistant"))
     messages.append({"role": "user", "content": text})
     try:

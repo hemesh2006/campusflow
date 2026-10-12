@@ -12,7 +12,12 @@ async def get_current_user(request) -> UserPublic:
     if not payload or "sub" not in payload:
         raise credentials_error
 
-    user = await users_col.find_one({"_id": ObjectId(payload["sub"])})
+    try:
+        user_id = ObjectId(payload["sub"])
+    except Exception:
+        raise credentials_error
+
+    user = await users_col.find_one({"_id": user_id})
     if not user:
         raise credentials_error
 
@@ -20,6 +25,11 @@ async def get_current_user(request) -> UserPublic:
 
 
 def user_doc_to_public(user: dict) -> UserPublic:
+    from app.services.hierarchy_sync import compute_user_permissions, get_default_settings
+    raw_settings = user.get("settings")
+    settings = raw_settings if raw_settings is not None else get_default_settings(user.get("role", "student"))
+    permissions = compute_user_permissions(user.get("role", "student"), user)
+
     return UserPublic(
         id=str(user["_id"]),
         name=user["name"],
@@ -37,6 +47,8 @@ def user_doc_to_public(user: dict) -> UserPublic:
         resume_uploaded=user.get("resume_uploaded", False),
         telegram_linked=user.get("telegram_linked", False),
         placement_eligible=user.get("placement_eligible", True),
+        settings=settings,
+        permissions=permissions,
     )
 
 

@@ -3,17 +3,21 @@ import { Link } from "react-router-dom";
 import {
   GraduationCap, CheckCircle2, Circle, UsersRound, Rocket, ArrowUpRight,
   Calendar, Bot, Code2, Activity, Trophy, TrendingUp, MessageSquare,
-  Mail, MapPin, Cake, Pencil, ChevronRight, Lightbulb,
+  Mail, MapPin, Cake, Pencil, ChevronRight, Lightbulb, LifeBuoy,
+  Flame, AlertTriangle, ShieldCheck, Clock,
 } from "lucide-react";
 import AppShell from "../../components/layout/AppShell";
-import { GlassCard, ProgressBar } from "../../components/common/Primitives";
+import { GlassCard, ProgressBar, Modal } from "../../components/common/Primitives";
 import StudyIllustration from "../../components/common/StudyIllustration";
 import { useAuth } from "../../context/AuthContext";
 import { listTasks } from "../../api/tasks";
 import { listAgents } from "../../api/agents";
 import { listPlacements } from "../../api/placements";
 import { listMessages } from "../../api/messages";
+import { fileReport } from "../../api/reports";
 import { api } from "../../api/client";
+import { getStudentAttendance } from "../../api/users";
+
 
 /* ---------- top stat row — icon-in-circle, not rings ---------- */
 function IconStat({ icon: Icon, tone, tint, value, label, sub, subTone }) {
@@ -107,6 +111,190 @@ function CgpaCard({ student }) {
   );
 }
 
+/* ---------- Attendance Card ---------- */
+function AttendanceRadial({ pct }) {
+  const r = 52;
+  const circ = 2 * Math.PI * r;
+  const safe = pct != null ? Math.min(100, Math.max(0, pct)) : null;
+  const dash = safe != null ? (safe / 100) * circ : 0;
+  const danger = safe != null && safe < 75;
+  const warn = safe != null && safe >= 75 && safe < 85;
+  const color = danger ? "#ef4444" : warn ? "#f59e0b" : "#10b981";
+  const trackColor = danger ? "#fee2e2" : warn ? "#fef3c7" : "#d1fae5";
+  return (
+    <svg width="130" height="130" viewBox="0 0 130 130" style={{ flexShrink: 0 }}>
+      <circle cx="65" cy="65" r={r} fill="none" stroke={trackColor} strokeWidth="10" />
+      {safe != null && (
+        <circle
+          cx="65" cy="65" r={r} fill="none" stroke={color} strokeWidth="10"
+          strokeDasharray={`${dash} ${circ}`} strokeLinecap="round"
+          transform="rotate(-90 65 65)" style={{ transition: "stroke-dasharray 0.8s ease" }}
+        />
+      )}
+      <text x="65" y="60" textAnchor="middle" fill={safe != null ? color : "#9ca3af"}
+        fontSize="22" fontWeight="800" fontFamily="inherit">
+        {safe != null ? `${safe}%` : "—"}
+      </text>
+      <text x="65" y="76" textAnchor="middle" fill="#9ca3af" fontSize="10" fontFamily="inherit">
+        ATTENDANCE
+      </text>
+    </svg>
+  );
+}
+
+function SessionDot({ status }) {
+  const map = {
+    present: { color: "#10b981", label: "P" },
+    od: { color: "#6366f1", label: "OD" },
+    absent: { color: "#ef4444", label: "A" },
+  };
+  const s = map[status] || map.absent;
+  return (
+    <div title={status} style={{
+      width: 22, height: 22, borderRadius: 6, background: `${s.color}22`,
+      border: `1.5px solid ${s.color}55`, display: "grid", placeItems: "center",
+      fontSize: 8, fontWeight: 700, color: s.color,
+    }}>{s.label}</div>
+  );
+}
+
+function AttendanceCard({ attendanceData, fallbackPct }) {
+  const pct = attendanceData?.overall_pct ?? fallbackPct;
+  const total = attendanceData?.total_sessions ?? 0;
+  const attended = attendanceData?.attended_sessions ?? 0;
+  const streak = attendanceData?.streak ?? 0;
+  const sessions = attendanceData?.sessions ?? [];
+  const danger = pct != null && pct < 75;
+  const warn = pct != null && pct >= 75 && pct < 85;
+
+  return (
+    <GlassCard style={{
+      padding: 22,
+      background: danger
+        ? "linear-gradient(135deg, #fff5f5, #fff)" 
+        : warn ? "linear-gradient(135deg, #fffbeb, #fff)"
+        : "linear-gradient(135deg, #f0fdf4, #fff)",
+      border: `1px solid ${danger ? "rgba(239,68,68,0.18)" : warn ? "rgba(245,158,11,0.18)" : "rgba(16,185,129,0.14)"}`,
+    }}>
+      {/* Header */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <div style={{
+            width: 30, height: 30, borderRadius: 10,
+            background: danger ? "rgba(239,68,68,0.12)" : warn ? "rgba(245,158,11,0.12)" : "rgba(16,185,129,0.12)",
+            color: danger ? "#ef4444" : warn ? "#f59e0b" : "#10b981",
+            display: "grid", placeItems: "center",
+          }}>
+            {danger ? <AlertTriangle size={15} /> : <ShieldCheck size={15} />}
+          </div>
+          <span style={{ fontSize: 14.5, fontWeight: 700 }}>Attendance</span>
+        </div>
+        {streak > 0 && (
+          <div style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, fontWeight: 700, color: "#f59e0b" }}>
+            <Flame size={12} /> {streak}-day streak
+          </div>
+        )}
+      </div>
+
+      {/* Radial + stats */}
+      <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 16 }}>
+        <AttendanceRadial pct={pct} />
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 10 }}>
+          {/* Safe/danger label */}
+          {danger && (
+            <div style={{
+              background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: 8,
+              padding: "6px 10px", fontSize: 11, fontWeight: 600, color: "#dc2626",
+              display: "flex", alignItems: "center", gap: 5,
+            }}>
+              <AlertTriangle size={12} />
+              Below 75% — exam eligibility at risk!
+            </div>
+          )}
+          {warn && (
+            <div style={{
+              background: "#fffbeb", border: "1px solid #fcd34d", borderRadius: 8,
+              padding: "6px 10px", fontSize: 11, fontWeight: 600, color: "#92400e",
+              display: "flex", alignItems: "center", gap: 5,
+            }}>
+              <AlertTriangle size={12} />
+              Borderline — maintain above 75%
+            </div>
+          )}
+          {!danger && !warn && pct != null && (
+            <div style={{
+              background: "#f0fdf4", border: "1px solid #6ee7b7", borderRadius: 8,
+              padding: "6px 10px", fontSize: 11, fontWeight: 600, color: "#065f46",
+              display: "flex", alignItems: "center", gap: 5,
+            }}>
+              <ShieldCheck size={12} /> Eligible for exams ✓
+            </div>
+          )}
+          {/* Stats row */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+            {[{label: "Present", val: attended}, {label: "Total Days", val: total},
+              {label: "Absent", val: total - attended}, {label: "Threshold", val: "75%"}]
+              .map(({label, val}) => (
+                <div key={label} style={{
+                  background: "rgba(255,255,255,0.7)", borderRadius: 8, padding: "7px 10px",
+                  border: "1px solid rgba(0,0,0,0.05)",
+                }}>
+                  <div style={{ fontSize: 16, fontWeight: 800, color: "var(--text-hi)" }}>{val}</div>
+                  <div style={{ fontSize: 10, color: "var(--text-lo)", fontWeight: 600 }}>{label}</div>
+                </div>
+              ))}
+          </div>
+          {/* Progress bar to 75% threshold */}
+          {pct != null && (
+            <div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: "var(--text-lo)", marginBottom: 4, fontWeight: 600 }}>
+                <span>0%</span>
+                <span style={{ color: "#f59e0b" }}>75% required</span>
+                <span>100%</span>
+              </div>
+              <div style={{ position: "relative", height: 8, background: "#e5e7eb", borderRadius: 999 }}>
+                {/* Threshold marker */}
+                <div style={{ position: "absolute", left: "75%", top: -2, bottom: -2, width: 2, background: "#f59e0b", borderRadius: 1 }} />
+                <div style={{
+                  width: `${pct}%`, height: "100%", borderRadius: 999,
+                  background: danger ? "#ef4444" : warn ? "#f59e0b" : "#10b981",
+                  transition: "width 0.8s ease",
+                }} />
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Session history dots */}
+      {sessions.length > 0 && (
+        <div>
+          <div style={{ fontSize: 11, fontWeight: 600, color: "var(--text-lo)", marginBottom: 8, display: "flex", alignItems: "center", gap: 5 }}>
+            <Clock size={11} /> Recent sessions (newest → oldest)
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+            {sessions.slice(0, 30).map((s, i) => (
+              <div key={i} title={`${s.date} — ${s.status}`}>
+                <SessionDot status={s.status} />
+              </div>
+            ))}
+          </div>
+          <div style={{ display: "flex", gap: 12, marginTop: 8, fontSize: 10, color: "var(--text-lo)" }}>
+            {[{s:"present",c:"#10b981",l:"Present"},{s:"od",c:"#6366f1",l:"On Duty"},{s:"absent",c:"#ef4444",l:"Absent"}].map(({s,c,l})=>(
+              <span key={s} style={{ display: "flex", alignItems: "center", gap: 3 }}>
+                <span style={{ width: 8, height: 8, borderRadius: 2, background: c, display: "inline-block" }} />{l}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+      {sessions.length === 0 && total === 0 && (
+        <div style={{ fontSize: 12, color: "var(--text-lo)", padding: "6px 0" }}>No sessions recorded yet — your advisor will mark attendance.</div>
+      )}
+    </GlassCard>
+  );
+}
+
 function SectionHeader({ icon: Icon, tone, title, to }) {
   return (
     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
@@ -153,11 +341,14 @@ function TodaysPlan({ tasks }) {
 }
 
 const AGENT_DISPLAY = {
+  "Placement Readiness Agent": { icon: GraduationCap, tone: "#10b981", status: "Active", statusColor: "#10b981" },
   "Placement Assist": { icon: GraduationCap, tone: "#10b981", status: "Running", statusColor: "#10b981" },
   "Skill Assist Agent": { icon: Code2, tone: "#6366f1", status: "Ready", statusColor: "var(--text-lo)", rename: "Skill Mentor" },
   "Attendance Agent": { icon: UsersRound, tone: "#f59e0b", status: "Monitoring", statusColor: "#f59e0b", rename: "Attendance Bot" },
+  "Attendance Monitoring Bot": { icon: UsersRound, tone: "#f59e0b", status: "Monitoring", statusColor: "#f59e0b", rename: "Attendance Bot" },
   "Exam Eligibility Agent": { icon: Activity, tone: "#8b5cf6", status: "Ready", statusColor: "var(--text-lo)" },
 };
+
 
 function YourAgents({ agents }) {
   return (
@@ -373,6 +564,97 @@ function ProTipCard() {
   );
 }
 
+function FileReportCard() {
+  const [open, setOpen] = useState(false);
+  const [subject, setSubject] = useState("");
+  const [body, setBody] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [status, setStatus] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!subject.trim()) return;
+    setSubmitting(true);
+    setStatus(null);
+    try {
+      await fileReport({ subject, body });
+      setStatus("Report filed successfully! Admin & HOD have received it.");
+      setSubject("");
+      setBody("");
+      setTimeout(() => {
+        setOpen(false);
+        setStatus(null);
+      }, 1500);
+    } catch (err) {
+      setStatus(err.message || "Failed to submit report.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <>
+      <button
+        onClick={() => setOpen(true)}
+        className="glass"
+        style={{
+          padding: "12px 14px", display: "flex", alignItems: "center", gap: 10,
+          width: "100%", border: "1px dashed var(--glass-border)", background: "rgba(255,255,255,0.02)",
+          cursor: "pointer", color: "inherit", borderRadius: 12, fontSize: 12.5, textAlign: "left",
+        }}
+      >
+        <div style={{ width: 30, height: 30, borderRadius: 9, background: "rgba(245,169,78,0.15)", color: "var(--accent-amber)", display: "grid", placeItems: "center", flexShrink: 0 }}>
+          <LifeBuoy size={16} />
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontWeight: 600 }}>Need help?</div>
+          <div style={{ fontSize: 11, color: "var(--text-lo)" }}>Submit an escalation report</div>
+        </div>
+        <ChevronRight size={14} color="var(--text-faint)" />
+      </button>
+
+      <Modal open={open} onClose={() => setOpen(false)} title="File an Escalation / Help Ticket">
+        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          {status && (
+            <div style={{ fontSize: 12, padding: "8px 12px", borderRadius: 8, background: "rgba(99,102,241,0.1)", color: "var(--accent-cyan)" }}>
+              {status}
+            </div>
+          )}
+          <div>
+            <label className="eyebrow" style={{ display: "block", marginBottom: 6 }}>Subject</label>
+            <input
+              type="text"
+              required
+              placeholder="e.g. Attendance discrepancy, course concern..."
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+              className="input"
+              style={{ width: "100%", padding: "10px 12px", boxSizing: "border-box" }}
+            />
+          </div>
+          <div>
+            <label className="eyebrow" style={{ display: "block", marginBottom: 6 }}>Details (Optional)</label>
+            <textarea
+              rows={4}
+              placeholder="Provide any relevant context for your HOD or Admin..."
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
+              className="input"
+              style={{ width: "100%", padding: "10px 12px", resize: "vertical", boxSizing: "border-box" }}
+            />
+          </div>
+          <div style={{ display: "flex", justifyContent: "flex-end", gap: 10, marginTop: 10 }}>
+            <button type="button" className="btn btn-ghost" onClick={() => setOpen(false)}>Cancel</button>
+            <button type="submit" className="btn btn-primary" disabled={submitting}>
+              {submitting ? "Submitting..." : "Submit Report"}
+            </button>
+          </div>
+        </form>
+      </Modal>
+    </>
+  );
+}
+
 export default function StudentDashboard() {
   const { user } = useAuth();
 
@@ -381,6 +663,7 @@ export default function StudentDashboard() {
   const [placements, setPlacements] = useState([]);
   const [skills, setSkills] = useState([]);
   const [messages, setMessages] = useState([]);
+  const [attendanceData, setAttendanceData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -389,30 +672,38 @@ export default function StudentDashboard() {
     setLoading(true);
     setError(null);
 
-    Promise.all([
+    const classGroup = user?.class_advisor_id ? `class-${user.class_advisor_id}` : "CSE-C";
+
+    Promise.allSettled([
       listTasks(),
       listAgents(),
       listPlacements(),
       api.get("/skills/me"),
-      listMessages("CSE-C"),
+      listMessages(classGroup),
+      getStudentAttendance(),
     ])
-      .then(([taskData, agentData, placementData, skillData, messageData]) => {
+      .then(([taskRes, agentRes, placementRes, skillRes, messageRes, attRes]) => {
         if (cancelled) return;
-        setTasks(taskData);
-        setAgents(agentData);
-        setPlacements(placementData);
-        setSkills(skillData);
-        setMessages(messageData);
-      })
-      .catch((err) => {
-        if (!cancelled) setError(err.message || "Failed to load dashboard data.");
+        if (taskRes.status === "fulfilled") setTasks(taskRes.value);
+        if (agentRes.status === "fulfilled") setAgents(agentRes.value);
+        if (placementRes.status === "fulfilled") setPlacements(placementRes.value);
+        if (skillRes.status === "fulfilled") setSkills(skillRes.value);
+        if (messageRes.status === "fulfilled") setMessages(messageRes.value);
+        if (attRes.status === "fulfilled") setAttendanceData(attRes.value);
+
+        const rejected = [taskRes, agentRes, placementRes, skillRes, messageRes].filter(
+          (r) => r.status === "rejected"
+        );
+        if (rejected.length > 0 && taskRes.status === "rejected" && placementRes.status === "rejected") {
+          setError(rejected[0].reason?.message || "Failed to load dashboard data.");
+        }
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
       });
 
     return () => { cancelled = true; };
-  }, []);
+  }, [user?.class_advisor_id]);
 
   if (loading) {
     return (
@@ -437,7 +728,14 @@ export default function StudentDashboard() {
       <div className="grid grid-4" style={{ marginBottom: 18 }}>
         <IconStat icon={GraduationCap} tone="#6366f1" tint="rgba(99,102,241,0.12)" value={user.cgpa ?? "—"} label="CGPA" sub={<><ArrowUpRight size={11} /> {diff} vs last sem</>} subTone="var(--accent-emerald)" />
         <IconStat icon={CheckCircle2} tone="#10b981" tint="rgba(16,185,129,0.12)" value={`${done}/${tasks.length}`} label="Tasks complete" sub="this week" />
-        <IconStat icon={UsersRound} tone="#14b8a6" tint="rgba(20,184,166,0.12)" value={user.attendance != null ? `${user.attendance}%` : "—"} label="Attendance" sub="semester to date" />
+        <IconStat
+          icon={UsersRound} tone={(() => { const p = attendanceData?.overall_pct ?? user.attendance; return p == null ? "#14b8a6" : p < 75 ? "#ef4444" : p < 85 ? "#f59e0b" : "#10b981"; })()}
+          tint={(() => { const p = attendanceData?.overall_pct ?? user.attendance; return p == null ? "rgba(20,184,166,0.12)" : p < 75 ? "rgba(239,68,68,0.12)" : p < 85 ? "rgba(245,158,11,0.12)" : "rgba(16,185,129,0.12)"; })()}
+          value={(attendanceData?.overall_pct ?? user.attendance) != null ? `${attendanceData?.overall_pct ?? user.attendance}%` : "—"}
+          label="Attendance"
+          sub={attendanceData ? `${attendanceData.attended_sessions}/${attendanceData.total_sessions} days` : "semester to date"}
+          subTone={(attendanceData?.overall_pct ?? user.attendance) != null && (attendanceData?.overall_pct ?? user.attendance) < 75 ? "#ef4444" : "var(--text-lo)"}
+        />
         <IconStat icon={Rocket} tone="#8b5cf6" tint="rgba(139,92,246,0.12)" value={runningAgents} label="Active agents" sub={`of ${myAgents.length} assigned`} />
       </div>
 
@@ -450,6 +748,9 @@ export default function StudentDashboard() {
               <YourAgents agents={myAgents} />
             </div>
           </div>
+
+          {/* Full Attendance Card — live from backend */}
+          <AttendanceCard attendanceData={attendanceData} fallbackPct={user.attendance} />
 
           <TaskCompletionCard tasks={tasks} />
 
@@ -464,6 +765,7 @@ export default function StudentDashboard() {
           <ProfileCard user={user} />
           <IllustrationCard />
           <ProTipCard />
+          <FileReportCard />
         </div>
       </div>
     </AppShell>

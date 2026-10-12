@@ -70,19 +70,83 @@ async def placements_collection(request):
     current_user = await _user(request)
     if isinstance(current_user, JsonResponse):
         return current_user
+
     if request.method == "GET":
-        items = [_out(item) async for item in placements_col.find({"owner_id": current_user.id})]
-        return JsonResponse(items, safe=False)
+        if current_user.role == Role.STUDENT:
+            student_docs = [item async for item in placements_col.find({"owner_id": current_user.id})]
+            existing_companies = {p["company"].lower(): p for p in student_docs}
+
+            # Find all master placement drives created by advisors or staff
+            staff_users = {str(u["_id"]): u async for u in users_col.find({"role": {"$ne": Role.STUDENT.value}})}
+            async for master in placements_col.find({"owner_id": {"$in": list(staff_users.keys())}}):
+                c_key = master["company"].lower()
+                if c_key not in existing_companies:
+                    tasks_copy = [dict(t) for t in master.get("tasks", [])] if master.get("tasks") else [
+                        {"title": "Register on placement portal", "done": False},
+                        {"title": "Submit updated resume", "done": False},
+                    ]
+                    st_doc = {
+                        "owner_id": current_user.id,
+                        "company": master["company"],
+                        "role": master.get("role", "Campus Placement Drive"),
+                        "package": master.get("package"),
+                        "deadline": master.get("deadline", "Open"),
+                        "status": "action_needed",
+                        "tasks": tasks_copy,
+                        "completed": False,
+                        "completed_at": None,
+                    }
+                    res = await placements_col.insert_one(st_doc)
+                    st_doc["_id"] = res.inserted_id
+                    student_docs.append(st_doc)
+                    existing_companies[c_key] = st_doc
+
+            items = [_out(item) for item in student_docs]
+            return JsonResponse(items, safe=False)
+        else:
+            items = [_out(item) async for item in placements_col.find({"owner_id": current_user.id})]
+            return JsonResponse(items, safe=False)
+
     if request.method != "POST":
         return _error("Method not allowed", 405)
     try:
         payload = PlacementCreate.model_validate(_body(request))
     except ValidationError as exc:
         return _error(exc.errors(), 422)
-    document = {**payload.model_dump(), "owner_id": current_user.id}
+
+    tasks_list = [t.model_dump() for t in payload.tasks] if payload.tasks else [
+        {"title": "Register on placement portal", "done": False},
+        {"title": "Submit updated resume", "done": False},
+    ]
+
+    document = {**payload.model_dump(), "tasks": tasks_list, "owner_id": current_user.id}
     result = await placements_col.insert_one(document)
     document["_id"] = result.inserted_id
+
+    # If created by staff (Advisor, HOD, Admin), broadcast drive to ALL students
+    if current_user.role in (Role.ADVISOR, Role.HOD, Role.ADMIN):
+        async for st in users_col.find({"role": Role.STUDENT.value}):
+            st_id = str(st["_id"])
+            existing = await placements_col.find_one({
+                "owner_id": st_id,
+                "company": {"$regex": f"^{payload.company}$", "$options": "i"},
+            })
+            if not existing:
+                await placements_col.insert_one({
+                    "owner_id": st_id,
+                    "company": payload.company,
+                    "role": payload.role,
+                    "package": payload.package,
+                    "deadline": payload.deadline,
+                    "status": "action_needed",
+                    "tasks": [dict(t) for t in tasks_list],
+                    "completed": False,
+                    "completed_at": None,
+                })
+
     return JsonResponse(_out(document), status=201)
+
+
 
 
 async def _owned(placement_id, user_id):
@@ -168,9 +232,8 @@ async def advisor_summary(request):
         return current_user
     if current_user.role not in (Role.ADVISOR, Role.HOD, Role.PRINCIPAL, Role.ADMIN):
         return _error("Not permitted for this role", 403)
+    # Find all students so advisor tracks every student
     query = {"role": Role.STUDENT.value}
-    if current_user.role != Role.ADMIN and current_user.dept:
-        query["dept"] = current_user.dept
     students = {str(user["_id"]): user async for user in users_col.find(query)}
     drives = {}
     async for item in placements_col.find({"owner_id": {"$in": list(students)}}):

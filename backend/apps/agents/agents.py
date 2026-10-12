@@ -128,7 +128,9 @@ async def agent_graph_view(request, full=False):
         return current_user
     if full and current_user.role != Role.ADMIN:
         return _error("Not permitted for this role", 403)
-    graph = await agent_graph.rebuild_graph()
+    graph = agent_graph.load_graph()
+    if not graph or "agents" not in graph:
+        graph = await agent_graph.rebuild_graph()
     if full:
         return JsonResponse({"generated_at": graph["generated_at"], "agents": graph["agents"], "connections": graph["connections"], "role_graph": graph["role_graph"]})
     view = agent_graph.scoped_view(graph, current_user.id)

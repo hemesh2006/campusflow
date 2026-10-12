@@ -23,7 +23,7 @@ export default function PrincipalGroup() {
   // Load all advisors for class tab dropdown
   useEffect(() => {
     listDirectory()
-      .then((users) => setAdvisorList(users.filter((u) => u.role === "class_advisor")))
+      .then((users) => setAdvisorList(users.filter((u) => u.role === "advisor")))
       .catch(() => {});
   }, []);
 

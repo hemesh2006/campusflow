@@ -13,6 +13,10 @@ messages_col = db["messages"]
 skills_col = db["skills"]
 reports_col = db["reports"]
 settings_col = db["settings"]  # small key/value docs, e.g. the admin-selected assistant model
+attendance_col = db["attendance"]  # daily attendance logs by advisor and date
+group_tasks_col = db["group_tasks"]  # advisor-broadcast tasks auto-created from messages
+group_task_completions_col = db["group_task_completions"]  # per-student completion records
+
 
 
 async def ensure_indexes():
@@ -26,3 +30,6 @@ async def ensure_indexes():
     await messages_col.create_index("group")
     await skills_col.create_index("owner_id")
     await reports_col.create_index("from_dept")
+    await group_tasks_col.create_index("advisor_id")
+    await group_tasks_col.create_index("group")
+    await group_task_completions_col.create_index([("task_id", 1), ("student_id", 1)], unique=True)

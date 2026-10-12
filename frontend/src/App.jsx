@@ -14,11 +14,13 @@ import StudentPlacements from "./pages/dashboards/StudentPlacements";
 import StudentSkills from "./pages/dashboards/StudentSkills";
 import StudentProfile from "./pages/dashboards/StudentProfile";
 import MyMessages from "./pages/dashboards/MyMessages";
+import StudentGroupTasks from "./pages/dashboards/StudentGroupTasks";
 
 import AdvisorDashboard from "./pages/dashboards/AdvisorDashboard";
 import AdvisorStudents from "./pages/dashboards/AdvisorStudents";
 import AdvisorPlacements from "./pages/dashboards/AdvisorPlacements";
 import AdvisorGroup from "./pages/dashboards/AdvisorGroup";
+import AdvisorGroupTasks from "./pages/dashboards/AdvisorGroupTasks";
 
 import HodDashboard from "./pages/dashboards/HodDashboard";
 import HodAdvisorGroup from "./pages/dashboards/HodAdvisorGroup";
@@ -68,6 +70,7 @@ export default function App() {
 
           <Route path="/student" element={<Protected role={ROLES.STUDENT}><StudentDashboard /></Protected>} />
           <Route path="/student/tasks" element={<Protected role={ROLES.STUDENT}><StudentTasks /></Protected>} />
+          <Route path="/student/group-tasks" element={<Protected role={ROLES.STUDENT}><StudentGroupTasks /></Protected>} />
           <Route path="/student/placements" element={<Protected role={ROLES.STUDENT}><StudentPlacements /></Protected>} />
           <Route path="/student/skills" element={<Protected role={ROLES.STUDENT}><StudentSkills /></Protected>} />
           <Route path="/student/group" element={<Protected role={ROLES.STUDENT}><StudentGroup /></Protected>} />
@@ -76,6 +79,7 @@ export default function App() {
 
           <Route path="/advisor" element={<Protected role={ROLES.ADVISOR}><AdvisorDashboard /></Protected>} />
           <Route path="/advisor/students" element={<Protected role={ROLES.ADVISOR}><AdvisorStudents /></Protected>} />
+          <Route path="/advisor/group-tasks" element={<Protected role={ROLES.ADVISOR}><AdvisorGroupTasks /></Protected>} />
           <Route path="/advisor/placements" element={<Protected role={ROLES.ADVISOR}><AdvisorPlacements /></Protected>} />
           <Route path="/advisor/network" element={<Protected role={ROLES.ADVISOR}><NetworkView scopeLabel="Class · CSE-C" /></Protected>} />
           <Route path="/advisor/group" element={<Protected role={ROLES.ADVISOR}><AdvisorGroup /></Protected>} />
@@ -85,13 +89,13 @@ export default function App() {
           <Route path="/hod" element={<Protected role={ROLES.HOD}><HodDashboard /></Protected>} />
           <Route path="/hod/network" element={<Protected role={ROLES.HOD}><NetworkView scopeLabel="Department · AI & DS" /></Protected>} />
           <Route path="/hod/group" element={<Protected role={ROLES.HOD}><HodAdvisorGroup /></Protected>} />
-          <Route path="/hod/messages" element={<Protected role={ROLES.HOD}><MyMessages /></Protected>} />
+          <Route path="/hod/messages" element={<Navigate to="/hod" replace />} />
           <Route path="/hod/notifications" element={<Protected role={ROLES.HOD}><AccountNotifications /></Protected>} />
 
           <Route path="/principal" element={<Protected role={ROLES.PRINCIPAL}><PrincipalDashboard /></Protected>} />
           <Route path="/principal/departments" element={<Protected role={ROLES.PRINCIPAL}><PrincipalDepartments /></Protected>} />
           <Route path="/principal/group" element={<Protected role={ROLES.PRINCIPAL}><PrincipalHodGroup /></Protected>} />
-          <Route path="/principal/messages" element={<Protected role={ROLES.PRINCIPAL}><MyMessages /></Protected>} />
+          <Route path="/principal/messages" element={<Navigate to="/principal" replace />} />
           <Route path="/principal/notifications" element={<Protected role={ROLES.PRINCIPAL}><AccountNotifications /></Protected>} />
 
           <Route path="/admin" element={<Protected role={ROLES.ADMIN}><AdminDashboard /></Protected>} />

@@ -1,6 +1,106 @@
 {
-  "generated_at": "2026-09-22T05:28:14.396551+00:00",
+  "generated_at": "2026-10-12T04:26:49.300042+00:00",
   "agents": {
+    "6acc6189875038572deb19c7": {
+      "name": "Notification Router",
+      "role": "system",
+      "status": "running",
+      "accuracy": 99.0,
+      "hallucination": 0.1,
+      "owner_id": null,
+      "owner_name": "System",
+      "deadline": null
+    },
+    "6acc6189875038572deb19c8": {
+      "name": "Compliance Monitor",
+      "role": "system",
+      "status": "running",
+      "accuracy": 98.5,
+      "hallucination": 0.2,
+      "owner_id": null,
+      "owner_name": "System",
+      "deadline": "Attendance & policy audit active"
+    },
+    "6acc6189875038572deb19c9": {
+      "name": "Workflow Orchestrator",
+      "role": "system",
+      "status": "running",
+      "accuracy": 97.5,
+      "hallucination": 0.3,
+      "owner_id": null,
+      "owner_name": "System",
+      "deadline": "Continuous inter-agent coordination"
+    },
+    "6acc6189875038572deb19ca": {
+      "name": "Faculty Coordinator",
+      "role": "system",
+      "status": "running",
+      "accuracy": 98.0,
+      "hallucination": 0.2,
+      "owner_id": null,
+      "owner_name": "System",
+      "deadline": null
+    },
+    "6acc6189875038572deb19cb": {
+      "name": "Placement Readiness Agent",
+      "role": "student",
+      "status": "running",
+      "accuracy": 96.5,
+      "hallucination": 0.4,
+      "owner_id": null,
+      "owner_name": "Student Cell",
+      "deadline": "Upcoming drives screening active"
+    },
+    "6acc6189875038572deb19cc": {
+      "name": "Skill Assist Agent",
+      "role": "student",
+      "status": "running",
+      "accuracy": 97.0,
+      "hallucination": 0.3,
+      "owner_id": null,
+      "owner_name": "Student Cell",
+      "deadline": "Skill roadmap updates on Sundays"
+    },
+    "6acc6189875038572deb19cd": {
+      "name": "Attendance Monitoring Bot",
+      "role": "student",
+      "status": "running",
+      "accuracy": 99.5,
+      "hallucination": 0.1,
+      "owner_id": null,
+      "owner_name": "Student Cell",
+      "deadline": "Real-time roll call reconciliation"
+    },
+    "6acc6189875038572deb19ce": {
+      "name": "Exam Eligibility Agent",
+      "role": "student",
+      "status": "running",
+      "accuracy": 99.0,
+      "hallucination": 0.1,
+      "owner_id": null,
+      "owner_name": "Student Cell",
+      "deadline": "Semester 75% threshold clearance"
+    },
+    "6acc6189875038572deb19cf": {
+      "name": "Aadhavan Class Advisor Bot",
+      "role": "advisor",
+      "status": "running",
+      "accuracy": 98.2,
+      "hallucination": 0.2,
+      "owner_id": "6a8c2ce4a963fc2909bfdb5d",
+      "owner_name": "Aadhavan",
+      "deadline": "Daily roll call by 10:00 AM"
+    },
+    "6acc6189875038572deb19d0": {
+      "name": "Mugilan HOD Coordinator",
+      "role": "hod",
+      "status": "running",
+      "accuracy": 98.8,
+      "hallucination": 0.1,
+      "owner_id": "6a8c31344ccc77483c543708",
+      "owner_name": "Mugilan",
+      "deadline": "Weekly department attendance review"
+    },
     "sys-notification-router": {
       "name": "Notification Router",
       "role": "system",
@@ -15,106 +115,324 @@
       "name": "Compliance Monitor",
       "role": "system",
       "status": "running",
-      "accuracy": 97.5,
-      "hallucination": 0.3,
+      "accuracy": 98.5,
+      "hallucination": 0.2,
       "owner_id": null,
       "owner_name": "System",
-      "deadline": "Policy audit due Fri, 5:00 PM"
+      "deadline": "Attendance & policy audit active"
     },
     "agent-manager": {
-      "name": "agent-manager",
+      "name": "Workflow Orchestrator",
       "role": "system",
       "status": "running",
       "accuracy": 97.5,
       "hallucination": 0.3,
       "owner_id": null,
       "owner_name": "System",
-      "deadline": "due on fridays"
+      "deadline": "Continuous inter-agent coordination"
     },
     "teacher-manager": {
-      "name": "teacher-manager",
+      "name": "Faculty Coordinator",
       "role": "system",
       "status": "running",
-      "accuracy": 97.5,
-      "hallucination": 0.3,
+      "accuracy": 98.0,
+      "hallucination": 0.2,
       "owner_id": null,
       "owner_name": "System",
       "deadline": null
     },
-    "jude-agent": {
-      "name": "jude-agent",
-      "role": "system",
+    "aadhavan-agent": {
+      "name": "Aadhavan Class Advisor Bot",
+      "role": "advisor",
       "status": "running",
-      "accuracy": 97.5,
-      "hallucination": 0.3,
-      "owner_id": null,
-      "owner_name": "System",
-      "deadline": null
+      "accuracy": 98.2,
+      "hallucination": 0.2,
+      "owner_id": "6a8c2ce4a963fc2909bfdb5d",
+      "owner_name": "Aadhavan",
+      "deadline": "Daily roll call by 10:00 AM"
     },
-    "hemesh-agent": {
-      "name": "hemesh-agent",
+    "mugilan-agent": {
+      "name": "Mugilan HOD Coordinator",
+      "role": "hod",
+      "status": "running",
+      "accuracy": 98.8,
+      "hallucination": 0.1,
+      "owner_id": "6a8c31344ccc77483c543708",
+      "owner_name": "Mugilan",
+      "deadline": "Weekly department attendance review"
+    },
+    "placement-agent": {
+      "name": "Placement Readiness Agent",
       "role": "system",
       "status": "running",
-      "accuracy": 97.5,
+      "accuracy": 96.5,
+      "hallucination": 0.4,
+      "owner_id": null,
+      "owner_name": "Placement Cell",
+      "deadline": "Upcoming drives screening active"
+    },
+    "skill-mentor-agent": {
+      "name": "Skill Assist Agent",
+      "role": "system",
+      "status": "running",
+      "accuracy": 97.0,
       "hallucination": 0.3,
       "owner_id": null,
-      "owner_name": "System",
-      "deadline": null
+      "owner_name": "Academic Mentorship",
+      "deadline": "Skill roadmap updates on Sundays"
+    },
+    "attendance-bot-agent": {
+      "name": "Attendance Monitoring Bot",
+      "role": "system",
+      "status": "running",
+      "accuracy": 99.5,
+      "hallucination": 0.1,
+      "owner_id": null,
+      "owner_name": "Dean Academic Office",
+      "deadline": "Real-time roll call reconciliation"
+    },
+    "exam-eligibility-agent": {
+      "name": "Exam Eligibility Agent",
+      "role": "system",
+      "status": "running",
+      "accuracy": 99.0,
+      "hallucination": 0.1,
+      "owner_id": null,
+      "owner_name": "Controller of Examinations",
+      "deadline": "Semester 75% threshold clearance"
     }
   },
   "connections": {
+    "6acc6189875038572deb19c7": [
+      "6acc6189875038572deb19cf",
+      "aadhavan-agent",
+      "6acc6189875038572deb19d0",
+      "mugilan-agent"
+    ],
+    "6acc6189875038572deb19cf": [
+      "6acc6189875038572deb19c7",
+      "6acc6189875038572deb19c8",
+      "6acc6189875038572deb19c9",
+      "6acc6189875038572deb19ca",
+      "sys-notification-router",
+      "sys-compliance-monitor",
+      "agent-manager",
+      "teacher-manager",
+      "placement-agent",
+      "skill-mentor-agent",
+      "attendance-bot-agent",
+      "exam-eligibility-agent",
+      "6acc6189875038572deb19d0",
+      "mugilan-agent"
+    ],
+    "aadhavan-agent": [
+      "6acc6189875038572deb19c7",
+      "6acc6189875038572deb19c8",
+      "6acc6189875038572deb19c9",
+      "6acc6189875038572deb19ca",
+      "sys-notification-router",
+      "sys-compliance-monitor",
+      "agent-manager",
+      "teacher-manager",
+      "placement-agent",
+      "skill-mentor-agent",
+      "attendance-bot-agent",
+      "exam-eligibility-agent",
+      "6acc6189875038572deb19d0",
+      "mugilan-agent"
+    ],
+    "6acc6189875038572deb19d0": [
+      "6acc6189875038572deb19c7",
+      "6acc6189875038572deb19c8",
+      "6acc6189875038572deb19c9",
+      "6acc6189875038572deb19ca",
+      "sys-notification-router",
+      "sys-compliance-monitor",
+      "agent-manager",
+      "teacher-manager",
+      "placement-agent",
+      "skill-mentor-agent",
+      "attendance-bot-agent",
+      "exam-eligibility-agent",
+      "6acc6189875038572deb19cf",
+      "aadhavan-agent"
+    ],
+    "mugilan-agent": [
+      "6acc6189875038572deb19c7",
+      "6acc6189875038572deb19c8",
+      "6acc6189875038572deb19c9",
+      "6acc6189875038572deb19ca",
+      "sys-notification-router",
+      "sys-compliance-monitor",
+      "agent-manager",
+      "teacher-manager",
+      "placement-agent",
+      "skill-mentor-agent",
+      "attendance-bot-agent",
+      "exam-eligibility-agent",
+      "6acc6189875038572deb19cf",
+      "aadhavan-agent"
+    ],
+    "6acc6189875038572deb19c8": [
+      "6acc6189875038572deb19cf",
+      "aadhavan-agent",
+      "6acc6189875038572deb19d0",
+      "mugilan-agent"
+    ],
+    "6acc6189875038572deb19c9": [
+      "6acc6189875038572deb19cf",
+      "aadhavan-agent",
+      "6acc6189875038572deb19d0",
+      "mugilan-agent"
+    ],
+    "6acc6189875038572deb19ca": [
+      "6acc6189875038572deb19cf",
+      "aadhavan-agent",
+      "6acc6189875038572deb19d0",
+      "mugilan-agent"
+    ],
     "sys-notification-router": [
+      "6acc6189875038572deb19cf",
+      "aadhavan-agent",
+      "6acc6189875038572deb19d0",
+      "mugilan-agent",
       "sys-compliance-monitor",
       "agent-manager"
     ],
     "sys-compliance-monitor": [
+      "6acc6189875038572deb19cf",
+      "aadhavan-agent",
+      "6acc6189875038572deb19d0",
+      "mugilan-agent",
       "sys-notification-router",
       "teacher-manager"
     ],
     "agent-manager": [
+      "6acc6189875038572deb19cf",
+      "aadhavan-agent",
+      "6acc6189875038572deb19d0",
+      "mugilan-agent",
       "sys-notification-router",
       "teacher-manager",
-      "jude-agent"
+      "placement-agent"
     ],
     "teacher-manager": [
+      "6acc6189875038572deb19cf",
+      "aadhavan-agent",
+      "6acc6189875038572deb19d0",
+      "mugilan-agent",
       "agent-manager",
-      "sys-compliance-monitor",
-      "hemesh-agent"
+      "sys-compliance-monitor"
     ],
-    "hemesh-agent": [
-      "jude-agent",
-      "teacher-manager"
-    ],
-    "jude-agent": [
-      "hemesh-agent",
+    "placement-agent": [
+      "6acc6189875038572deb19cf",
+      "aadhavan-agent",
+      "6acc6189875038572deb19d0",
+      "mugilan-agent",
+      "skill-mentor-agent",
       "agent-manager"
-    ]
+    ],
+    "skill-mentor-agent": [
+      "6acc6189875038572deb19cf",
+      "aadhavan-agent",
+      "6acc6189875038572deb19d0",
+      "mugilan-agent",
+      "placement-agent"
+    ],
+    "attendance-bot-agent": [
+      "6acc6189875038572deb19cf",
+      "aadhavan-agent",
+      "6acc6189875038572deb19d0",
+      "mugilan-agent",
+      "exam-eligibility-agent"
+    ],
+    "exam-eligibility-agent": [
+      "6acc6189875038572deb19cf",
+      "aadhavan-agent",
+      "6acc6189875038572deb19d0",
+      "mugilan-agent",
+      "attendance-bot-agent"
+    ],
+    "6acc6189875038572deb19cb": [],
+    "6acc6189875038572deb19cc": [],
+    "6acc6189875038572deb19cd": [],
+    "6acc6189875038572deb19ce": []
   },
   "role_graph": {
-    "system": []
+    "system": [
+      "advisor",
+      "hod"
+    ],
+    "advisor": [
+      "system",
+      "hod"
+    ],
+    "hod": [
+      "system",
+      "advisor"
+    ],
+    "student": []
   },
   "access_scope": {
     "6a8c2c6f143c302da8d3629d": [
+      "6acc6189875038572deb19c7",
+      "6acc6189875038572deb19c8",
+      "6acc6189875038572deb19c9",
+      "6acc6189875038572deb19ca",
+      "6acc6189875038572deb19cb",
+      "6acc6189875038572deb19cc",
+      "6acc6189875038572deb19cd",
+      "6acc6189875038572deb19ce",
+      "6acc6189875038572deb19cf",
+      "6acc6189875038572deb19d0",
       "sys-notification-router",
       "sys-compliance-monitor",
       "agent-manager",
       "teacher-manager",
-      "jude-agent",
-      "hemesh-agent"
+      "aadhavan-agent",
+      "mugilan-agent",
+      "placement-agent",
+      "skill-mentor-agent",
+      "attendance-bot-agent",
+      "exam-eligibility-agent"
     ],
-    "6a8c2ce4a963fc2909bfdb5d": [],
+    "6a8c2ce4a963fc2909bfdb5d": [
+      "6acc6189875038572deb19cf",
+      "aadhavan-agent"
+    ],
     "6a8c2f4b796bc0dcd1e0efc5": [],
-    "6a8c30774ccc77483c543704": [],
-    "6a8c30894ccc77483c543705": [],
-    "6a8c30a24ccc77483c543706": [],
-    "6a8c30b74ccc77483c543707": [],
     "6a8c31344ccc77483c543708": [
+      "6acc6189875038572deb19c7",
+      "6acc6189875038572deb19c8",
+      "6acc6189875038572deb19c9",
+      "6acc6189875038572deb19ca",
+      "6acc6189875038572deb19cf",
+      "6acc6189875038572deb19d0",
       "sys-notification-router",
       "sys-compliance-monitor",
       "agent-manager",
       "teacher-manager",
-      "jude-agent",
-      "hemesh-agent"
-    ]
+      "aadhavan-agent",
+      "mugilan-agent",
+      "placement-agent",
+      "skill-mentor-agent",
+      "attendance-bot-agent",
+      "exam-eligibility-agent"
+    ],
+    "6acc57dd24fe7c6898881075": [],
+    "6acc57dd24fe7c6898881076": [],
+    "6acc57dd24fe7c6898881077": [],
+    "6acc57dd24fe7c6898881078": [],
+    "6acc57dd24fe7c6898881079": [],
+    "6acc57dd24fe7c689888107a": [],
+    "6acc57dd24fe7c689888107b": [],
+    "6acc57dd24fe7c689888107c": [],
+    "6acc57dd24fe7c689888107d": [],
+    "6acc57dd24fe7c689888107e": [],
+    "6acc57dd24fe7c689888107f": [],
+    "6acc57dd24fe7c6898881080": [],
+    "6acc57dd24fe7c6898881081": [],
+    "6acc57dd24fe7c6898881082": [],
+    "6acc57dd24fe7c6898881083": []
   }
 }

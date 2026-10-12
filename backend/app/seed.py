@@ -17,7 +17,7 @@ updating the hashed_password field directly in Mongo.)
 import asyncio
 from app.database import (
     users_col, tasks_col, agents_col, placements_col,
-    messages_col, skills_col, reports_col,
+    messages_col, skills_col, reports_col, ensure_indexes,
 )
 from app.core.security import hash_password
 from app.models.user import resolve_role_from_email
@@ -37,14 +37,19 @@ async def seed():
     await skills_col.delete_many({})
     await reports_col.delete_many({})
 
-    role = resolve_role_from_email(ADMIN_EMAIL)
+    await ensure_indexes()
+
+    from app.services.hierarchy_sync import get_default_settings, sync_hierarchy_now
     await users_col.insert_one({
         "name": ADMIN_NAME,
         "email": ADMIN_EMAIL,
         "hashed_password": hash_password(ADMIN_PASSWORD),
         "role": role.value,
         "dept": "All",
+        "settings": get_default_settings(role.value),
     })
+
+    await sync_hierarchy_now()
 
     print("Database reset. Every collection is empty except one admin account:")
     print(f"  {ADMIN_EMAIL} / {ADMIN_PASSWORD}")

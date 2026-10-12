@@ -31,18 +31,22 @@ async def signup(request):
     # Role is resolved automatically — the client never sends one.
     role = resolve_role_from_email(data["email"])
 
+    from app.services.hierarchy_sync import get_default_settings, trigger_hierarchy_sync
+
     doc = {
         "name": data["name"],
         "email": data["email"],
         "hashed_password": hash_password(data["password"]),
         "role": role.value,
         "dept": data.get("dept"),
+        "settings": get_default_settings(role.value),
     }
     result = await users_col.insert_one(doc)
     doc["_id"] = result.inserted_id
     user = user_doc_to_public(doc)
     token = create_access_token(subject=str(result.inserted_id), role=role.value)
     asyncio.create_task(user_knowledge.save_snapshot(str(result.inserted_id)))
+    trigger_hierarchy_sync()
     return JsonResponse(Token(access_token=token, user=user).model_dump(mode="json"), status=201)
 
 
@@ -53,9 +57,10 @@ async def login(request):
     if not payload.is_valid():
         return _error(payload.errors, 400)
     data = payload.validated_data
-    user = await users_col.find_one({"email": data["email"]})
+    user = await users_col.find_one({"$or": [{"email": data["email"]}, {"alt_email": data["email"]}]})
     if not user or not verify_password(data["password"], user["hashed_password"]):
         return _error("Incorrect email or password", 401)
+
 
     token = create_access_token(subject=str(user["_id"]), role=user["role"])
     public = user_doc_to_public(user)

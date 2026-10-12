@@ -1,3 +1,4 @@
+import asyncio
 import json
 from datetime import datetime, timezone
 from typing import Optional
@@ -53,16 +54,25 @@ async def _user(request):
 
 
 def _allowed(group, user):
+    if not group:
+        return False
     if group.startswith(DM_PREFIX):
         return user.id in group[len(DM_PREFIX):].split("-")
     if group.startswith("class-") or group.startswith("advisor-class-"):
         advisor_id = group.replace("advisor-class-", "").replace("class-", "")
-        return (user.role == Role.ADVISOR and user.id == advisor_id) or (user.role == Role.STUDENT and user.class_advisor_id == advisor_id)
+        return (user.role == Role.ADVISOR and user.id == advisor_id) or \
+               (user.role == Role.STUDENT and user.class_advisor_id == advisor_id) or \
+               (user.role in (Role.ADMIN, Role.PRINCIPAL, Role.HOD))
     if group.startswith("hod-advisor-"):
         return user.role in (Role.ADMIN, Role.HOD, Role.ADVISOR)
     if group == "principal-hod":
         return user.role in (Role.ADMIN, Role.PRINCIPAL, Role.HOD)
+    if group.startswith("placement-"):
+        return True
+    if group in ("CSE-C", "AIDS-A", "general", "common") or group.startswith("dept-"):
+        return True
     return False
+
 
 
 async def messages_collection(request):
@@ -87,6 +97,15 @@ async def messages_collection(request):
     document = {**payload.model_dump(), "from_user_id": current_user.id, "from_name": current_user.name, "created_at": datetime.now(timezone.utc), "read_by": [], "read_count": 0, "deleted_for": [], "deleted_for_everyone": False}
     result = await messages_col.insert_one(document)
     document["_id"] = result.inserted_id
+    # ── Auto-analyse advisor class-group messages for tasks/drives ──
+    if current_user.role in (Role.ADVISOR, Role.HOD) and (
+        payload.group.startswith("class-") or payload.group.startswith("advisor-class-")
+    ):
+        try:
+            from apps.tasks.group_tasks import analyse_and_act
+            asyncio.create_task(analyse_and_act(document, current_user))
+        except Exception:
+            pass
     return JsonResponse(_out(document), status=201)
 
 
@@ -140,17 +159,36 @@ async def dm_threads(request):
     if isinstance(current_user, JsonResponse):
         return current_user
     latest = {}
-    async for message in messages_col.find({"group": {"$regex": f"^{DM_PREFIX}"}}).sort("created_at", 1):
+    query = {"group": {"$regex": f"^{DM_PREFIX}({current_user.id}-|.*-{current_user.id}$)"}}
+    async for message in messages_col.find(query).sort("created_at", 1):
         participants = message["group"][len(DM_PREFIX):].split("-")
         if len(participants) == 2 and current_user.id in participants:
             latest[message["group"]] = message
-    other_ids = {next(participant for participant in group[len(DM_PREFIX):].split("-") if participant != current_user.id) for group in latest}
-    users = {str(user["_id"]): user async for user in users_col.find({"_id": {"$in": [ObjectId(user_id) for user_id in other_ids]}})}
+    other_ids = set()
+    for group in latest:
+        for p in group[len(DM_PREFIX):].split("-"):
+            if p != current_user.id:
+                try:
+                    other_ids.add(ObjectId(p))
+                except Exception:
+                    pass
+    users = {str(user["_id"]): user async for user in users_col.find({"_id": {"$in": list(other_ids)}})}
     result = []
     for group, message in latest.items():
-        other_id = next(participant for participant in group[len(DM_PREFIX):].split("-") if participant != current_user.id)
+        other_id = next((participant for participant in group[len(DM_PREFIX):].split("-") if participant != current_user.id), None)
+        if not other_id:
+            continue
         other = users.get(other_id, {})
-        result.append({"group": group, "other_user_id": other_id, "other_user_name": other.get("name", "Unknown"), "other_user_role": other.get("role"), "last_text": message.get("text", ""), "last_at": message["created_at"].isoformat(), "last_from_me": message.get("from_user_id") == current_user.id, "has_attachment": bool(message.get("attachment"))})
+        result.append({
+            "group": group,
+            "other_user_id": other_id,
+            "other_user_name": other.get("name", "Unknown"),
+            "other_user_role": other.get("role"),
+            "last_text": message.get("text", ""),
+            "last_at": message["created_at"].isoformat(),
+            "last_from_me": message.get("from_user_id") == current_user.id,
+            "has_attachment": bool(message.get("attachment")),
+        })
     return JsonResponse(result, safe=False)
 
 

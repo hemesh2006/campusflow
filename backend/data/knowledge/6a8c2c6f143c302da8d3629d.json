@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-09-16T09:48:14.685300+00:00",
+    "generated_at": "2026-10-11T20:48:13.243517+00:00",
     "user_id": "6a8c2c6f143c302da8d3629d",
     "role": "admin",
     "name": "IT Admin"
@@ -12,7 +12,79 @@
     "dept": "All",
     "dob": "2006-03-11",
     "mobile": "9047009912",
-    "semesters": []
+    "semesters": [],
+    "settings": {
+      "theme": "dark",
+      "notifications": {
+        "email": true,
+        "telegram": false,
+        "academic_alerts": true,
+        "announcements": true,
+        "attendance_warnings": true
+      },
+      "ai_assistant": {
+        "enabled": true,
+        "preferred_model": null,
+        "response_style": "academic",
+        "auto_context": true,
+        "permission_aware": true
+      },
+      "privacy": {
+        "profile_visible": true,
+        "show_contact": true
+      }
+    }
+  },
+  "settings": {
+    "theme": "dark",
+    "notifications": {
+      "email": true,
+      "telegram": false,
+      "academic_alerts": true,
+      "announcements": true,
+      "attendance_warnings": true
+    },
+    "ai_assistant": {
+      "enabled": true,
+      "preferred_model": null,
+      "response_style": "academic",
+      "auto_context": true,
+      "permission_aware": true
+    },
+    "privacy": {
+      "profile_visible": true,
+      "show_contact": true
+    }
+  },
+  "permissions": {
+    "role": "admin",
+    "role_level": 5,
+    "scope": "system",
+    "can_view_institution_stats": true,
+    "can_manage_roles": true,
+    "can_manage_departments": true,
+    "can_view_all_departments": true,
+    "can_manage_advisors": true,
+    "can_manage_students": true,
+    "can_view_all_students": true,
+    "can_mark_attendance": true,
+    "can_warn_attendance": true,
+    "can_edit_academic_records": true,
+    "can_broadcast_institution": true,
+    "can_broadcast_department": true,
+    "can_broadcast_class": true,
+    "can_manage_own_tasks": true,
+    "can_assign_tasks_to_others": true,
+    "can_manage_agents": true,
+    "can_access_llm_admin": true,
+    "can_view_hardware_telemetry": true
+  },
+  "hierarchy": {
+    "level": 5,
+    "scope": "system",
+    "department": "All",
+    "reports_to": null,
+    "manages": []
   },
   "tasks": [],
   "skills": [],
@@ -72,6 +144,18 @@
         "text": "heloo principal",
         "time": "2026-08-24T13:13:33.872000",
         "read_count": 0
+      },
+      {
+        "from": "arjun",
+        "text": "hi there",
+        "time": "2026-10-11T17:03:26.779000",
+        "read_count": 0
+      },
+      {
+        "from": "arjun",
+        "text": "hello hods am principal",
+        "time": "2026-10-11T18:14:32.468000",
+        "read_count": 0
       }
     ],
     "direct_messages": [
@@ -108,7 +192,7 @@
     "tasks_pending": 0,
     "skills_count": 0,
     "avg_skill_level": 0.0,
-    "total_messages_in_scope": 13,
+    "total_messages_in_scope": 15,
     "open_reports": 0
   }
 }

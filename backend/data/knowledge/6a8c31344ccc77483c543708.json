@@ -1,0 +1,181 @@
+{
+  "meta": {
+    "generated_at": "2026-10-12T04:14:28.379822+00:00",
+    "user_id": "6a8c31344ccc77483c543708",
+    "role": "hod",
+    "name": "Mugilan"
+  },
+  "profile": {
+    "name": "Mugilan",
+    "email": "mugilan@campusflow.edu",
+    "role": "hod",
+    "dept": "AI & DS",
+    "class_advisor_id": null,
+    "alt_email": "sumathi@gmail.com"
+  },
+  "settings": {
+    "theme": "system",
+    "notifications": {
+      "email": true,
+      "telegram": false,
+      "academic_alerts": true,
+      "announcements": true,
+      "attendance_warnings": true
+    },
+    "ai_assistant": {
+      "enabled": true,
+      "preferred_model": null,
+      "response_style": "executive",
+      "auto_context": true,
+      "permission_aware": true
+    },
+    "privacy": {
+      "profile_visible": true,
+      "show_contact": true
+    }
+  },
+  "permissions": {
+    "role": "hod",
+    "role_level": 3,
+    "scope": "department:AI & DS",
+    "can_view_institution_stats": false,
+    "can_manage_roles": true,
+    "can_manage_departments": false,
+    "can_view_all_departments": false,
+    "can_manage_advisors": true,
+    "can_manage_students": true,
+    "can_view_all_students": true,
+    "can_mark_attendance": false,
+    "can_warn_attendance": true,
+    "can_edit_academic_records": true,
+    "can_broadcast_institution": false,
+    "can_broadcast_department": true,
+    "can_broadcast_class": true,
+    "can_manage_own_tasks": true,
+    "can_assign_tasks_to_others": true,
+    "can_manage_agents": false,
+    "can_access_llm_admin": false,
+    "can_view_hardware_telemetry": false
+  },
+  "hierarchy": {
+    "level": 3,
+    "scope": "department:AI & DS",
+    "department": "AI & DS",
+    "reports_to": {
+      "id": "6a8c2f4b796bc0dcd1e0efc5",
+      "name": "arjun",
+      "role": "principal"
+    },
+    "manages": [
+      {
+        "id": "6a8c2ce4a963fc2909bfdb5d",
+        "name": "Aadhavan",
+        "role": "advisor"
+      }
+    ]
+  },
+  "tasks": [],
+  "skills": [],
+  "placements": [],
+  "recent_messages": {
+    "hod_advisor": [],
+    "principal_hod": [
+      {
+        "from": "arjun",
+        "text": "hello hods",
+        "time": "2026-08-24T11:58:02.478000",
+        "read_count": 0
+      },
+      {
+        "from": "arjun",
+        "text": "hello all",
+        "time": "2026-08-24T12:10:40.765000",
+        "read_count": 0
+      },
+      {
+        "from": "arjun",
+        "text": "gello hods",
+        "time": "2026-08-24T12:24:41.036000",
+        "read_count": 0
+      },
+      {
+        "from": "arjun",
+        "text": "he;llo hods are you getin the messages",
+        "time": "2026-08-24T12:31:16.157000",
+        "read_count": 0
+      },
+      {
+        "from": "arjun",
+        "text": "hello hod 11 111",
+        "time": "2026-08-24T12:43:41.304000",
+        "read_count": 0
+      },
+      {
+        "from": "Mugilan (HOD)",
+        "text": "hi",
+        "time": "2026-08-24T12:47:42.518000",
+        "read_count": 0
+      },
+      {
+        "from": "arjun",
+        "text": "role:",
+        "time": "2026-08-24T12:48:46.447000",
+        "read_count": 0
+      },
+      {
+        "from": "Mugilan (HOD)",
+        "text": "ghu",
+        "time": "2026-08-24T13:13:13.901000",
+        "read_count": 0
+      },
+      {
+        "from": "Mugilan (HOD)",
+        "text": "heloo principal",
+        "time": "2026-08-24T13:13:33.872000",
+        "read_count": 0
+      },
+      {
+        "from": "arjun",
+        "text": "hi there",
+        "time": "2026-10-11T17:03:26.779000",
+        "read_count": 0
+      },
+      {
+        "from": "arjun",
+        "text": "hello hods am principal",
+        "time": "2026-10-11T18:14:32.468000",
+        "read_count": 0
+      }
+    ],
+    "direct_messages": [
+      {
+        "from": "IT Admin",
+        "text": "hello there",
+        "time": "2026-08-24T12:08:29.166000",
+        "thread": "dm-6a8c2c6f143c302da8d3629d-6a8c31344ccc77483c543708"
+      },
+      {
+        "from": "IT Admin",
+        "text": "gello hod",
+        "time": "2026-08-24T12:23:41.856000",
+        "thread": "dm-6a8c2c6f143c302da8d3629d-6a8c31344ccc77483c543708"
+      },
+      {
+        "from": "Mugilan (HOD)",
+        "text": "yes ther",
+        "time": "2026-08-24T12:23:55.382000",
+        "thread": "dm-6a8c2c6f143c302da8d3629d-6a8c31344ccc77483c543708"
+      }
+    ]
+  },
+  "reports": [],
+  "activity_log": [],
+  "stats": {
+    "tasks_done": 0,
+    "tasks_pending": 0,
+    "skills_count": 0,
+    "avg_skill_level": 0.0,
+    "total_messages_in_scope": 14,
+    "open_reports": 0
+  }
+}

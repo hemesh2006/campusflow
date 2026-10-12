@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import {
   LayoutGrid, Users, Network, ListChecks, MessageSquare, ShieldAlert,
-  Building2, GraduationCap, Briefcase, TrendingUp, UserCircle2, BellRing, Cpu, Send, Home, LogOut,
+  Building2, GraduationCap, Briefcase, TrendingUp, UserCircle2, BellRing, Cpu, Send, Home, LogOut, ClipboardList,
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { ROLES, ROLE_META } from "../../data/mockData";
@@ -21,19 +21,18 @@ const NAV_BY_ROLE = {
     { to: "/principal", label: "Institution", icon: LayoutGrid, end: true },
     { to: "/principal/departments", label: "Departments", icon: Building2 },
     { to: "/principal/group", label: "HOD group", icon: MessageSquare },
-    { to: "/principal/messages", label: "Messages", icon: Send },
     { to: "/principal/notifications", label: "Profile", icon: BellRing },
   ],
   [ROLES.HOD]: [
     { to: "/hod", label: "Department", icon: LayoutGrid, end: true },
     { to: "/hod/network", label: "Agent network", icon: Network },
     { to: "/hod/group", label: "Advisor group", icon: MessageSquare },
-    { to: "/hod/messages", label: "Messages", icon: Send },
     { to: "/hod/notifications", label: "Profile", icon: BellRing },
   ],
   [ROLES.ADVISOR]: [
     { to: "/advisor", label: "Class board", icon: LayoutGrid, end: true },
     { to: "/advisor/students", label: "Students", icon: GraduationCap },
+    { to: "/advisor/group-tasks", label: "Group tasks", icon: ClipboardList },
     { to: "/advisor/placements", label: "Placements", icon: Briefcase },
     { to: "/advisor/network", label: "Agent network", icon: Network },
     { to: "/advisor/group", label: "Common group", icon: MessageSquare },
@@ -42,7 +41,8 @@ const NAV_BY_ROLE = {
   ],
   [ROLES.STUDENT]: [
     { to: "/student", label: "Dashboard", icon: Home, end: true },
-    { to: "/student/tasks", label: "Tasks", icon: ListChecks },
+    { to: "/student/tasks", label: "My Tasks", icon: ListChecks },
+    { to: "/student/group-tasks", label: "Class Assignments", icon: ClipboardList },
     { to: "/student/placements", label: "Placements", icon: Briefcase },
     { to: "/student/skills", label: "Skills", icon: TrendingUp },
     { to: "/student/group", label: "Common group", icon: MessageSquare },

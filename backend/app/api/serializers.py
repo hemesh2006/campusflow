@@ -34,6 +34,14 @@ class ProfileUpdateSerializer(serializers.Serializer):
     semesters = serializers.ListField(required=False, allow_null=True)
     resume_uploaded = serializers.BooleanField(required=False, allow_null=True)
     telegram_linked = serializers.BooleanField(required=False, allow_null=True)
+    settings = serializers.DictField(required=False, allow_null=True)
+
+
+class SettingsUpdateSerializer(serializers.Serializer):
+    theme = serializers.CharField(required=False, allow_null=True)
+    notifications = serializers.DictField(required=False, allow_null=True)
+    ai_assistant = serializers.DictField(required=False, allow_null=True)
+    privacy = serializers.DictField(required=False, allow_null=True)
 
 
 class StudentCreateSerializer(serializers.Serializer):

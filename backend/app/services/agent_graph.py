@@ -100,7 +100,9 @@ def _read() -> dict:
 
 def _write(graph: dict) -> None:
     GRAPH_PATH.parent.mkdir(parents=True, exist_ok=True)
-    GRAPH_PATH.write_text(json.dumps(graph, indent=2, ensure_ascii=False), encoding="utf-8")
+    temp_file = GRAPH_PATH.with_suffix(".tmp")
+    temp_file.write_text(json.dumps(graph, indent=2, ensure_ascii=False), encoding="utf-8")
+    temp_file.replace(GRAPH_PATH)
 
 
 def _add_edge(connections: dict[str, list[str]], a: str, b: str) -> None:

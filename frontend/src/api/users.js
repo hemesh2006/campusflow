@@ -3,6 +3,14 @@ import { api } from "./client";
 export const getMyProfile = () => api.get("/users/me");
 export const updateMyProfile = (patch) => api.patch("/users/me", patch);
 
+// User settings & Preferences
+export const getMySettings = () => api.get("/users/me/settings");
+export const updateMySettings = (patch) => api.patch("/users/me/settings", patch);
+
+// Hierarchical Structure & Permissions Store
+export const getUserHierarchy = () => api.get("/users/hierarchy");
+export const syncUserHierarchy = () => api.post("/users/hierarchy/sync");
+
 // Everyone in the system, lightweight — powers @mention search. Open
 // to every logged-in role (unlike listUsers(), which is admin-only).
 export const listDirectory = () => api.get("/users/directory");
@@ -47,5 +55,15 @@ export const adminUpdateUserRole = (userId, role, dept) =>
 export const updateStudentAcademic = (studentId, { cgpa, attendance }) =>
   api.patch(`/advisor/students/${studentId}/academic`, { cgpa, attendance });
 
+// Attendance System APIs (Class Advisor)
+export const getDailyAttendance = (date) =>
+  api.get(`/advisor/attendance${date ? `?date=${date}` : ""}`);
 
+export const submitDailyAttendance = ({ date, records }) =>
+  api.post("/advisor/attendance", { date, records });
 
+export const sendAttendanceWarning = (studentId) =>
+  api.post(`/advisor/students/${studentId}/warn-attendance`);
+
+// Student — view own attendance history & cumulative %
+export const getStudentAttendance = () => api.get("/student/attendance");
