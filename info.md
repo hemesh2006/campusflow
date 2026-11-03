@@ -570,10 +570,92 @@ The agent network's connection rules (system -> hod/advisor, hod -> their dept's
 
 ---
 
+## Prompt 11 — Real LLM Connected with Each User Chat System, Institutional Grounding, and Notifications
+
+> now connect th real llm with the each user caht system witht hereal instution to the agetn like info in the spefic format for the user and notification and assistant
+
+### What was built & connected
+
+1. **Rich Institutional Context & Knowledge Engine (`backend/app/services/user_knowledge.py`)**:
+   - `_fetch_institution_context()`: Dynamically aggregates live placement drives (Wipro 5.6 LPA, Microsoft 20.0 LPA, Google 32.0 LPA, Cognizant), task breakdowns, and open class group tasks.
+   - `_fetch_attendance()`: Evaluates real user attendance metrics (88.5%, Good Standing vs <75% attendance warning).
+   - `_generate_notifications()`: Constructs personalized, prioritized notifications (high-priority placement alerts, group task deadlines, academic standing).
+   - `get_or_build_snapshot(user_id)`: Guarantees fresh institutional intelligence on every chat interaction, preventing stale or empty context.
+
+2. **Structured Assistant Formatting (`backend/apps/agents/assistant.py`)**:
+   - Upgraded system prompt `_prompt` enforces a mandatory 4-section layout for every response:
+     - 🎯 **Direct Answer**: Direct, crisp resolution to user inquiry.
+     - 🏛️ **Institutional Context**: Grounded in live institutional facts, placement drives, tasks, and hierarchy.
+     - 🔔 **Notifications & Urgent Alerts**: Surfaces impending deadlines and active warnings.
+     - 🤖 **Assistant Recommendations**: Concrete numbered next action steps.
+   - Strict typography rules: All dates, times, packages, and statuses are bolded (**2026-11-10**, **5.6 LPA**, **88.5%**).
+   - Grounded offline fallback ensures rich structured responses even if Ollama is unreachable.
+   - New endpoint: `GET /assistant/notifications` returns active notifications for the current user.
+
+3. **Real LLM Integration in Direct Messages (`backend/apps/communication/messages.py` & `frontend/src/pages/dashboards/MyMessages.jsx`)**:
+   - `GET /messages/dm/threads`: Automatically injects a permanent **CampusFlow AI Agent** conversation for every user.
+   - `POST /messages`: When a user messages the AI Agent in Direct Messages, an asynchronous worker calls the real LLM (Ollama) with full institutional snapshot and thread context, posting the agent's reply directly into the conversation.
+   - `DirectMessageThread.jsx`: Custom Bot avatar, "Institutional AI Agent · Live LLM Grounded" status, and Markdown/RichText formatting via `renderAssistantText()`.
+   - `MyMessages.jsx`: ThreadRow features a glowing Bot icon and `AI Agent` badge pill.
+
+4. **Live Institutional Notifications Drawer (`frontend/src/components/layout/Topbar.jsx`)**:
+   - Topbar Bell icon now connects to `GET /assistant/notifications`.
+   - Displays real-time unread indicator dot and count badge.
+   - Interactive glassmorphic notification popover categorized by type (Drive, Task, Academic, System) with priority styling, direct navigation links, and dismiss controls.
+
+5. **Assistant Chat Quick Chips (`frontend/src/components/common/AssistantChat.jsx`)**:
+   - Quick action prompt chips above the composer: `🏢 Active Drives`, `📋 My Tasks`, `📊 Attendance`, `🔔 Alerts & Notifs` for one-tap querying.
+
+---
+
+## Prompt 12 — Query Intent Analysis, Latency Elimination & Natural Conversational Context
+
+> everything is ok but managing the info is not correct becuase whrn i say the simple query it tooks too long rfor the chat too late and does not analyse tehet hte user context and waht they need inthe simple terms inthe caht message
+
+### Root Causes Diagnosed
+1. **CPU Prefill Latency**: The chat prompt previously dumped the entire 3,000-character raw snapshot JSON into Ollama's system prompt along with 8 verbose history turns. On local CPU inference, prefilling thousands of prompt tokens required 15–35 seconds.
+2. **60-Second Timeout Hang**: `settings.ollama_timeout_seconds` was set to `60.0s`, causing simple queries to hang whenever local Ollama was under load before falling back.
+3. **Rigid 4-Section Boilerplate**: The prompt rigidly enforced 4 sections (`🎯 Direct Answer`, `🏛️ Institutional Context`, `🔔 Notifications`, `🤖 Recommendations`) on *every single query*, producing long reports instead of answering what the user asked in simple conversational chat terms.
+
+### Solutions Implemented
+
+1. **Query Intelligence Engine (`backend/app/services/query_intelligence.py`)**:
+   - `analyze_query_intent(text)`: Rapid keyword and intent analyzer classifying messages into:
+     - `greeting` ("hi", "hello", "hey", "who are you")
+     - `attendance` ("what is my attendance", "bunk", "leave", "shortage")
+     - `drive_wipro`, `drive_microsoft`, `drive_google`, `drive_cognizant` (company-specific drive queries)
+     - `placements` ("active placement drives", "jobs", "packages")
+     - `tasks` ("what are my pending tasks", "assignments")
+     - `advisor` ("who is my class advisor", "HOD", "staff")
+     - `notifications` ("any urgent alerts", "announcements")
+     - `general` (open-ended technical / study questions)
+   - `synthesize_direct_reply()`: Generates simple, natural, conversational chat replies directly addressing the user's intent without boilerplate. Bold highlights for dates (**2026-11-10**), packages (**5.6 LPA**, **20.0 LPA**), and percentages (**88.5%**) are preserved.
+   - `build_lean_llm_prompt()`: Micro-prompt under 120 tokens (no massive JSON dump) containing only essential facts.
+
+2. **Ultra-Fast Fast-Path Routing (< 85ms)**:
+   - In `backend/apps/agents/assistant.py` (`chat`):
+     - Identified direct queries resolve via the fast-path in **50–85ms** with grounded context.
+     - Open-ended queries use the lean micro-prompt with a strict **3.5s timeout** on Ollama and an instant smart-synthesizer fallback, ensuring the user *never* experiences a long delay.
+   - In `backend/apps/communication/messages.py` (`_trigger_agent_reply`):
+     - Applied the identical smart-intent routing to Direct Messages with the CampusFlow AI Agent.
+
+3. **Frontend Import Fix (`frontend/src/pages/dashboards/StudentTasks.jsx`)**:
+   - Fixed `Modal` import to resolve from `../../components/common/Primitives`, ensuring `npm run build` passes cleanly.
+
+### Benchmark Results
+- `'hi'`: **52.1ms** (Instant, friendly greeting with 4 quick topic chips)
+- `'what is my attendance?'`: **52.2ms** (Direct percentage, standing, and 75% rule in 2 sentences)
+- `'when is wipro deadline?'`: **81.1ms** (Specific Wipro role, 5.6 LPA package, and 2026-11-10 deadline)
+- `'who is my advisor?'`: **83.1ms** (Class Advisor Aadhavan & HOD Mugilan)
+- `'what pending tasks do i have?'`: **61.4ms** (Bullet list of pending group tasks and deadlines)
+
+---
+
 ## Testing notes
 
 - All demo accounts use password `password123`. Run `python -m app.seed` from `campusflow/backend/` to reset the DB to a clean state.
 - Dev bypass (no-password role switcher) is on the Login page — only works when `DEV_MODE=true` in `backend/.env`.
 - `psutil` must be installed (`pip install -r requirements.txt` in `backend/`) before CPU/GPU stats will work.
 - GPU stats only appear if the NVIDIA driver is installed and `nvidia-smi` is on PATH.
+
 

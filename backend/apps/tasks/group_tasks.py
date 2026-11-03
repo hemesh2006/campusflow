@@ -88,31 +88,57 @@ Rules:
 """
 
 
-async def _classify_message(text: str) -> dict:
-    """Call Ollama to classify a message. Falls back to smart keyword heuristics."""
-    model_used = "heuristic"
-    try:
-        from app.services import ollama_client
-        from app.database import settings_col
-        from app.config import settings as app_settings
-        doc = await settings_col.find_one({"_id": "assistant"})
-        model = (doc or {}).get("model") or app_settings.ollama_default_model
-        prompt = _CLASSIFY_PROMPT.format(text=text[:800])
-        messages = [
-            {"role": "system", "content": "You are a JSON-only response API. Respond ONLY with valid JSON."},
-            {"role": "user", "content": prompt},
-        ]
-        raw = await asyncio.wait_for(ollama_client.chat(model, messages), timeout=6.0)
-        json_match = re.search(r'\{[\s\S]*\}', raw or "")
-        if json_match:
-            result = json.loads(json_match.group())
-            if isinstance(result, dict) and "category" in result:
-                result["model_used"] = f"ollama ({model})"
-                return result
-    except Exception:
-        pass
+async def _classify_message(text: str, engine: str = "auto", timeout: float = 3.5, model_override: str | None = None) -> dict:
+    """
+    Classify a message using Ollama model or local keyword heuristic.
+    - engine='auto': Attempts Ollama with timeout; gracefully falls back to local keyword classifier.
+    - engine='ollama': Calls Ollama directly.
+    - engine='local' or 'heuristic': Immediately runs local keyword classifier without calling Ollama.
+    """
+    from app.services import ollama_client
+    from app.database import settings_col
+    from app.config import settings as app_settings
 
-    # ── Smart Keyword & Fuzzy Heuristic Fallback ──────────────────────────────
+    doc = await settings_col.find_one({"_id": "assistant"})
+    model = model_override or (doc or {}).get("model") or app_settings.ollama_default_model
+    timed_out = False
+
+    if engine in ("auto", "ollama"):
+        try:
+            prompt = _CLASSIFY_PROMPT.format(text=text[:800])
+            messages = [
+                {"role": "system", "content": "You are a JSON-only response API. Respond ONLY with valid JSON."},
+                {"role": "user", "content": prompt},
+            ]
+            raw = await asyncio.wait_for(
+                ollama_client.chat(model, messages, timeout=timeout),
+                timeout=timeout + 0.5
+            )
+            json_match = re.search(r'\{[\s\S]*\}', raw or "")
+            if json_match:
+                result = json.loads(json_match.group())
+                if isinstance(result, dict) and "category" in result:
+                    result["engine"] = "ollama"
+                    result["model_used"] = f"ollama ({model})"
+                    result["timed_out"] = False
+                    result["notice"] = f"Classified by Ollama LLM ({model})"
+                    return result
+        except Exception as exc:
+            timed_out = True
+            if engine == "ollama":
+                return {
+                    "category": "general",
+                    "title": text[:50],
+                    "description": text[:200],
+                    "completion_modes": ["mark_done"],
+                    "engine": "ollama",
+                    "model_used": f"ollama ({model}) - Failed",
+                    "timed_out": True,
+                    "error": str(exc),
+                    "notice": f"Ollama model ({model}) failed or timed out: {str(exc)}",
+                }
+
+    # ── Smart Keyword & Fuzzy Heuristic Fallback (Local Words-Based Engine) ───
     text_lower = text.lower()
 
     # 1. Company Detection (with common typos & abbreviations)
@@ -189,6 +215,12 @@ async def _classify_message(text: str) -> dict:
     else:
         title = text[:50].rstrip(".!?,") + ("…" if len(text) > 50 else "")
 
+    notice = (
+        f"Ollama model ({model}) was unreachable/timed out after {timeout}s. Switched to Local Keyword Engine."
+        if timed_out else
+        "Classified using fast Local Keyword Engine without LLM."
+    )
+
     return {
         "category": category,
         "title": title,
@@ -199,7 +231,10 @@ async def _classify_message(text: str) -> dict:
         "drive_company": detected_company,
         "drive_package": detected_package,
         "drive_role": detected_role,
-        "model_used": "ollama-smart-parser",
+        "engine": "local_rules",
+        "model_used": "Local Keyword Classifier (Heuristic)",
+        "timed_out": timed_out,
+        "notice": notice,
     }
 
 
@@ -215,7 +250,7 @@ async def analyse_and_act(message_doc: dict, advisor) -> None:
 async def detect_intent_view(request):
     """
     POST /group-tasks/detect
-    Receives {"text": "..."} or {"message": "..."}
+    Receives {"text": "...", "engine": "auto"|"ollama"|"local", "timeout": 3.5, "model": "..."}
     Calls Ollama AI model (with smart fallback) and returns structured category & details.
     """
     if request.method != "POST":
@@ -228,7 +263,11 @@ async def detect_intent_view(request):
     if not text:
         return _error("Message text is required", 400)
 
-    result = await _classify_message(text)
+    engine = (data.get("engine") or "auto").strip().lower()
+    timeout = float(data.get("timeout") or 3.5)
+    model = (data.get("model") or "").strip() or None
+
+    result = await _classify_message(text, engine=engine, timeout=timeout, model_override=model)
     return JsonResponse(result)
 
 

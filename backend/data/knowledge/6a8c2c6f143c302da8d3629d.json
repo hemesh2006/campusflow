@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-10-11T20:48:13.243517+00:00",
+    "generated_at": "2026-10-25T07:35:31.973184+00:00",
     "user_id": "6a8c2c6f143c302da8d3629d",
     "role": "admin",
     "name": "IT Admin"
@@ -35,6 +35,215 @@
       }
     }
   },
+  "institution": {
+    "name": "CampusFlow Academic & Placement Institute",
+    "academic_session": "2026-2027",
+    "active_placement_drives": [
+      {
+        "company": "cognizant",
+        "role": "On-campus Drive",
+        "package": "1.2",
+        "deadline": "2026-10-18",
+        "total_action_items": 3,
+        "tasks": [
+          "Register on company portal",
+          "Submit updated resume",
+          "Complete online assessment"
+        ]
+      },
+      {
+        "company": "Wipro",
+        "role": "Software Engineer",
+        "package": "5.6 LPA",
+        "deadline": "2026-11-10",
+        "total_action_items": 4,
+        "tasks": [
+          "Register on Wipro NextGen Portal",
+          "Upload updated resume (PDF)",
+          "Complete Wipro NLTH Aptitude Test",
+          "Attend Virtual Pre-Placement Talk"
+        ]
+      },
+      {
+        "company": "Microsoft",
+        "role": "Software Development Engineer (SDE)",
+        "package": "20.0 LPA",
+        "deadline": "2026-11-20",
+        "total_action_items": 5,
+        "tasks": [
+          "Submit Microsoft Career Portal application",
+          "Upload resume + LinkedIn profile URL",
+          "Complete Microsoft Online Coding Assessment",
+          "Prepare for Technical Interview (DSA + System Design)",
+          "Attend HR interview (Virtual or In-person)"
+        ]
+      },
+      {
+        "company": "Google",
+        "role": "Software Engineer L3",
+        "package": "32.0 LPA",
+        "deadline": "2026-11-30",
+        "total_action_items": 5,
+        "tasks": [
+          "Apply on Google Careers portal with updated CV",
+          "Complete Google Online Coding Challenge (GCC)",
+          "Submit GitHub or Portfolio URL for review",
+          "Prepare for 4-round technical interviews (Algorithms + System Design)",
+          "Complete Googleyness and Leadership Interview prep"
+        ]
+      }
+    ],
+    "active_group_tasks": [
+      {
+        "title": "Submit Internship and Project Documents",
+        "category": "task",
+        "due": "2026-10-25",
+        "drive_company": null,
+        "completion_modes": [
+          "upload",
+          "mark_done"
+        ],
+        "description": "Upload scanned copies of your internship certificates, project completion letters, and any workshop certificates. These will be attached to "
+      },
+      {
+        "title": "Placement Eligibility Excel Sheet - Fill Your Data",
+        "category": "task",
+        "due": "2026-10-20",
+        "drive_company": null,
+        "completion_modes": [
+          "form",
+          "mark_done"
+        ],
+        "description": "Fill your CGPA, backlog count, internship experience, and technical skills in the shared Excel sheet. Mandatory for shortlisting for all pla"
+      },
+      {
+        "title": "Google GCC Coding Challenge - Complete Now",
+        "category": "drive",
+        "due": "2026-11-25",
+        "drive_company": "Google",
+        "completion_modes": [
+          "upload",
+          "mark_done"
+        ],
+        "description": "Google's Online Coding Challenge (GCC) is live. Complete the 90-minute test before November 25th and share your confirmation screenshot."
+      },
+      {
+        "title": "Microsoft SDE Drive - Upload Resume",
+        "category": "drive",
+        "due": "2026-11-15",
+        "drive_company": "Microsoft",
+        "completion_modes": [
+          "upload",
+          "mark_done"
+        ],
+        "description": "Submit your updated resume (max 1 page, PDF) for the Microsoft SDE campus drive. Ensure all internships and projects are highlighted."
+      },
+      {
+        "title": "Fill Wipro Drive Registration Form",
+        "category": "drive",
+        "due": "2026-11-03",
+        "drive_company": "Wipro",
+        "completion_modes": [
+          "form",
+          "mark_done"
+        ],
+        "description": "All eligible students (7.5+ CGPA, no backlogs) must fill the Google Form to register for the Wipro Campus Drive on November 10th. Deadline: "
+      },
+      {
+        "title": "Complete Form Submission",
+        "category": "task",
+        "due": "",
+        "drive_company": null,
+        "completion_modes": [
+          "form",
+          "mark_done"
+        ],
+        "description": "helo complete this form"
+      }
+    ]
+  },
+  "attendance": {
+    "class_average_percentage": 86.4,
+    "minimum_required": 75.0,
+    "students_at_risk_count": 0,
+    "details": "Class attendance overall is healthy."
+  },
+  "notifications": [
+    {
+      "id": "notif-drive-cognizant",
+      "title": "cognizant Campus Drive (1.2)",
+      "message": "Role: On-campus Drive. Deadline: 2026-10-18. Action needed: register and upload requirements.",
+      "category": "drive",
+      "priority": "high",
+      "due": "2026-10-18",
+      "status": "pending",
+      "action_link": "/advisor/placements",
+      "timestamp": "Active Now"
+    },
+    {
+      "id": "notif-drive-wipro",
+      "title": "Wipro Campus Drive (5.6 LPA)",
+      "message": "Role: Software Engineer. Deadline: 2026-11-10. Action needed: register and upload requirements.",
+      "category": "drive",
+      "priority": "high",
+      "due": "2026-11-10",
+      "status": "pending",
+      "action_link": "/advisor/placements",
+      "timestamp": "Active Now"
+    },
+    {
+      "id": "notif-drive-microsoft",
+      "title": "Microsoft Campus Drive (20.0 LPA)",
+      "message": "Role: Software Development Engineer (SDE). Deadline: 2026-11-20. Action needed: register and upload requirements.",
+      "category": "drive",
+      "priority": "high",
+      "due": "2026-11-20",
+      "status": "pending",
+      "action_link": "/advisor/placements",
+      "timestamp": "Active Now"
+    },
+    {
+      "id": "notif-drive-google",
+      "title": "Google Campus Drive (32.0 LPA)",
+      "message": "Role: Software Engineer L3. Deadline: 2026-11-30. Action needed: register and upload requirements.",
+      "category": "drive",
+      "priority": "high",
+      "due": "2026-11-30",
+      "status": "pending",
+      "action_link": "/advisor/placements",
+      "timestamp": "Active Now"
+    },
+    {
+      "id": "notif-task-25004",
+      "title": "Submit Internship and Project Documents",
+      "message": "Deadline: 2026-10-25. Upload scanned copies of your internship certificates, project completion letters, and any workshop certificates. These will be attached to ",
+      "category": "task",
+      "priority": "normal",
+      "due": "2026-10-25",
+      "action_link": "/advisor/group-tasks",
+      "timestamp": "Today"
+    },
+    {
+      "id": "notif-task-95292",
+      "title": "Placement Eligibility Excel Sheet - Fill Your Data",
+      "message": "Deadline: 2026-10-20. Fill your CGPA, backlog count, internship experience, and technical skills in the shared Excel sheet. Mandatory for shortlisting for all pla",
+      "category": "task",
+      "priority": "normal",
+      "due": "2026-10-20",
+      "action_link": "/advisor/group-tasks",
+      "timestamp": "Today"
+    },
+    {
+      "id": "notif-task-49945",
+      "title": "Google GCC Coding Challenge - Complete Now",
+      "message": "Deadline: 2026-11-25. Google's Online Coding Challenge (GCC) is live. Complete the 90-minute test before November 25th and share your confirmation screenshot.",
+      "category": "task",
+      "priority": "high",
+      "due": "2026-11-25",
+      "action_link": "/advisor/group-tasks",
+      "timestamp": "Today"
+    }
+  ],
   "settings": {
     "theme": "dark",
     "notifications": {
@@ -122,7 +331,7 @@
         "read_count": 0
       },
       {
-        "from": "anu",
+        "from": "Mugilan (HOD)",
         "text": "hi",
         "time": "2026-08-24T12:47:42.518000",
         "read_count": 0
@@ -134,13 +343,13 @@
         "read_count": 0
       },
       {
-        "from": "anu",
+        "from": "Mugilan (HOD)",
         "text": "ghu",
         "time": "2026-08-24T13:13:13.901000",
         "read_count": 0
       },
       {
-        "from": "anu",
+        "from": "Mugilan (HOD)",
         "text": "heloo principal",
         "time": "2026-08-24T13:13:33.872000",
         "read_count": 0
@@ -178,7 +387,7 @@
         "thread": "dm-6a8c2c6f143c302da8d3629d-6a8c31344ccc77483c543708"
       },
       {
-        "from": "anu",
+        "from": "Mugilan (HOD)",
         "text": "yes ther",
         "time": "2026-08-24T12:23:55.382000",
         "thread": "dm-6a8c2c6f143c302da8d3629d-6a8c31344ccc77483c543708"
@@ -192,6 +401,7 @@
     "tasks_pending": 0,
     "skills_count": 0,
     "avg_skill_level": 0.0,
+    "attendance_percentage": 88.5,
     "total_messages_in_scope": 15,
     "open_reports": 0
   }

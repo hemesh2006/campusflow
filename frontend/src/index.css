@@ -618,3 +618,15 @@ input, select, textarea{ font-family: inherit; }
   .assistant-panel{ right: 16px; left: 16px; width: auto; bottom: 78px; }
   .assistant-fab{ right: 16px; bottom: 16px; }
 }
+
+@keyframes drive-highlight-pulse {
+  0% {
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.4), 0 4px 16px rgba(139, 92, 246, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.95), 0 8px 32px rgba(139, 92, 246, 0.45);
+  }
+  100% {
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.4), 0 4px 16px rgba(139, 92, 246, 0.15);
+  }
+}

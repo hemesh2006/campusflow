@@ -40,6 +40,7 @@ async def seed():
     await ensure_indexes()
 
     from app.services.hierarchy_sync import get_default_settings, sync_hierarchy_now
+    role = resolve_role_from_email(ADMIN_EMAIL)
     await users_col.insert_one({
         "name": ADMIN_NAME,
         "email": ADMIN_EMAIL,

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MessageCircle, ShieldCheck, Plus } from "lucide-react";
+import { MessageCircle, ShieldCheck, Plus, Bot } from "lucide-react";
 import AppShell from "../../components/layout/AppShell";
 import { GlassCard } from "../../components/common/Primitives";
 import DirectMessageThread from "../../components/common/DirectMessageThread";
@@ -7,6 +7,7 @@ import { listDmThreads } from "../../api/messages";
 import { ROLE_META } from "../../data/mockData";
 
 function ThreadRow({ t, isActive, onClick }) {
+  const isAgent = t.is_agent || t.other_user_id === "agent";
   const roleMeta = t.other_user_role ? ROLE_META[t.other_user_role] : null;
   const lastTime = t.last_at
     ? new Date(t.last_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
@@ -34,18 +35,21 @@ function ThreadRow({ t, isActive, onClick }) {
           className="avatar"
           style={{
             width: 42, height: 42, fontSize: 17,
-            background: roleMeta
+            display: "grid", placeItems: "center",
+            background: isAgent
+              ? "linear-gradient(135deg, #6366f1, #8b5cf6)"
+              : roleMeta
               ? `linear-gradient(135deg, ${roleMeta.color}aa, ${roleMeta.color}66)`
               : "linear-gradient(135deg, var(--accent-violet), var(--accent-blue))",
           }}
         >
-          {t.other_user_name?.[0]?.toUpperCase() || "?"}
+          {isAgent ? <Bot size={20} color="#fff" /> : (t.other_user_name?.[0]?.toUpperCase() || "?")}
         </div>
       </div>
 
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 6 }}>
-          <span style={{ fontSize: 13.5, fontWeight: 600, lineHeight: 1.2 }}>
+          <span style={{ fontSize: 13.5, fontWeight: isAgent ? 700 : 600, lineHeight: 1.2, color: isAgent ? "var(--accent-violet)" : "inherit" }}>
             {t.other_user_name || "Unknown user"}
           </span>
           <span style={{ fontSize: 10, color: "var(--text-faint)", flexShrink: 0, fontFamily: "var(--font-mono)" }}>
@@ -63,14 +67,21 @@ function ThreadRow({ t, isActive, onClick }) {
             {t.has_attachment && "📷 "}
             {t.last_text || <i>No messages yet</i>}
           </span>
-          {roleMeta && (
+          {isAgent ? (
+            <span
+              className="pill desktop-only"
+              style={{ fontSize: 9.5, color: "var(--accent-violet)", borderColor: "rgba(139,92,246,0.4)", marginLeft: 6, flexShrink: 0, fontWeight: 700 }}
+            >
+              AI Agent
+            </span>
+          ) : roleMeta ? (
             <span
               className="pill desktop-only"
               style={{ fontSize: 9.5, color: roleMeta.color, borderColor: `${roleMeta.color}40`, marginLeft: 6, flexShrink: 0 }}
             >
               {roleMeta.label}
             </span>
-          )}
+          ) : null}
         </div>
       </div>
     </button>

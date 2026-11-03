@@ -36,7 +36,7 @@ async def list_models() -> list[dict]:
         raise OllamaError(f"Ollama returned an error: {e.response.status_code}") from e
 
 
-async def chat(model: str, messages: list[dict], temperature: float = 0.4) -> str:
+async def chat(model: str, messages: list[dict], temperature: float = 0.4, timeout: float | None = None) -> str:
     """POST /api/chat (non-streaming). messages is the standard
     [{"role": "system"|"user"|"assistant", "content": str}, ...] shape."""
     if not model:
@@ -49,8 +49,9 @@ async def chat(model: str, messages: list[dict], temperature: float = 0.4) -> st
         "stream": False,
         "options": {"temperature": temperature},
     }
+    client_timeout = timeout if timeout is not None else settings.ollama_timeout_seconds
     try:
-        async with httpx.AsyncClient(timeout=settings.ollama_timeout_seconds) as client:
+        async with httpx.AsyncClient(timeout=client_timeout) as client:
             resp = await client.post(url, json=payload)
             resp.raise_for_status()
             data = resp.json()

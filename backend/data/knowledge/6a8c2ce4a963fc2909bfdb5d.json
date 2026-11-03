@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-10-12T04:08:39.102011+00:00",
+    "generated_at": "2026-10-12T14:34:42.374127+00:00",
     "user_id": "6a8c2ce4a963fc2909bfdb5d",
     "role": "advisor",
     "name": "Aadhavan"
@@ -12,6 +12,225 @@
     "dept": "AI & DS",
     "alt_email": "hemesh@gmail.com"
   },
+  "institution": {
+    "name": "CampusFlow Academic & Placement Institute",
+    "academic_session": "2026-2027",
+    "active_placement_drives": [
+      {
+        "company": "cognizant",
+        "role": "On-campus Drive",
+        "package": "1.2",
+        "deadline": "2026-10-18",
+        "total_action_items": 3,
+        "tasks": [
+          "Register on company portal",
+          "Submit updated resume",
+          "Complete online assessment"
+        ]
+      },
+      {
+        "company": "Wipro",
+        "role": "Software Engineer",
+        "package": "5.6 LPA",
+        "deadline": "2026-11-10",
+        "total_action_items": 4,
+        "tasks": [
+          "Register on Wipro NextGen Portal",
+          "Upload updated resume (PDF)",
+          "Complete Wipro NLTH Aptitude Test",
+          "Attend Virtual Pre-Placement Talk"
+        ]
+      },
+      {
+        "company": "Microsoft",
+        "role": "Software Development Engineer (SDE)",
+        "package": "20.0 LPA",
+        "deadline": "2026-11-20",
+        "total_action_items": 5,
+        "tasks": [
+          "Submit Microsoft Career Portal application",
+          "Upload resume + LinkedIn profile URL",
+          "Complete Microsoft Online Coding Assessment",
+          "Prepare for Technical Interview (DSA + System Design)",
+          "Attend HR interview (Virtual or In-person)"
+        ]
+      },
+      {
+        "company": "Google",
+        "role": "Software Engineer L3",
+        "package": "32.0 LPA",
+        "deadline": "2026-11-30",
+        "total_action_items": 5,
+        "tasks": [
+          "Apply on Google Careers portal with updated CV",
+          "Complete Google Online Coding Challenge (GCC)",
+          "Submit GitHub or Portfolio URL for review",
+          "Prepare for 4-round technical interviews (Algorithms + System Design)",
+          "Complete Googleyness and Leadership Interview prep"
+        ]
+      }
+    ],
+    "active_group_tasks": [
+      {
+        "title": "Submit Internship and Project Documents",
+        "category": "task",
+        "due": "2026-10-25",
+        "drive_company": null,
+        "completion_modes": [
+          "upload",
+          "mark_done"
+        ],
+        "description": "Upload scanned copies of your internship certificates, project completion letters, and any workshop certificates. These will be attached to "
+      },
+      {
+        "title": "Placement Eligibility Excel Sheet - Fill Your Data",
+        "category": "task",
+        "due": "2026-10-20",
+        "drive_company": null,
+        "completion_modes": [
+          "form",
+          "mark_done"
+        ],
+        "description": "Fill your CGPA, backlog count, internship experience, and technical skills in the shared Excel sheet. Mandatory for shortlisting for all pla"
+      },
+      {
+        "title": "Google GCC Coding Challenge - Complete Now",
+        "category": "drive",
+        "due": "2026-11-25",
+        "drive_company": "Google",
+        "completion_modes": [
+          "upload",
+          "mark_done"
+        ],
+        "description": "Google's Online Coding Challenge (GCC) is live. Complete the 90-minute test before November 25th and share your confirmation screenshot."
+      },
+      {
+        "title": "Microsoft SDE Drive - Upload Resume",
+        "category": "drive",
+        "due": "2026-11-15",
+        "drive_company": "Microsoft",
+        "completion_modes": [
+          "upload",
+          "mark_done"
+        ],
+        "description": "Submit your updated resume (max 1 page, PDF) for the Microsoft SDE campus drive. Ensure all internships and projects are highlighted."
+      },
+      {
+        "title": "Fill Wipro Drive Registration Form",
+        "category": "drive",
+        "due": "2026-11-03",
+        "drive_company": "Wipro",
+        "completion_modes": [
+          "form",
+          "mark_done"
+        ],
+        "description": "All eligible students (7.5+ CGPA, no backlogs) must fill the Google Form to register for the Wipro Campus Drive on November 10th. Deadline: "
+      },
+      {
+        "title": "Complete Form Submission",
+        "category": "task",
+        "due": "",
+        "drive_company": null,
+        "completion_modes": [
+          "form",
+          "mark_done"
+        ],
+        "description": "helo complete this form"
+      }
+    ]
+  },
+  "attendance": {
+    "class_average_percentage": 86.4,
+    "minimum_required": 75.0,
+    "students_at_risk_count": 0,
+    "details": "Class attendance overall is healthy."
+  },
+  "notifications": [
+    {
+      "id": "notif-drive-cognizant",
+      "title": "cognizant Campus Drive (1.2)",
+      "message": "Role: On-campus Drive. Deadline: 2026-10-18. Action needed: register and upload requirements.",
+      "category": "drive",
+      "priority": "high",
+      "due": "2026-10-18",
+      "status": "pending",
+      "action_link": "/advisor/placements",
+      "timestamp": "Active Now"
+    },
+    {
+      "id": "notif-drive-wipro",
+      "title": "Wipro Campus Drive (5.6 LPA)",
+      "message": "Role: Software Engineer. Deadline: 2026-11-10. Action needed: register and upload requirements.",
+      "category": "drive",
+      "priority": "high",
+      "due": "2026-11-10",
+      "status": "pending",
+      "action_link": "/advisor/placements",
+      "timestamp": "Active Now"
+    },
+    {
+      "id": "notif-drive-microsoft",
+      "title": "Microsoft Campus Drive (20.0 LPA)",
+      "message": "Role: Software Development Engineer (SDE). Deadline: 2026-11-20. Action needed: register and upload requirements.",
+      "category": "drive",
+      "priority": "high",
+      "due": "2026-11-20",
+      "status": "pending",
+      "action_link": "/advisor/placements",
+      "timestamp": "Active Now"
+    },
+    {
+      "id": "notif-drive-google",
+      "title": "Google Campus Drive (32.0 LPA)",
+      "message": "Role: Software Engineer L3. Deadline: 2026-11-30. Action needed: register and upload requirements.",
+      "category": "drive",
+      "priority": "high",
+      "due": "2026-11-30",
+      "status": "pending",
+      "action_link": "/advisor/placements",
+      "timestamp": "Active Now"
+    },
+    {
+      "id": "notif-task-14656",
+      "title": "Submit Internship and Project Documents",
+      "message": "Deadline: 2026-10-25. Upload scanned copies of your internship certificates, project completion letters, and any workshop certificates. These will be attached to ",
+      "category": "task",
+      "priority": "normal",
+      "due": "2026-10-25",
+      "action_link": "/advisor/group-tasks",
+      "timestamp": "Today"
+    },
+    {
+      "id": "notif-task-85481",
+      "title": "Placement Eligibility Excel Sheet - Fill Your Data",
+      "message": "Deadline: 2026-10-20. Fill your CGPA, backlog count, internship experience, and technical skills in the shared Excel sheet. Mandatory for shortlisting for all pla",
+      "category": "task",
+      "priority": "normal",
+      "due": "2026-10-20",
+      "action_link": "/advisor/group-tasks",
+      "timestamp": "Today"
+    },
+    {
+      "id": "notif-task-41441",
+      "title": "Google GCC Coding Challenge - Complete Now",
+      "message": "Deadline: 2026-11-25. Google's Online Coding Challenge (GCC) is live. Complete the 90-minute test before November 25th and share your confirmation screenshot.",
+      "category": "task",
+      "priority": "high",
+      "due": "2026-11-25",
+      "action_link": "/advisor/group-tasks",
+      "timestamp": "Today"
+    },
+    {
+      "id": "notif-advisor-sync",
+      "title": "Placement Drive Nodes Synced",
+      "message": "Wipro, Microsoft, and Google placement drives are linked to your group tasks with live completion tracking.",
+      "category": "system",
+      "priority": "normal",
+      "due": null,
+      "action_link": "/advisor/group-tasks",
+      "timestamp": "Today"
+    }
+  ],
   "settings": {
     "theme": "system",
     "notifications": {
@@ -62,7 +281,7 @@
     "department": "AI & DS",
     "reports_to": {
       "id": "6a8c31344ccc77483c543708",
-      "name": "anu",
+      "name": "Mugilan",
       "role": "hod",
       "dept": "AI & DS"
     },
@@ -165,8 +384,114 @@
     {
       "company": "cognizant",
       "role": "On-campus Drive",
+      "package": "1.2",
       "status": "action_needed",
-      "applied_at": null
+      "deadline": "2026-10-18",
+      "completed": false,
+      "completed_at": null,
+      "tasks": [
+        {
+          "title": "Register on company portal",
+          "done": false
+        },
+        {
+          "title": "Submit updated resume",
+          "done": false
+        },
+        {
+          "title": "Complete online assessment",
+          "done": false
+        }
+      ]
+    },
+    {
+      "company": "Wipro",
+      "role": "Software Engineer",
+      "package": "5.6 LPA",
+      "status": "action_needed",
+      "deadline": "2026-11-10",
+      "completed": false,
+      "completed_at": null,
+      "tasks": [
+        {
+          "title": "Register on Wipro NextGen Portal",
+          "done": false
+        },
+        {
+          "title": "Upload updated resume (PDF)",
+          "done": false
+        },
+        {
+          "title": "Complete Wipro NLTH Aptitude Test",
+          "done": false
+        },
+        {
+          "title": "Attend Virtual Pre-Placement Talk",
+          "done": false
+        }
+      ]
+    },
+    {
+      "company": "Microsoft",
+      "role": "Software Development Engineer (SDE)",
+      "package": "20.0 LPA",
+      "status": "action_needed",
+      "deadline": "2026-11-20",
+      "completed": false,
+      "completed_at": null,
+      "tasks": [
+        {
+          "title": "Submit Microsoft Career Portal application",
+          "done": false
+        },
+        {
+          "title": "Upload resume + LinkedIn profile URL",
+          "done": false
+        },
+        {
+          "title": "Complete Microsoft Online Coding Assessment",
+          "done": false
+        },
+        {
+          "title": "Prepare for Technical Interview (DSA + System Design)",
+          "done": false
+        },
+        {
+          "title": "Attend HR interview (Virtual or In-person)",
+          "done": false
+        }
+      ]
+    },
+    {
+      "company": "Google",
+      "role": "Software Engineer L3",
+      "package": "32.0 LPA",
+      "status": "action_needed",
+      "deadline": "2026-11-30",
+      "completed": false,
+      "completed_at": null,
+      "tasks": [
+        {
+          "title": "Apply on Google Careers portal with updated CV",
+          "done": false
+        },
+        {
+          "title": "Complete Google Online Coding Challenge (GCC)",
+          "done": false
+        },
+        {
+          "title": "Submit GitHub or Portfolio URL for review",
+          "done": false
+        },
+        {
+          "title": "Prepare for 4-round technical interviews (Algorithms + System Design)",
+          "done": false
+        },
+        {
+          "title": "Complete Googleyness and Leadership Interview prep",
+          "done": false
+        }
+      ]
     }
   ],
   "recent_messages": {
@@ -253,6 +578,12 @@
         "from": "Aadhavan (Class Advisor)",
         "text": "I have to fill the form now quickly.",
         "time": "2026-10-12T03:17:53.551000",
+        "read_count": 0
+      },
+      {
+        "from": "Aadhavan",
+        "text": "I have to fill the form now quickly.",
+        "time": "2026-10-12T04:23:04.199000",
         "read_count": 0
       }
     ],
@@ -384,7 +715,8 @@
     "tasks_pending": 0,
     "skills_count": 0,
     "avg_skill_level": 0.0,
-    "total_messages_in_scope": 16,
+    "attendance_percentage": 88.5,
+    "total_messages_in_scope": 17,
     "open_reports": 0
   }
 }

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import AppShell from "../../components/layout/AppShell";
 import { GlassCard, Modal } from "../../components/common/Primitives";
 import { useAuth } from "../../context/AuthContext";
@@ -298,14 +298,25 @@ function CreateTaskModal({ onClose, onCreated, advisorId, initialValues, aiDetec
 }
 
 // ── Single task row ─────────────────────────────────────────────────────────
-function TaskRow({ task, onViewCompletions, onSetDue, onDelete }) {
+function TaskRow({ task, onViewCompletions, onSetDue, onDelete, highlighted, taskRef }) {
   const cat = CAT_META[task.category] || CAT_META.task;
   const pct = task.total_students > 0
     ? Math.round((task.completed_count / task.total_students) * 100) : 0;
   const overdue = task.due && new Date(task.due) < new Date();
 
   return (
-    <GlassCard style={{ padding: "14px 18px" }}>
+    <GlassCard
+      ref={taskRef}
+      style={{
+        padding: "14px 18px",
+        transition: "box-shadow 0.4s ease, border-color 0.4s ease",
+        ...(highlighted ? {
+          boxShadow: "0 0 0 2px rgba(139,92,246,0.7), 0 4px 24px rgba(139,92,246,0.25)",
+          borderColor: "rgba(139,92,246,0.6)",
+          animation: "drive-highlight-pulse 1.5s ease 3",
+        } : {}),
+      }}
+    >
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <div style={{
           width: 34, height: 34, borderRadius: 10,
@@ -385,6 +396,8 @@ export default function AdvisorGroupTasks() {
   const [creating, setCreating] = useState(false);
   const [prefill, setPrefill] = useState(null);
   const [aiMessage, setAiMessage] = useState(null);
+  const [highlightId, setHighlightId] = useState(null);
+  const taskRefs = useRef({});
 
   const load = () => {
     setLoading(true);
@@ -403,7 +416,25 @@ export default function AdvisorGroupTasks() {
       setCreating(true);
       window.history.replaceState({}, document.title);
     }
+    if (location.state?.highlightTaskId) {
+      setHighlightId(location.state.highlightTaskId);
+      window.history.replaceState({}, document.title);
+    }
   }, [location.state]);
+
+  // Scroll to highlighted task once tasks have loaded
+  useEffect(() => {
+    if (highlightId && tasks.length > 0) {
+      const el = taskRefs.current[highlightId];
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 150);
+        // Clear highlight after animation completes
+        setTimeout(() => setHighlightId(null), 5000);
+      }
+    }
+  }, [highlightId, tasks]);
 
   const handleDelete = async (task) => {
     if (!window.confirm(`Delete task "${task.title}"?`)) return;
@@ -475,6 +506,8 @@ export default function AdvisorGroupTasks() {
               onViewCompletions={setCompletionTask}
               onSetDue={setDueTask}
               onDelete={handleDelete}
+              highlighted={highlightId === t.id}
+              taskRef={(el) => { taskRefs.current[t.id] = el; }}
             />
           ))}
         </div>

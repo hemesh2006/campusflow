@@ -32,6 +32,12 @@ export const completeGroupTask = (id, { mode, text_response, upload_url, form_da
   api.post(`/group-tasks/${id}/complete`, { mode, text_response, upload_url, form_data });
 
 // ── AI intent detection via Ollama (task vs drive vs general) ──────────────
-export const detectGroupTaskIntent = (text, group) =>
-  api.post("/group-tasks/detect", { text, group });
+export const detectGroupTaskIntent = (text, group, options = {}) =>
+  api.post("/group-tasks/detect", {
+    text,
+    group,
+    engine: options.engine || "auto",
+    timeout: options.timeout || 3.5,
+    model: options.model,
+  });
 

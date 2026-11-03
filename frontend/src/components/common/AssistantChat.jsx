@@ -69,8 +69,8 @@ export default function AssistantChat() {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [messages, thinking, open]);
 
-  const send = async () => {
-    const text = draft.trim();
+  const send = async (overrideText) => {
+    const text = (typeof overrideText === "string" ? overrideText : draft).trim();
     if (!text || thinking) return;
 
     const historyForModel = messages
@@ -139,6 +139,35 @@ export default function AssistantChat() {
             )}
           </div>
 
+          {/* Quick Institutional Chips */}
+          <div style={{ display: "flex", gap: 5, padding: "7px 12px", overflowX: "auto", borderTop: "1px solid var(--glass-border)", background: "rgba(255,255,255,0.02)" }}>
+            {[
+              { label: "🏢 Active Drives", query: "What are the active placement drives and deadlines?" },
+              { label: "📋 My Tasks", query: "What are my pending tasks and group tasks?" },
+              { label: "📊 Attendance", query: "What is my attendance status?" },
+              { label: "🔔 Alerts & Notifs", query: "What urgent notifications and alerts require my attention?" },
+            ].map((chip) => (
+              <button
+                key={chip.label}
+                onClick={() => send(chip.query)}
+                disabled={thinking}
+                style={{
+                  fontSize: 10.5,
+                  fontWeight: 600,
+                  whiteSpace: "nowrap",
+                  padding: "4px 8px",
+                  borderRadius: 99,
+                  border: "1px solid var(--glass-border)",
+                  background: "rgba(255,255,255,0.04)",
+                  color: "var(--text-mid)",
+                  cursor: "pointer",
+                }}
+              >
+                {chip.label}
+              </button>
+            ))}
+          </div>
+
           <div className="assistant-composer">
             <input
               className="field-input"
@@ -148,7 +177,7 @@ export default function AssistantChat() {
               onKeyDown={(e) => e.key === "Enter" && send()}
               disabled={thinking}
             />
-            <button className="btn btn-primary btn-sm" onClick={send} aria-label="Send" disabled={thinking}>
+            <button className="btn btn-primary btn-sm" onClick={() => send()} aria-label="Send" disabled={thinking}>
               <Send size={14} />
             </button>
           </div>

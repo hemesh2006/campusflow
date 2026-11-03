@@ -1,10 +1,12 @@
-export function GlassCard({ children, className = "", style = {}, as: Tag = "div", ...rest }) {
+import { forwardRef } from "react";
+
+export const GlassCard = forwardRef(function GlassCard({ children, className = "", style = {}, as: Tag = "div", ...rest }, ref) {
   return (
-    <Tag className={`glass ${className}`} style={style} {...rest}>
+    <Tag ref={ref} className={`glass ${className}`} style={style} {...rest}>
       {children}
     </Tag>
   );
-}
+});
 
 const VIVID_GRADIENTS = {
   emerald: "linear-gradient(135deg, #1fbf8f, #0e8f6c)",

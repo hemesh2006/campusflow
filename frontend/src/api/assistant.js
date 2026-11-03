@@ -18,5 +18,11 @@ export const getAssistantModels = () => api.get("/assistant/models");
 // Admin-only — every agent institution-wide switches to this model.
 export const setAssistantModel = (model) => api.post("/assistant/model", { model });
 
-export const classifyMessage = (message) =>
-  api.post("/assistant/classify-message", { message });
+export const classifyMessage = (message, options = {}) =>
+  api.post("/assistant/classify-message", {
+    message,
+    engine: options.engine || "auto",
+    timeout: options.timeout || 3.5,
+  });
+
+export const getAssistantNotifications = () => api.get("/assistant/notifications");

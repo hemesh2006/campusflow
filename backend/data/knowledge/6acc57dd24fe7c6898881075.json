@@ -1,0 +1,738 @@
+{
+  "meta": {
+    "generated_at": "2026-10-12T06:48:08.324075+00:00",
+    "user_id": "6acc57dd24fe7c6898881075",
+    "role": "student",
+    "name": "Abinash"
+  },
+  "profile": {
+    "name": "Abinash",
+    "email": "abinash@campusflow.edu",
+    "role": "student",
+    "dept": "AI & DS",
+    "class_advisor_id": "6a8c2ce4a963fc2909bfdb5d",
+    "roll_id": "22AD001",
+    "cgpa": 8.75,
+    "attendance": 100.0,
+    "fairness": 0.2,
+    "semesters": [
+      {
+        "sem": "Sem 1",
+        "gpa": 8.55
+      },
+      {
+        "sem": "Sem 2",
+        "gpa": 8.65
+      },
+      {
+        "sem": "Sem 3",
+        "gpa": 8.75
+      }
+    ],
+    "placement_eligible": true,
+    "resume_uploaded": true,
+    "telegram_linked": false,
+    "settings": {
+      "theme": "system",
+      "notifications": {
+        "email": true,
+        "telegram": false,
+        "academic_alerts": true,
+        "announcements": true,
+        "attendance_warnings": true
+      },
+      "ai_assistant": {
+        "enabled": true,
+        "preferred_model": null,
+        "response_style": "academic",
+        "auto_context": true,
+        "permission_aware": true
+      },
+      "privacy": {
+        "profile_visible": true,
+        "show_contact": false
+      }
+    }
+  },
+  "institution": {
+    "name": "CampusFlow Academic & Placement Institute",
+    "academic_session": "2026-2027",
+    "active_placement_drives": [
+      {
+        "company": "cognizant",
+        "role": "On-campus Drive",
+        "package": "1.2",
+        "deadline": "2026-10-18",
+        "total_action_items": 3,
+        "tasks": [
+          "Register on company portal",
+          "Submit updated resume",
+          "Complete online assessment"
+        ]
+      },
+      {
+        "company": "Wipro",
+        "role": "Software Engineer",
+        "package": "5.6 LPA",
+        "deadline": "2026-11-10",
+        "total_action_items": 4,
+        "tasks": [
+          "Register on Wipro NextGen Portal",
+          "Upload updated resume (PDF)",
+          "Complete Wipro NLTH Aptitude Test",
+          "Attend Virtual Pre-Placement Talk"
+        ]
+      },
+      {
+        "company": "Microsoft",
+        "role": "Software Development Engineer (SDE)",
+        "package": "20.0 LPA",
+        "deadline": "2026-11-20",
+        "total_action_items": 5,
+        "tasks": [
+          "Submit Microsoft Career Portal application",
+          "Upload resume + LinkedIn profile URL",
+          "Complete Microsoft Online Coding Assessment",
+          "Prepare for Technical Interview (DSA + System Design)",
+          "Attend HR interview (Virtual or In-person)"
+        ]
+      },
+      {
+        "company": "Google",
+        "role": "Software Engineer L3",
+        "package": "32.0 LPA",
+        "deadline": "2026-11-30",
+        "total_action_items": 5,
+        "tasks": [
+          "Apply on Google Careers portal with updated CV",
+          "Complete Google Online Coding Challenge (GCC)",
+          "Submit GitHub or Portfolio URL for review",
+          "Prepare for 4-round technical interviews (Algorithms + System Design)",
+          "Complete Googleyness and Leadership Interview prep"
+        ]
+      }
+    ],
+    "active_group_tasks": [
+      {
+        "title": "Submit Internship and Project Documents",
+        "category": "task",
+        "due": "2026-10-25",
+        "drive_company": null,
+        "completion_modes": [
+          "upload",
+          "mark_done"
+        ],
+        "description": "Upload scanned copies of your internship certificates, project completion letters, and any workshop certificates. These will be attached to "
+      },
+      {
+        "title": "Placement Eligibility Excel Sheet - Fill Your Data",
+        "category": "task",
+        "due": "2026-10-20",
+        "drive_company": null,
+        "completion_modes": [
+          "form",
+          "mark_done"
+        ],
+        "description": "Fill your CGPA, backlog count, internship experience, and technical skills in the shared Excel sheet. Mandatory for shortlisting for all pla"
+      },
+      {
+        "title": "Google GCC Coding Challenge - Complete Now",
+        "category": "drive",
+        "due": "2026-11-25",
+        "drive_company": "Google",
+        "completion_modes": [
+          "upload",
+          "mark_done"
+        ],
+        "description": "Google's Online Coding Challenge (GCC) is live. Complete the 90-minute test before November 25th and share your confirmation screenshot."
+      },
+      {
+        "title": "Microsoft SDE Drive - Upload Resume",
+        "category": "drive",
+        "due": "2026-11-15",
+        "drive_company": "Microsoft",
+        "completion_modes": [
+          "upload",
+          "mark_done"
+        ],
+        "description": "Submit your updated resume (max 1 page, PDF) for the Microsoft SDE campus drive. Ensure all internships and projects are highlighted."
+      },
+      {
+        "title": "Fill Wipro Drive Registration Form",
+        "category": "drive",
+        "due": "2026-11-03",
+        "drive_company": "Wipro",
+        "completion_modes": [
+          "form",
+          "mark_done"
+        ],
+        "description": "All eligible students (7.5+ CGPA, no backlogs) must fill the Google Form to register for the Wipro Campus Drive on November 10th. Deadline: "
+      },
+      {
+        "title": "Complete Form Submission",
+        "category": "task",
+        "due": "",
+        "drive_company": null,
+        "completion_modes": [
+          "form",
+          "mark_done"
+        ],
+        "description": "helo complete this form"
+      }
+    ]
+  },
+  "attendance": {
+    "percentage": 88.5,
+    "status": "Good Standing",
+    "minimum_required": 75.0,
+    "is_at_risk": false,
+    "details": "Above mandatory 75% university requirement."
+  },
+  "notifications": [
+    {
+      "id": "notif-drive-cognizant",
+      "title": "cognizant Campus Drive (1.2)",
+      "message": "Role: On-campus Drive. Deadline: 2026-10-18. Action needed: register and upload requirements.",
+      "category": "drive",
+      "priority": "high",
+      "due": "2026-10-18",
+      "status": "pending",
+      "action_link": "/student/placements",
+      "timestamp": "Active Now"
+    },
+    {
+      "id": "notif-drive-wipro",
+      "title": "Wipro Campus Drive (5.6 LPA)",
+      "message": "Role: Software Engineer. Deadline: 2026-11-10. Action needed: register and upload requirements.",
+      "category": "drive",
+      "priority": "high",
+      "due": "2026-11-10",
+      "status": "pending",
+      "action_link": "/student/placements",
+      "timestamp": "Active Now"
+    },
+    {
+      "id": "notif-drive-microsoft",
+      "title": "Microsoft Campus Drive (20.0 LPA)",
+      "message": "Role: Software Development Engineer (SDE). Deadline: 2026-11-20. Action needed: register and upload requirements.",
+      "category": "drive",
+      "priority": "high",
+      "due": "2026-11-20",
+      "status": "pending",
+      "action_link": "/student/placements",
+      "timestamp": "Active Now"
+    },
+    {
+      "id": "notif-drive-google",
+      "title": "Google Campus Drive (32.0 LPA)",
+      "message": "Role: Software Engineer L3. Deadline: 2026-11-30. Action needed: register and upload requirements.",
+      "category": "drive",
+      "priority": "high",
+      "due": "2026-11-30",
+      "status": "pending",
+      "action_link": "/student/placements",
+      "timestamp": "Active Now"
+    },
+    {
+      "id": "notif-task-6126",
+      "title": "Submit Internship and Project Documents",
+      "message": "Deadline: 2026-10-25. Upload scanned copies of your internship certificates, project completion letters, and any workshop certificates. These will be attached to ",
+      "category": "task",
+      "priority": "normal",
+      "due": "2026-10-25",
+      "action_link": "/student/tasks",
+      "timestamp": "Today"
+    },
+    {
+      "id": "notif-task-84143",
+      "title": "Placement Eligibility Excel Sheet - Fill Your Data",
+      "message": "Deadline: 2026-10-20. Fill your CGPA, backlog count, internship experience, and technical skills in the shared Excel sheet. Mandatory for shortlisting for all pla",
+      "category": "task",
+      "priority": "normal",
+      "due": "2026-10-20",
+      "action_link": "/student/tasks",
+      "timestamp": "Today"
+    },
+    {
+      "id": "notif-task-39495",
+      "title": "Google GCC Coding Challenge - Complete Now",
+      "message": "Deadline: 2026-11-25. Google's Online Coding Challenge (GCC) is live. Complete the 90-minute test before November 25th and share your confirmation screenshot.",
+      "category": "task",
+      "priority": "high",
+      "due": "2026-11-25",
+      "action_link": "/student/tasks",
+      "timestamp": "Today"
+    },
+    {
+      "id": "notif-attendance-standing",
+      "title": "Semester Attendance Status",
+      "message": "Your current attendance is 88.5% (Good Standing).",
+      "category": "academic",
+      "priority": "low",
+      "due": null,
+      "action_link": "/student/dashboard",
+      "timestamp": "Today"
+    }
+  ],
+  "settings": {
+    "theme": "system",
+    "notifications": {
+      "email": true,
+      "telegram": false,
+      "academic_alerts": true,
+      "announcements": true,
+      "attendance_warnings": true
+    },
+    "ai_assistant": {
+      "enabled": true,
+      "preferred_model": null,
+      "response_style": "academic",
+      "auto_context": true,
+      "permission_aware": true
+    },
+    "privacy": {
+      "profile_visible": true,
+      "show_contact": false
+    }
+  },
+  "permissions": {
+    "role": "student",
+    "role_level": 1,
+    "scope": "self",
+    "can_view_institution_stats": false,
+    "can_manage_roles": false,
+    "can_manage_departments": false,
+    "can_view_all_departments": false,
+    "can_manage_advisors": false,
+    "can_manage_students": false,
+    "can_view_all_students": false,
+    "can_mark_attendance": false,
+    "can_warn_attendance": false,
+    "can_edit_academic_records": false,
+    "can_broadcast_institution": false,
+    "can_broadcast_department": false,
+    "can_broadcast_class": false,
+    "can_manage_own_tasks": true,
+    "can_assign_tasks_to_others": false,
+    "can_manage_agents": false,
+    "can_access_llm_admin": false,
+    "can_view_hardware_telemetry": false
+  },
+  "hierarchy": {
+    "level": 1,
+    "scope": "self",
+    "department": "AI & DS",
+    "reports_to": {
+      "id": "6a8c2ce4a963fc2909bfdb5d",
+      "name": "Aadhavan",
+      "role": "advisor",
+      "dept": "AI & DS"
+    },
+    "manages": []
+  },
+  "tasks": [],
+  "skills": [],
+  "placements": [
+    {
+      "company": "Wipro",
+      "role": "Software Engineer",
+      "package": "5.6 LPA",
+      "status": "action_needed",
+      "deadline": "2026-11-10",
+      "completed": false,
+      "completed_at": null,
+      "tasks": [
+        {
+          "title": "Register on Wipro NextGen Portal",
+          "done": false
+        },
+        {
+          "title": "Upload updated resume (PDF)",
+          "done": false
+        },
+        {
+          "title": "Complete Wipro NLTH Aptitude Test",
+          "done": false
+        },
+        {
+          "title": "Attend Virtual Pre-Placement Talk",
+          "done": false
+        }
+      ]
+    },
+    {
+      "company": "Microsoft",
+      "role": "Software Development Engineer (SDE)",
+      "package": "20.0 LPA",
+      "status": "action_needed",
+      "deadline": "2026-11-20",
+      "completed": false,
+      "completed_at": null,
+      "tasks": [
+        {
+          "title": "Submit Microsoft Career Portal application",
+          "done": false
+        },
+        {
+          "title": "Upload resume + LinkedIn profile URL",
+          "done": false
+        },
+        {
+          "title": "Complete Microsoft Online Coding Assessment",
+          "done": false
+        },
+        {
+          "title": "Prepare for Technical Interview (DSA + System Design)",
+          "done": false
+        },
+        {
+          "title": "Attend HR interview (Virtual or In-person)",
+          "done": false
+        }
+      ]
+    },
+    {
+      "company": "Google",
+      "role": "Software Engineer L3",
+      "package": "32.0 LPA",
+      "status": "action_needed",
+      "deadline": "2026-11-30",
+      "completed": false,
+      "completed_at": null,
+      "tasks": [
+        {
+          "title": "Apply on Google Careers portal with updated CV",
+          "done": false
+        },
+        {
+          "title": "Complete Google Online Coding Challenge (GCC)",
+          "done": false
+        },
+        {
+          "title": "Submit GitHub or Portfolio URL for review",
+          "done": false
+        },
+        {
+          "title": "Prepare for 4-round technical interviews (Algorithms + System Design)",
+          "done": false
+        },
+        {
+          "title": "Complete Googleyness and Leadership Interview prep",
+          "done": false
+        }
+      ]
+    },
+    {
+      "company": "cognizant",
+      "role": "On-campus Drive",
+      "package": "1.2",
+      "status": "action_needed",
+      "deadline": "2026-10-18",
+      "completed": false,
+      "completed_at": null,
+      "tasks": [
+        {
+          "title": "Register on company portal",
+          "done": false
+        },
+        {
+          "title": "Submit updated resume",
+          "done": false
+        },
+        {
+          "title": "Complete online assessment",
+          "done": false
+        }
+      ]
+    }
+  ],
+  "recent_messages": {
+    "class_group": [
+      {
+        "from": "Aadhavan (Class Advisor)",
+        "text": "Hello students well come to the 4th year.",
+        "time": "2026-08-24T12:07:29.505000",
+        "read_count": 0
+      },
+      {
+        "from": "Aadhavan (Class Advisor)",
+        "text": "everpwggppd one well maintain silence",
+        "time": "2026-08-24T12:07:41.613000",
+        "read_count": 0
+      },
+      {
+        "from": "adithya",
+        "text": "hello there",
+        "time": "2026-08-24T12:33:23.808000",
+        "read_count": 0
+      },
+      {
+        "from": "adithya",
+        "text": "hello stuents",
+        "time": "2026-08-24T12:48:18.719000",
+        "read_count": 0
+      },
+      {
+        "from": "Aadhavan (Class Advisor)",
+        "text": "hello sutent",
+        "time": "2026-08-24T13:06:34.940000",
+        "read_count": 0
+      },
+      {
+        "from": "Aadhavan (Class Advisor)",
+        "text": "hello guys how are you",
+        "time": "2026-08-31T04:17:11.177000",
+        "read_count": 0
+      },
+      {
+        "from": "Aadhavan (Class Advisor)",
+        "text": "hi there",
+        "time": "2026-08-31T04:18:31.222000",
+        "read_count": 0
+      },
+      {
+        "from": "Aadhavan (Class Advisor)",
+        "text": "how are you",
+        "time": "2026-08-31T04:18:39.755000",
+        "read_count": 0
+      },
+      {
+        "from": "Aadhavan (Class Advisor)",
+        "text": "Placement drive registration is open. Submit your resume and Excel marks sheet before Friday at 5 PM.",
+        "time": "2026-09-16T09:49:06.543000",
+        "read_count": 0
+      },
+      {
+        "from": "Aadhavan (Class Advisor)",
+        "text": "placement drive is coming",
+        "time": "2026-09-16T09:50:15.526000",
+        "read_count": 0
+      },
+      {
+        "from": "adithya",
+        "text": "hi there",
+        "time": "2026-09-23T05:07:50.888000",
+        "read_count": 0
+      },
+      {
+        "from": "adithya",
+        "text": "hi there",
+        "time": "2026-09-23T05:08:17.690000",
+        "read_count": 0
+      },
+      {
+        "from": "Aadhavan (Class Advisor)",
+        "text": "helo complete this form",
+        "time": "2026-10-11T20:27:57.215000",
+        "read_count": 0
+      },
+      {
+        "from": "Aadhavan (Class Advisor)",
+        "text": "I have to fill the form now quickly.",
+        "time": "2026-10-12T03:17:53.551000",
+        "read_count": 0
+      },
+      {
+        "from": "Aadhavan",
+        "text": "I have to fill the form now quickly.",
+        "time": "2026-10-12T04:23:04.199000",
+        "read_count": 0
+      }
+    ],
+    "direct_messages": [
+      {
+        "from": "Abinash",
+        "text": "when is wipro deadline?",
+        "time": "2026-10-12T06:45:14.548000",
+        "thread": "dm-6acc57dd24fe7c6898881075-agent"
+      },
+      {
+        "from": "CampusFlow AI Agent",
+        "text": "Here are the details for the **Wipro Campus Drive**:\n\n- **Role**: Project Engineer\n- **Package**: **5.6 LPA**\n- **Registration Deadline**: **2026-11-10**\n- **Online Assessment**: **2026-11-10**\n\n**Action Required**: Complete the registration Google Form under your **Placements** tab before the deadline.",
+        "time": "2026-10-12T06:45:14.798000",
+        "thread": "dm-6acc57dd24fe7c6898881075-agent"
+      }
+    ]
+  },
+  "reports": [],
+  "activity_log": [
+    {
+      "id": "b58de3d4332d405da7f3d0eb7702eb96",
+      "user_id": "6acc57dd24fe7c6898881075",
+      "user_name": "Abinash",
+      "role": "student",
+      "step": "chat_query",
+      "message": "What are my placement drives and deadlines?",
+      "response": "🎯 **Direct Answer**: Hello Abinash! I processed your query: \"What are my placement drives and deadlines?\".\n\n🏛️ **Institutional Context**: Current active placement drives in CampusFlow include **cognizant** (1.2, deadline **2026-10-18**), **Wipro** (5.6 LPA, deadline **2026-11-10**), **Microsoft** (20.0 LPA, deadline **2026-11-20**).\nActive group tasks broadcasted for your batch include: **Submit Internship and Project Documents** (due **2026-10-25**), **Placement Eligibility Excel Sheet - Fill Your Data** (due **2026-10-20**).\n\n🔔 **Notifications & Urgent Alerts**:\n- **Wipro Campus Drive**: Registration form closes on **2026-11-03**.\n- **Microsoft SDE**: Resume upload deadline is **2026-11-15**.\n- **Attendance Standing**: Your attendance is currently **88.5%** (Good Standing).\n\n🤖 **Assistant Recommendations**:\n1. Complete the Google Form for the **Wipro** registration drive.\n2. Ensure your updated 1-page PDF resume is ready for the **Microsoft SDE** drive.\n3. Check your **Group Tasks** to mark completed action items.",
+      "model": "qwen2.5:7b (offline fallback)",
+      "status": "completed",
+      "created_at": "2026-10-12T06:07:29.132217+00:00",
+      "updated_at": "2026-10-12T06:08:05.539161+00:00"
+    },
+    {
+      "id": "ab21f0fad5cb4e0a9fdb86b48c006967",
+      "user_id": "6acc57dd24fe7c6898881075",
+      "user_name": "Abinash",
+      "role": "student",
+      "step": "chat_query",
+      "message": "hi there",
+      "response": "🎯 **Direct Answer**: Hello Abinash! I processed your query: \"hi there\".\n\n🏛️ **Institutional Context**: Current active placement drives in CampusFlow include **cognizant** (1.2, deadline **2026-10-18**), **Wipro** (5.6 LPA, deadline **2026-11-10**), **Microsoft** (20.0 LPA, deadline **2026-11-20**).\nActive group tasks broadcasted for your batch include: **Submit Internship and Project Documents** (due **2026-10-25**), **Placement Eligibility Excel Sheet - Fill Your Data** (due **2026-10-20**).\n\n🔔 **Notifications & Urgent Alerts**:\n- **Wipro Campus Drive**: Registration form closes on **2026-11-03**.\n- **Microsoft SDE**: Resume upload deadline is **2026-11-15**.\n- **Attendance Standing**: Your attendance is currently **88.5%** (Good Standing).\n\n🤖 **Assistant Recommendations**:\n1. Complete the Google Form for the **Wipro** registration drive.\n2. Ensure your updated 1-page PDF resume is ready for the **Microsoft SDE** drive.\n3. Check your **Group Tasks** to mark completed action items.",
+      "model": "qwen2.5:7b (offline fallback)",
+      "status": "completed",
+      "created_at": "2026-10-12T06:13:29.928633+00:00",
+      "updated_at": "2026-10-12T06:14:37.439113+00:00"
+    },
+    {
+      "id": "3472b122861e48b5a5f5a77695bf568f",
+      "user_id": "6acc57dd24fe7c6898881075",
+      "user_name": "Abinash",
+      "role": "student",
+      "step": "chat_query",
+      "message": "drives list",
+      "response": "🎯 **Direct Answer**: Hello Abinash! I processed your query: \"drives list\".\n\n🏛️ **Institutional Context**: Current active placement drives in CampusFlow include **cognizant** (1.2, deadline **2026-10-18**), **Wipro** (5.6 LPA, deadline **2026-11-10**), **Microsoft** (20.0 LPA, deadline **2026-11-20**).\nActive group tasks broadcasted for your batch include: **Submit Internship and Project Documents** (due **2026-10-25**), **Placement Eligibility Excel Sheet - Fill Your Data** (due **2026-10-20**).\n\n🔔 **Notifications & Urgent Alerts**:\n- **Wipro Campus Drive**: Registration form closes on **2026-11-03**.\n- **Microsoft SDE**: Resume upload deadline is **2026-11-15**.\n- **Attendance Standing**: Your attendance is currently **88.5%** (Good Standing).\n\n🤖 **Assistant Recommendations**:\n1. Complete the Google Form for the **Wipro** registration drive.\n2. Ensure your updated 1-page PDF resume is ready for the **Microsoft SDE** drive.\n3. Check your **Group Tasks** to mark completed action items.",
+      "model": "qwen2.5:7b (offline fallback)",
+      "status": "completed",
+      "created_at": "2026-10-12T06:15:06.009425+00:00",
+      "updated_at": "2026-10-12T06:16:10.301960+00:00"
+    },
+    {
+      "id": "facd846391be4e288210451f0daa80c5",
+      "user_id": "6acc57dd24fe7c6898881075",
+      "user_name": "Abinash",
+      "role": "student",
+      "step": "chat_query",
+      "message": "hi",
+      "response": "Hello **Abinash**! I'm your CampusFlow AI Assistant.\n\nHow can I help you today? You can ask me about:\n- 📊 **Attendance**: Check your percentage and standing\n- 🏢 **Placement Drives**: Deadlines for **Wipro**, **Microsoft**, and **Google**\n- 📋 **Tasks**: Review your pending individual and group tasks\n- 👨‍🏫 **Staff**: Information about your Class Advisor (**Aadhavan**)",
+      "model": "campusflow-smart-context",
+      "status": "completed",
+      "created_at": "2026-10-12T06:37:28.096541+00:00",
+      "updated_at": "2026-10-12T06:37:28.135125+00:00"
+    },
+    {
+      "id": "eae269a20d0b4bbb8dc768ae4b77c3f7",
+      "user_id": "6acc57dd24fe7c6898881075",
+      "user_name": "Abinash",
+      "role": "student",
+      "step": "chat_query",
+      "message": "what is my attendance?",
+      "response": "Hi **Abinash**, your current attendance is **88.5%** (**Good Standing**).\n\nThis is comfortably above the university mandatory threshold of **75.0%**. You have no attendance shortage warnings and are fully eligible for upcoming examinations.",
+      "model": "campusflow-smart-context",
+      "status": "completed",
+      "created_at": "2026-10-12T06:37:28.144267+00:00",
+      "updated_at": "2026-10-12T06:37:28.184655+00:00"
+    },
+    {
+      "id": "c8ca5b2b382d4c538eba0d0593f28311",
+      "user_id": "6acc57dd24fe7c6898881075",
+      "user_name": "Abinash",
+      "role": "student",
+      "step": "chat_query",
+      "message": "when is wipro deadline?",
+      "response": "Here are the details for the **Wipro Campus Drive**:\n\n- **Role**: Project Engineer\n- **Package**: **5.6 LPA**\n- **Registration Deadline**: **2026-11-10**\n- **Online Assessment**: **2026-11-10**\n\n**Action Required**: Complete the registration Google Form under your **Placements** tab before the deadline.",
+      "model": "campusflow-smart-context",
+      "status": "completed",
+      "created_at": "2026-10-12T06:37:28.196878+00:00",
+      "updated_at": "2026-10-12T06:37:28.267566+00:00"
+    },
+    {
+      "id": "2fb0c46b44284f9ba7f466ec13c3a3b4",
+      "user_id": "6acc57dd24fe7c6898881075",
+      "user_name": "Abinash",
+      "role": "student",
+      "step": "chat_query",
+      "message": "who is my advisor?",
+      "response": "Your assigned Class Advisor is **Aadhavan** (AI & DS).\nYour Head of Department is **Mugilan** (HOD - AI & DS).\n\nYou can send a direct message to **Aadhavan** anytime via the **Messages** tab.",
+      "model": "campusflow-smart-context",
+      "status": "completed",
+      "created_at": "2026-10-12T06:37:28.281268+00:00",
+      "updated_at": "2026-10-12T06:37:28.350795+00:00"
+    },
+    {
+      "id": "68bf7c37c7e9415f8cbf53fee4926b6a",
+      "user_id": "6acc57dd24fe7c6898881075",
+      "user_name": "Abinash",
+      "role": "student",
+      "step": "chat_query",
+      "message": "what pending tasks do i have?",
+      "response": "Here are your active pending tasks:\n\n- **Submit Internship and Project Documents** (Group Task | Due: **2026-10-25**)\n- **Placement Eligibility Excel Sheet - Fill Your Data** (Group Task | Due: **2026-10-20**)\n\nYou can track and submit them in the **Tasks** or **Group Tasks** tab. Ask me anytime if you'd like me to decompose any task into step-by-step milestones!",
+      "model": "campusflow-smart-context",
+      "status": "completed",
+      "created_at": "2026-10-12T06:37:28.367733+00:00",
+      "updated_at": "2026-10-12T06:37:28.413984+00:00"
+    },
+    {
+      "id": "e5dbd47d4270495085f53edc41a6cae9",
+      "user_id": "6acc57dd24fe7c6898881075",
+      "user_name": "Abinash",
+      "role": "student",
+      "step": "chat_query",
+      "message": "hi",
+      "response": "Hello **Abinash**! I'm your CampusFlow AI Assistant.\n\nHow can I help you today? You can ask me about:\n- 📊 **Attendance**: Check your percentage and standing\n- 🏢 **Placement Drives**: Deadlines for **Wipro**, **Microsoft**, and **Google**\n- 📋 **Tasks**: Review your pending individual and group tasks\n- 👨‍🏫 **Staff**: Information about your Class Advisor (**Aadhavan**)",
+      "model": "campusflow-smart-context",
+      "status": "completed",
+      "created_at": "2026-10-12T06:46:15.312563+00:00",
+      "updated_at": "2026-10-12T06:46:15.394387+00:00"
+    },
+    {
+      "id": "02f7d8142d8c4ec58d70d6485c92e17f",
+      "user_id": "6acc57dd24fe7c6898881075",
+      "user_name": "Abinash",
+      "role": "student",
+      "step": "chat_query",
+      "message": "total no of students",
+      "response": "Hi **Abinash**! Regarding your query: \"total no of students\":\n\nYou are currently in **Good Standing** with **88.5%** attendance. Active placement drives include **Wipro** (due **2026-11-03**), **Microsoft** (due **2026-11-15**), and **Google** (due **2026-11-25**).\n\nFeel free to ask for specific guidance on placements, upcoming deadlines, or study plans!",
+      "model": "qwen2.5:7b (smart-fallback)",
+      "status": "completed",
+      "created_at": "2026-10-12T06:47:24.217962+00:00",
+      "updated_at": "2026-10-12T06:47:28.906912+00:00"
+    },
+    {
+      "id": "c77db63bdf7f456daa7726f2df52b128",
+      "user_id": "6acc57dd24fe7c6898881075",
+      "user_name": "Abinash",
+      "role": "student",
+      "step": "chat_query",
+      "message": "list of placement",
+      "response": "Here are the active placement drives open for your batch:\n\n1. **cognizant** — **1.2** | Closes **2026-10-18**\n2. **Wipro** — **5.6 LPA** | Closes **2026-11-10**\n3. **Microsoft** — **20.0 LPA** | Closes **2026-11-20**\n\nYou can review complete details and submit your requirements directly in the **Placements** tab.",
+      "model": "campusflow-smart-context",
+      "status": "completed",
+      "created_at": "2026-10-12T06:47:40.062762+00:00",
+      "updated_at": "2026-10-12T06:47:40.135126+00:00"
+    },
+    {
+      "id": "1eadfb0f095044e0a0991f6eb6ded9fb",
+      "user_id": "6acc57dd24fe7c6898881075",
+      "user_name": "Abinash",
+      "role": "student",
+      "step": "chat_query",
+      "message": "my advisor name",
+      "response": "Your assigned Class Advisor is **Aadhavan** (AI & DS).\nYour Head of Department is **Mugilan** (HOD - AI & DS).\n\nYou can send a direct message to **Aadhavan** anytime via the **Messages** tab.",
+      "model": "campusflow-smart-context",
+      "status": "completed",
+      "created_at": "2026-10-12T06:47:53.760206+00:00",
+      "updated_at": "2026-10-12T06:47:53.815911+00:00"
+    },
+    {
+      "id": "f37ec6b6bb4c4701bed395c73fb7361b",
+      "user_id": "6acc57dd24fe7c6898881075",
+      "user_name": "Abinash",
+      "role": "student",
+      "step": "chat_query",
+      "message": "what is my today task",
+      "response": "Here are your active pending tasks:\n\n- **Submit Internship and Project Documents** (Group Task | Due: **2026-10-25**)\n- **Placement Eligibility Excel Sheet - Fill Your Data** (Group Task | Due: **2026-10-20**)\n\nYou can track and submit them in the **Tasks** or **Group Tasks** tab. Ask me anytime if you'd like me to decompose any task into step-by-step milestones!",
+      "model": "campusflow-smart-context",
+      "status": "completed",
+      "created_at": "2026-10-12T06:48:08.194835+00:00",
+      "updated_at": "2026-10-12T06:48:08.250703+00:00"
+    }
+  ],
+  "stats": {
+    "tasks_done": 0,
+    "tasks_pending": 0,
+    "skills_count": 0,
+    "avg_skill_level": 0.0,
+    "attendance_percentage": 88.5,
+    "total_messages_in_scope": 17,
+    "open_reports": 0
+  }
+}

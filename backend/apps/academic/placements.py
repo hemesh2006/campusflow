@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.urls import path
 from pydantic import BaseModel, ValidationError
 
-from app.database import placements_col, users_col
+from app.database import placements_col, users_col, group_tasks_col, group_task_completions_col
 from app.core.deps import get_current_user
 from app.models.user import Role
 
@@ -122,9 +122,38 @@ async def placements_collection(request):
     document = {**payload.model_dump(), "tasks": tasks_list, "owner_id": current_user.id}
     result = await placements_col.insert_one(document)
     document["_id"] = result.inserted_id
+    placement_id = str(result.inserted_id)
 
-    # If created by staff (Advisor, HOD, Admin), broadcast drive to ALL students
+    # ── Auto-create a linked Group Task node for drive tracking ────────────────
+    # This task is visible in the student's Group Tasks view and tracks completion.
+    group_task_doc = None
     if current_user.role in (Role.ADVISOR, Role.HOD, Role.ADMIN):
+        pkg_str = f" ({payload.package})" if payload.package else ""
+        group_task_doc = {
+            "title": f"{payload.company} Campus Drive{pkg_str}",
+            "description": (
+                f"{payload.company} is conducting a campus placement drive for the role of {payload.role}."
+                + (f" Package offered: {payload.package}." if payload.package else "")
+                + f" Deadline: {payload.deadline}. Complete all required action items to be considered eligible."
+            ),
+            "category": "drive",
+            "completion_modes": ["mark_done"],
+            "due": payload.deadline,
+            "advisor_id": current_user.id,
+            "advisor_name": current_user.name,
+            "group": f"class-{current_user.id}",
+            "status": "open",
+            "drive_company": payload.company,
+            "drive_package": payload.package,
+            "drive_role": payload.role,
+            "placement_drive_id": placement_id,  # link back to master placement doc
+            "source_message_id": None,
+            "created_at": datetime.now(timezone.utc),
+        }
+        gt_result = await group_tasks_col.insert_one(group_task_doc)
+        group_task_doc["_id"] = gt_result.inserted_id
+
+        # Broadcast drive placement record to ALL students in class
         async for st in users_col.find({"role": Role.STUDENT.value}):
             st_id = str(st["_id"])
             existing = await placements_col.find_one({
@@ -144,7 +173,10 @@ async def placements_collection(request):
                     "completed_at": None,
                 })
 
-    return JsonResponse(_out(document), status=201)
+    out = _out(document)
+    if group_task_doc:
+        out["group_task_id"] = str(group_task_doc["_id"])
+    return JsonResponse(out, status=201)
 
 
 
@@ -232,18 +264,72 @@ async def advisor_summary(request):
         return current_user
     if current_user.role not in (Role.ADVISOR, Role.HOD, Role.PRINCIPAL, Role.ADMIN):
         return _error("Not permitted for this role", 403)
+
     # Find all students so advisor tracks every student
-    query = {"role": Role.STUDENT.value}
-    students = {str(user["_id"]): user async for user in users_col.find(query)}
+    students = {str(user["_id"]): user async for user in users_col.find({"role": Role.STUDENT.value})}
     drives = {}
     async for item in placements_col.find({"owner_id": {"$in": list(students)}}):
         student = students.get(item["owner_id"])
         if not student:
             continue
         key = (item["company"], item["role"])
-        drive = drives.setdefault(key, {"company": item["company"], "role": item["role"], "package": item.get("package"), "deadline": item["deadline"], "students": []})
-        drive["students"].append({"student_id": item["owner_id"], "student_name": student["name"], "student_email": student["email"], "completed": item.get("completed", False), "completed_at": item.get("completed_at"), "tasks": item.get("tasks", [])})
-    return JsonResponse([{**drive, "total_students": len(drive["students"]), "completed_count": sum(student["completed"] for student in drive["students"])} for drive in drives.values()], safe=False)
+        drive = drives.setdefault(key, {
+            "company": item["company"],
+            "role": item["role"],
+            "package": item.get("package"),
+            "deadline": item["deadline"],
+            "students": [],
+            "group_task_id": None,
+            "group_task_completion_count": 0,
+        })
+        drive["students"].append({
+            "student_id": item["owner_id"],
+            "student_name": student["name"],
+            "student_email": student["email"],
+            "completed": item.get("completed", False),
+            "completed_at": item.get("completed_at"),
+            "tasks": item.get("tasks", []),
+        })
+
+    # Attach linked group_task_id for each drive (auto-created at drive creation or seeded)
+    gt_list = [
+        gt async for gt in group_tasks_col.find({
+            "$or": [{"category": "drive"}, {"drive_company": {"$exists": True, "$ne": None}}],
+            "status": {"$ne": "deleted"}
+        })
+    ]
+    for key, drive in drives.items():
+        comp_name = drive["company"].strip().lower()
+        role_name = (drive.get("role") or "").strip().lower()
+        matched_gt = None
+        for gt in gt_list:
+            gt_comp = (gt.get("drive_company") or "").strip().lower()
+            gt_role = (gt.get("drive_role") or "").strip().lower()
+            if gt_comp and gt_comp == comp_name:
+                if gt_role and gt_role == role_name:
+                    matched_gt = gt
+                    break
+                elif not matched_gt:
+                    matched_gt = gt
+            elif comp_name in (gt.get("title") or "").lower():
+                if not matched_gt:
+                    matched_gt = gt
+
+        if matched_gt:
+            gt_id_str = str(matched_gt["_id"])
+            drive["group_task_id"] = gt_id_str
+            drive["group_task_completion_count"] = await group_task_completions_col.count_documents({"task_id": gt_id_str})
+
+    result = []
+    for drive in drives.values():
+        completed_count = sum(1 for s in drive["students"] if s["completed"])
+        result.append({
+            **{k: v for k, v in drive.items() if k != "students"},
+            "students": drive["students"],
+            "total_students": len(drive["students"]),
+            "completed_count": completed_count,
+        })
+    return JsonResponse(result, safe=False)
 
 
 urlpatterns = [

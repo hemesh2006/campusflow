@@ -1275,6 +1275,63 @@ A dedicated agent catalog has been established at `frontend/src/agents/`:
 
 ---
 
+## 17. Real Ollama Model Classification & Local Words-Based Heuristic Fallback
+
+### 17.1 Architecture & Design
+To guarantee reliable announcement intent classification even when local LLMs (Ollama) are cold-starting, slow, or offline, a dual-engine classification architecture was implemented:
+
+```mermaid
+flowchart TD
+    A[Advisor posts message / tests classifier] --> B{Engine Selection}
+    B -->|Engine = 'local'| C[Local Words-Based Classifier]
+    B -->|Engine = 'auto' or 'ollama'| D[Attempt Real Ollama LLM]
+    
+    D -->|Ollama Responds <= 3.5s| E[Ollama Structured Result: ✨ Real Ollama LLM]
+    D -->|Ollama > 2.6s Pending| F[Frontend Banner: Timeout prompt]
+    F -->|User clicks 'Use Local Model'| C
+    F -->|User clicks 'Wait'| D
+    
+    D -->|Ollama Times out / Fails| G{Strict Ollama?}
+    G -->|Engine = 'ollama'| H[Return 504 / Error state]
+    G -->|Engine = 'auto'| C
+    
+    C --> I[Result tagged with 'engine': 'local_rules', 'timed_out': true/false]
+    I --> J[UI renders ⚡ Local Keyword Classifier fallback badge + 'Retry Ollama' button]
+```
+
+### 17.2 Backend Dual-Engine Endpoints
+1. **`POST /group-tasks/detect` (`backend/apps/tasks/group_tasks.py`):**
+   - Accepts: `{ text, group, engine: 'auto' | 'ollama' | 'local', timeout: 3.5, model: '...' }`
+   - Real Ollama classification parses JSON schema: `category` (`task`, `drive`, `general`), `completion_modes`, `drive_company`, `drive_package`, `drive_role`.
+   - On timeout / failure (or if `engine='local'`), executes smart keywords/regex parser detecting:
+     - Top companies: Wipro, TCS, Infosys, Cognizant, Zoho, Accenture, Capgemini, Amazon, Microsoft, IBM, HCL, etc.
+     - Packages: e.g. `5.6 LPA`, `8.5 LPA`, etc.
+     - Roles & action requirements: spreadsheet/forms, file uploads, mark-done.
+   - Metadata returned: `engine` (`"ollama"` or `"local_rules"`), `timed_out` (bool), `notice` (explanation of fallback).
+
+2. **`POST /assistant/classify-message` (`backend/apps/agents/assistant.py`):**
+   - Protected endpoint for staff message categorization.
+   - Automatically falls back to rule-based categorization instead of throwing 502/504 when Ollama is offline or times out.
+
+3. **`GET /assistant/models` (`backend/apps/agents/assistant.py`):**
+   - If Ollama daemon is offline, returns default catalog (`llama3.2`, `llama3`, `mistral`, `deepseek-r1`) with `"ollama_online": false` to prevent settings panel crashes.
+
+### 17.3 Frontend Interactive Experience (`frontend/src/pages/dashboards/AdvisorGroup.jsx`)
+1. **Timeout Prompt Modal / Alert Strip:**
+   - When a message is sent, analysis begins with Ollama.
+   - If Ollama takes $>2.6$s, the banner prompts the user:
+     *"⏱️ Ollama server is taking time / approaching timeout. Can we use the local model?"*
+     - `[⚡ Yes, Use Local Model]`: Immediately executes local words engine.
+     - `[Wait for Ollama]`: Continues waiting for LLM response.
+2. **Engine Switcher Pills:**
+   - Advisor can select `[🤖 Auto]` (Ollama with timeout fallback), `[✨ Ollama]` (strict LLM), or `[⚡ Local]` (instant keywords).
+3. **Sandbox Tester:**
+   - "Test Classifier Sandbox" widget in the sidebar lets advisors test any sentence (e.g. *"Wipro campus recruitment drive 5.6 LPA on Friday"*) and observe immediate classification.
+4. **Transparent Origin Badges:**
+   - Output clearly displays whether intent was detected by `✨ Real Ollama LLM (<model>)` or `⚡ Local Keyword Classifier (Ollama Timeout Fallback)` with an instant `[🔄 Retry Ollama]` option.
+
+---
+
 > **Blueprint Maintenance:** This document is maintained directly in the project root at `PROJECT_ANALYSIS_FLOWS_AND_BUGS.md`. Update this file whenever new endpoints, schemas, or architectural workflows are introduced.
 
 

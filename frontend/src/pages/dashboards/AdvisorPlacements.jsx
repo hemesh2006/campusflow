@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { Briefcase, ChevronDown, ChevronUp, CheckCircle2, Circle, Users, Plus, Bot } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Briefcase, ChevronDown, ChevronUp, CheckCircle2, Circle, Users, Plus, Bot, ClipboardList, ArrowRight } from "lucide-react";
 import AppShell from "../../components/layout/AppShell";
 import { GlassCard, ProgressBar, Modal } from "../../components/common/Primitives";
 import { listAdvisorPlacementSummary, createPlacement } from "../../api/placements";
@@ -50,6 +50,7 @@ function StudentRow({ s }) {
 }
 
 function DriveCard({ drive }) {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(true);
   const pct = drive.total_students ? Math.round((drive.completed_count / drive.total_students) * 100) : 0;
 
@@ -76,6 +77,29 @@ function DriveCard({ drive }) {
                 {drive.package}
               </span>
             )}
+            {/* Group Task Node badge */}
+            {drive.group_task_id && (
+              <span
+                className="pill"
+                title="Linked Group Task Node — click to view in Group Tasks"
+                style={{
+                  color: "var(--accent-violet)",
+                  borderColor: "var(--accent-violet)40",
+                  fontSize: 10,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 4,
+                  cursor: "pointer",
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate("/advisor/group-tasks", { state: { highlightTaskId: drive.group_task_id } });
+                }}
+              >
+                <ClipboardList size={10} />
+                Group Task Node
+              </span>
+            )}
           </div>
           <div style={{ fontSize: 12, color: "var(--text-lo)" }}>{drive.role}</div>
         </div>
@@ -94,6 +118,35 @@ function DriveCard({ drive }) {
             </div>
             <ProgressBar value={drive.completed_count} max={drive.total_students} color="var(--accent-emerald)" />
           </div>
+
+          {/* Group Task Node callout */}
+          {drive.group_task_id && (
+            <div
+              style={{
+                marginBottom: 14,
+                padding: "10px 14px",
+                borderRadius: 10,
+                background: "linear-gradient(135deg, rgba(139,92,246,0.10), rgba(109,40,217,0.08))",
+                border: "1px solid rgba(139,92,246,0.28)",
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                cursor: "pointer",
+              }}
+              onClick={() => navigate("/advisor/group-tasks", { state: { highlightTaskId: drive.group_task_id } })}
+            >
+              <ClipboardList size={15} color="var(--accent-violet)" />
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: "var(--accent-violet)" }}>
+                  Group Task Node Created
+                </div>
+                <div style={{ fontSize: 11, color: "var(--text-mid)", marginTop: 1 }}>
+                  A drive completion task was auto-created in your Group Tasks. Students mark it done when they finish their registration steps.
+                </div>
+              </div>
+              <ArrowRight size={14} color="var(--accent-violet)" style={{ flexShrink: 0 }} />
+            </div>
+          )}
 
           <span className="eyebrow">Students — rounds, test registration &amp; overall progress</span>
           <div style={{ marginTop: 4 }}>

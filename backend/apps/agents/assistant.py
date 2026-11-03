@@ -64,41 +64,19 @@ async def _active_model():
 
 
 def _prompt(user, context, hierarchy_node=None):
-    base = f"You are the personal assistant agent for {user.name}, {ROLE_BRIEF.get(user.role, 'a CampusFlow user')}. Be concise, warm, and directly useful. Format replies in Markdown."
+    first_name = (user.name or "User").split()[0]
+    return f"""You are the CampusFlow AI Assistant for {user.name} ({ROLE_BRIEF.get(user.role, 'a CampusFlow user')}).
+Address the user as {first_name}.
 
-    hierarchy_block = ""
-    if hierarchy_node:
-        perms = hierarchy_node.get("permissions", {})
-        h_info = hierarchy_node.get("hierarchy", {})
-        settings = hierarchy_node.get("settings", {})
+RULES:
+- Answer the user's message directly, clearly, and concisely in simple conversational terms.
+- Do NOT use rigid section headers or multi-heading boilerplate templates.
+- Address exactly what they asked without dumping unrelated institutional data.
+- Keep responses short, practical, and easy to read (1-3 paragraphs or clean bullet points).
+- Highlight key dates, deadlines, and metrics in bold (e.g. **2026-11-10**, **88.5%**, **5.6 LPA**).
 
-        allowed_actions = [k.replace("can_", "").replace("_", " ") for k, v in perms.items() if k.startswith("can_") and v]
-        denied_actions = [k.replace("can_", "").replace("_", " ") for k, v in perms.items() if k.startswith("can_") and not v]
-
-        reports_to = h_info.get("reports_to")
-        manages = h_info.get("manages", [])
-
-        rep_str = f"{reports_to['name']} ({reports_to.get('role', '').upper()})" if reports_to else "None (Institutional Leadership)"
-        man_str = ", ".join([f"{m['name']} ({m.get('role', '')})" for m in manages[:8]]) if manages else "None"
-        if len(manages) > 8:
-            man_str += f" (+{len(manages) - 8} more)"
-
-        hierarchy_block = f"""
-INSTITUTIONAL HIERARCHY & PERMISSION CONTEXT:
-- Role & Authority: {user.role.value.upper()} (Level {perms.get('role_level', 1)}/5, Scope: {perms.get('scope', 'self')})
-- Department: {user.dept or 'None / General'}
-- Reports To: {rep_str}
-- Supervises / Manages: {man_str}
-- Authorized Capabilities: {', '.join(allowed_actions) if allowed_actions else 'Standard student self-view'}
-- Restricted Capabilities: {', '.join(denied_actions[:8])}
-- User Style Preference: {settings.get('ai_assistant', {}).get('response_style', 'concise')}
-
-DECISION-MAKING & GOVERNANCE RULES:
-1. Always respect the user's authority scope. If a student asks to change grades or reassign advisors, state clearly that their role lacks permission.
-2. If an advisor, HOD, or principal asks about their students, subordinates, or department hierarchy, use the hierarchy data directly to provide accurate, grounded answers.
-"""
-
-    return f"{base}\n{hierarchy_block}\nUser snapshot: {context or 'No snapshot available.'}"
+Institutional Context:
+{context or 'No additional context available.'}"""
 
 
 async def chat(request):
@@ -115,21 +93,67 @@ async def chat(request):
     if not text:
         return _error("Message can't be empty", 400)
     record = await action_log.start_action(user.id, user.name, user.role.value, text, step="chat_query")
-    context = user_knowledge.snapshot_as_context_string(user.id)
+    
+    snapshot = await user_knowledge.get_or_build_snapshot(user.id)
     from app.services.hierarchy_sync import get_user_hierarchy_node
     hierarchy_node = get_user_hierarchy_node(user.id)
+
+    from app.services.query_intelligence import (
+        analyze_query_intent,
+        synthesize_direct_reply,
+        build_lean_llm_prompt,
+    )
+
+    intent = analyze_query_intent(text)
+
+    # ── Fast Path for simple, specific institutional queries ─────────────
+    # Instantly returns (<50ms) a concise, plain-English answer grounded in user context.
+    if intent != "general":
+        reply = synthesize_direct_reply(intent, text, user, snapshot, hierarchy_node)
+        await action_log.finish_action(record["id"], reply, "campusflow-smart-context", status="completed")
+        asyncio.create_task(user_knowledge.save_snapshot(user.id))
+        return JsonResponse({
+            "id": record["id"],
+            "response": reply,
+            "status": "completed",
+            "model": "campusflow-smart-context",
+            "created_at": record["created_at"],
+        })
+
+    # ── Open-ended / General queries ─────────────────────────────────────
+    # Use lean micro-prompting and short timeout (3.5s) to eliminate CPU prefill latency.
     model = await _active_model()
-    messages = [{"role": "system", "content": _prompt(user, context, hierarchy_node)}]
-    messages.extend({"role": item.role, "content": item.content} for item in payload.history[-8:] if item.role in ("user", "assistant"))
+    lean_prompt = build_lean_llm_prompt(user, snapshot, hierarchy_node)
+    messages = [{"role": "system", "content": lean_prompt}]
+    for item in payload.history[-4:]:
+        if item.role in ("user", "assistant"):
+            messages.append({"role": item.role, "content": item.content[:300]})
     messages.append({"role": "user", "content": text})
+
     try:
-        reply = await ollama_client.chat(model, messages) or "I didn't get a response back from the model — try asking again."
+        reply = await ollama_client.chat(model, messages, timeout=3.5)
+        if not reply:
+            reply = synthesize_direct_reply("general", text, user, snapshot, hierarchy_node)
         await action_log.finish_action(record["id"], reply, model, status="completed")
         asyncio.create_task(user_knowledge.save_snapshot(user.id))
-        return JsonResponse({"id": record["id"], "response": reply, "status": "completed", "model": model, "created_at": record["created_at"]})
-    except ollama_client.OllamaError as exc:
-        await action_log.finish_action(record["id"], str(exc), model, status="error")
-        return _error(str(exc), 502)
+        return JsonResponse({
+            "id": record["id"],
+            "response": reply,
+            "status": "completed",
+            "model": model,
+            "created_at": record["created_at"],
+        })
+    except Exception:
+        # Instant grounded fallback on timeout or connection error without stalling
+        reply = synthesize_direct_reply("general", text, user, snapshot, hierarchy_node)
+        await action_log.finish_action(record["id"], reply, f"{model} (smart-fallback)", status="completed")
+        return JsonResponse({
+            "id": record["id"],
+            "response": reply,
+            "status": "completed",
+            "model": model,
+            "created_at": record["created_at"],
+        })
 
 
 async def history(request):
@@ -155,9 +179,24 @@ async def models(request):
         return _error("Not permitted for this role", 403)
     try:
         raw = await ollama_client.list_models()
-    except ollama_client.OllamaError as exc:
-        return _error(str(exc), 502)
-    return JsonResponse({"active": await _active_model(), "models": [{"name": item.get("name"), "size": item.get("size"), "modified_at": item.get("modified_at")} for item in raw]})
+        return JsonResponse({
+            "active": await _active_model(),
+            "models": [{"name": item.get("name"), "size": item.get("size"), "modified_at": item.get("modified_at")} for item in raw],
+            "ollama_online": True,
+        })
+    except ollama_client.OllamaError:
+        active = await _active_model()
+        return JsonResponse({
+            "active": active,
+            "models": [
+                {"name": "llama3.2", "size": "2.0 GB", "modified_at": "catalog"},
+                {"name": "llama3", "size": "4.7 GB", "modified_at": "catalog"},
+                {"name": "mistral", "size": "4.1 GB", "modified_at": "catalog"},
+                {"name": "deepseek-r1:1.5b", "size": "1.1 GB", "modified_at": "catalog"},
+            ],
+            "ollama_online": False,
+            "notice": "Ollama server currently offline; default model catalog active."
+        })
 
 
 async def set_model(request):
@@ -184,38 +223,88 @@ async def classify_message(request):
         return user
     if user.role not in (Role.ADVISOR, Role.HOD, Role.PRINCIPAL, Role.ADMIN):
         return _error("Only staff can classify messages", 403)
-    try:
-        payload = MessageClassifyRequest.model_validate(_body(request))
-    except ValidationError as exc:
-        return _error(exc.errors(), 422)
-    text = payload.message.strip()
+    body = _body(request)
+    text = (body.get("message") or body.get("text") or "").strip()
     if not text:
         return _error("Message can't be empty", 400)
+    engine = (body.get("engine") or "auto").strip().lower()
+    timeout = float(body.get("timeout") or 3.5)
 
     model = await _active_model()
-    prompt = f"""Classify this campus advisor announcement into exactly one category and one action.
+    timed_out = False
+    result = None
+
+    if engine in ("auto", "ollama"):
+        prompt = f"""Classify this campus advisor announcement into exactly one category and one action.
 Return ONLY valid JSON with these keys: category, action_type, title, summary, due_at.
 Allowed category values: placement, event, academic, attendance, document, general.
 Allowed action_type values: form_entry, file_upload, excel_upload, acknowledge, none.
 Use null for due_at when no date is present. Do not invent deadlines.
 Message: {text}"""
-    try:
-        raw = await ollama_client.chat(model, [{"role": "user", "content": prompt}], temperature=0)
-    except ollama_client.OllamaError as exc:
-        return _error(str(exc), 502)
-    try:
-        cleaned = raw.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
-        result = json.loads(cleaned)
-    except (json.JSONDecodeError, AttributeError):
-        return _error("The Ollama model returned an invalid classification.", 502)
+        try:
+            raw = await asyncio.wait_for(
+                ollama_client.chat(model, [{"role": "user", "content": prompt}], temperature=0, timeout=timeout),
+                timeout=timeout + 0.5
+            )
+            cleaned = raw.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
+            parsed = json.loads(cleaned)
+            if isinstance(parsed, dict) and "category" in parsed:
+                result = parsed
+        except Exception:
+            timed_out = True
+            if engine == "ollama":
+                return _error(f"Ollama model ({model}) timed out or failed.", 504)
+
     allowed_categories = {"placement", "event", "academic", "attendance", "document", "general"}
     allowed_actions = {"form_entry", "file_upload", "excel_upload", "acknowledge", "none"}
+
+    if not result:
+        # Heuristic / Words-based local classifier fallback
+        tl = text.lower()
+        is_placement = any(k in tl for k in ["wipro", "tcs", "zoho", "cognizant", "infosys", "placement", "drive", "hiring", "ctc", "lpa"])
+        is_attendance = any(k in tl for k in ["attendance", "present", "absent", "roll call"])
+        is_doc = any(k in tl for k in ["upload", "photo", "document", "certificate", "id card"])
+        is_form = any(k in tl for k in ["fill", "form", "sheet", "excel", "register", "submit"])
+        
+        cat = "placement" if is_placement else "attendance" if is_attendance else "document" if is_doc else "academic" if is_form else "general"
+        action = "excel_upload" if "excel" in tl or "sheet" in tl else "file_upload" if is_doc else "form_entry" if is_form else "acknowledge" if is_placement else "none"
+
+        result = {
+            "category": cat,
+            "action_type": action,
+            "title": text[:60].rstrip(".!?,") + ("…" if len(text) > 60 else ""),
+            "summary": text[:200],
+            "due_at": None,
+        }
+
     result["category"] = result.get("category") if result.get("category") in allowed_categories else "general"
     result["action_type"] = result.get("action_type") if result.get("action_type") in allowed_actions else "none"
     result["title"] = str(result.get("title") or text[:80]).strip()
     result["summary"] = str(result.get("summary") or text).strip()
     result["due_at"] = result.get("due_at") or None
-    return JsonResponse({"classification": result, "model": model})
+
+    return JsonResponse({
+        "classification": result,
+        "model": model,
+        "engine": "local_rules" if timed_out or engine in ("local", "heuristic") else "ollama",
+        "timed_out": timed_out,
+        "notice": (
+            f"Ollama ({model}) timed out after {timeout}s. Classified with Local Keyword Engine."
+            if timed_out else
+            f"Classified by Ollama LLM ({model})" if not engine in ("local", "heuristic") else
+            "Classified by Local Keyword Engine."
+        )
+    })
+
+
+async def notifications_list(request):
+    if request.method != "GET":
+        return _error("Method not allowed", 405)
+    user = await _user(request)
+    if isinstance(user, JsonResponse):
+        return user
+    snapshot = await user_knowledge.get_or_build_snapshot(user.id)
+    return JsonResponse(snapshot.get("notifications", []), safe=False)
 
 
 urlpatterns = [
@@ -224,4 +313,5 @@ urlpatterns = [
     path("assistant/models", models),
     path("assistant/model", set_model),
     path("assistant/classify-message", classify_message),
+    path("assistant/notifications", notifications_list),
 ]

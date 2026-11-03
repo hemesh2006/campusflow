@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { Send, Paperclip, X, ShieldCheck, Trash2, Check, CheckCheck, Smile, Mic } from "lucide-react";
+import { Send, Paperclip, X, ShieldCheck, Trash2, Check, CheckCheck, Smile, Mic, Bot } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { listMessages, postMessage, dmGroup, deleteMessage, markMessageRead } from "../../api/messages";
 import { ROLE_META } from "../../data/mockData";
+import { renderAssistantText } from "../../lib/richText";
 
 const MAX_IMAGE_BYTES = 3 * 1024 * 1024;
 const POLL_MS = 3000;
@@ -212,7 +213,7 @@ function MessageBubble({ m, mine, prevDate, onDelete }) {
                 )}
                 {m.text && (
                   <div style={{ fontSize: 13.5, lineHeight: 1.55, whiteSpace: "pre-wrap" }}>
-                    {renderText(m.text)}
+                    {m.from_user_id === "agent" ? renderAssistantText(m.text) : renderText(m.text)}
                   </div>
                 )}
                 <div style={{
@@ -342,26 +343,43 @@ export default function DirectMessageThread({ otherUser, onFirstMessageSent }) {
         padding: "0 2px 14px", borderBottom: "1px solid var(--glass-border)", marginBottom: 0,
       }}>
         <div style={{ position: "relative" }}>
-          <div className="avatar" style={{ background: "linear-gradient(135deg, var(--accent-violet), var(--accent-blue))", width: 40, height: 40, fontSize: 16 }}>
-            {safeName[0]?.toUpperCase()}
-          </div>
-          {isOnline && (
+          {otherUser.role === "agent" || otherUser.id === "agent" ? (
+            <div className="avatar" style={{ background: "linear-gradient(135deg, #6366f1, #8b5cf6)", width: 40, height: 40, display: "grid", placeItems: "center" }}>
+              <Bot size={20} color="#fff" />
+            </div>
+          ) : (
+            <div className="avatar" style={{ background: "linear-gradient(135deg, var(--accent-violet), var(--accent-blue))", width: 40, height: 40, fontSize: 16 }}>
+              {safeName[0]?.toUpperCase()}
+            </div>
+          )}
+          {(isOnline || otherUser.role === "agent") && (
             <span style={{
               position: "absolute", bottom: 0, right: 0,
               width: 11, height: 11, borderRadius: "50%",
               background: "var(--accent-emerald)", border: "2px solid var(--bg-base)",
+              boxShadow: "0 0 6px var(--accent-emerald)",
             }} />
           )}
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontSize: 14.5, fontWeight: 700, lineHeight: 1.2 }}>{safeName}</div>
           <div style={{ fontSize: 11, color: "var(--text-faint)", marginTop: 1 }}>
-            {otherUser.email || (roleMeta ? roleMeta.label : "Private conversation")}
+            {otherUser.role === "agent" || otherUser.id === "agent"
+              ? "CampusFlow Institutional AI Agent · Live LLM Grounded"
+              : otherUser.email || (roleMeta ? roleMeta.label : "Private conversation")}
           </div>
         </div>
-        {roleMeta && (
-          <span className="pill" style={{ color: roleMeta.color, borderColor: `${roleMeta.color}40`, fontSize: 10.5 }}>
-            {roleMeta.label}
+        {(roleMeta || otherUser.role === "agent") && (
+          <span
+            className="pill"
+            style={{
+              color: otherUser.role === "agent" ? "var(--accent-violet)" : roleMeta.color,
+              borderColor: otherUser.role === "agent" ? "rgba(139, 92, 246, 0.4)" : `${roleMeta.color}40`,
+              fontSize: 10.5,
+              fontWeight: 700,
+            }}
+          >
+            {otherUser.role === "agent" ? "AI Agent" : roleMeta.label}
           </span>
         )}
       </div>

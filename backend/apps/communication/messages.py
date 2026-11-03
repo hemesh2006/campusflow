@@ -106,6 +106,67 @@ async def messages_collection(request):
             asyncio.create_task(analyse_and_act(document, current_user))
         except Exception:
             pass
+
+    # ── Auto-reply from CampusFlow AI Agent for DM queries ──
+    if payload.group in (f"{DM_PREFIX}{current_user.id}-agent", f"{DM_PREFIX}agent-{current_user.id}"):
+        async def _trigger_agent_reply(user_obj, text_prompt, thread_group):
+            try:
+                from app.services import user_knowledge, ollama_client
+                from app.services.hierarchy_sync import get_user_hierarchy_node
+                from app.services.query_intelligence import (
+                    analyze_query_intent,
+                    synthesize_direct_reply,
+                    build_lean_llm_prompt,
+                )
+                from apps.agents.assistant import _active_model
+
+                snapshot = await user_knowledge.get_or_build_snapshot(user_obj.id)
+                h_node = get_user_hierarchy_node(user_obj.id)
+                intent = analyze_query_intent(text_prompt)
+
+                if intent != "general":
+                    reply = synthesize_direct_reply(intent, text_prompt, user_obj, snapshot, h_node)
+                else:
+                    model = await _active_model()
+                    lean_prompt = build_lean_llm_prompt(user_obj, snapshot, h_node)
+                    llm_messages = [{"role": "system", "content": lean_prompt}]
+                    
+                    # Fetch last 4 turns in this thread for conversation context
+                    thread_history = []
+                    async for m in messages_col.find({"group": thread_group}).sort("created_at", -1).limit(4):
+                        r = "assistant" if m.get("from_user_id") == "agent" else "user"
+                        thread_history.append({"role": r, "content": (m.get("text") or "")[:300]})
+                    thread_history.reverse()
+                    llm_messages.extend(thread_history)
+
+                    try:
+                        reply = await ollama_client.chat(model, llm_messages, timeout=3.5)
+                    except Exception:
+                        reply = None
+
+                    if not reply:
+                        reply = synthesize_direct_reply("general", text_prompt, user_obj, snapshot, h_node)
+
+                agent_message_doc = {
+                    "group": thread_group,
+                    "text": reply,
+                    "link": None,
+                    "attachment": None,
+                    "workflow": None,
+                    "from_user_id": "agent",
+                    "from_name": "CampusFlow AI Agent",
+                    "created_at": datetime.now(timezone.utc),
+                    "read_by": [],
+                    "read_count": 0,
+                    "deleted_for": [],
+                    "deleted_for_everyone": False,
+                }
+                await messages_col.insert_one(agent_message_doc)
+            except Exception:
+                pass
+
+        asyncio.create_task(_trigger_agent_reply(current_user, payload.text, payload.group))
+
     return JsonResponse(_out(document), status=201)
 
 
@@ -189,6 +250,22 @@ async def dm_threads(request):
             "last_from_me": message.get("from_user_id") == current_user.id,
             "has_attachment": bool(message.get("attachment")),
         })
+
+    # Always provide the user's permanent AI Agent conversation thread
+    agent_group = f"{DM_PREFIX}{current_user.id}-agent"
+    agent_msg = await messages_col.find_one({"group": agent_group}, sort=[("created_at", -1)])
+    agent_thread = {
+        "group": agent_group,
+        "other_user_id": "agent",
+        "other_user_name": "CampusFlow AI Agent",
+        "other_user_role": "agent",
+        "last_text": agent_msg.get("text") if agent_msg else "Hello! I am your CampusFlow AI Agent with real-time institutional and placement tracking. Ask me anything!",
+        "last_at": agent_msg["created_at"].isoformat() if agent_msg else datetime.now(timezone.utc).isoformat(),
+        "last_from_me": agent_msg.get("from_user_id") == current_user.id if agent_msg else False,
+        "has_attachment": bool(agent_msg.get("attachment")) if agent_msg else False,
+        "is_agent": True,
+    }
+    result.insert(0, agent_thread)
     return JsonResponse(result, safe=False)
 
 
